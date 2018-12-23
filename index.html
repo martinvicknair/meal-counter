@@ -19,7 +19,7 @@
     <!-- site-meal-info 1/6 -->
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div class="card" id="site-meal-info">
+        <div class="card" id="site-meal-card">
           <h5 class="card-header">
             SFSP Meal Counter
           </h5>
@@ -42,7 +42,7 @@
                   Site Supervisor required.
                 </div>
             </div>
-            <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
+            <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type-btns">
               <div>
                 <button class="btn-lg w-100 btn-primary" type="submit" id="breakfast-btn" value="bkfst">Breakfast</button>
               </div>
@@ -70,7 +70,7 @@
     <!-- meals-available 2/6 -->
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div class="card d-none" id="meals-available">
+        <div class="card d-none" id="meals-available-card">
           <h5 class="card-header">
             SFSP Meal Counter
           </h5>
@@ -85,7 +85,7 @@
             <form class="needs-validation" id="meals-available-form" novalidate>
 
               <div class="form-row align-items-center">
-                <input type="number" class="form-control" min="0" id="meals-received" required />
+                <input type="number" class="form-control" min="0" id="meals-received" oninput="sumMeals()" required />
                 <div class="input-group-append">
                   <span class="input-group-text">Meals Received/Prepared</span>
                 </div>
@@ -95,7 +95,7 @@
               </div>
 
               <div class="form-row align-items-center">
-                <input type="number" class="form-control" min="0" id="meals-leftover" required />
+                <input type="number" class="form-control" min="0" id="meals-leftover" oninput="sumMeals()" required />
                 <div class="input-group-append">
                   <span class="input-group-text">Meals From Previous Day</span>
                 </div>
@@ -105,7 +105,7 @@
               </div>
 
               <div class="form-row align-items-center">
-                <input type="text" class="form-control" min="1" id="meals-available" required readonly />
+                <input type="number" class="form-control" min="1" id="total-meals-start" required />
                 <div class="input-group-append">
                   <span class="input-group-text">Total Meals Available</span>
                 </div>
@@ -121,11 +121,13 @@
               </div>
             </form>
           </div>
+
           <div class="card-footer text-muted text-center">
             Step 2/6<br>
             Fill in number of meals available to serve.<br>
             Press "Start Counting" to continue.
           </div>
+
         </div>
       </div>
     </div>
@@ -136,7 +138,7 @@
     <!-- meal-counter 3/6 -->
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div class="card d-none" id="meal-counter">
+        <div class="card d-none" id="meal-count-card">
           <h5 class="card-header">
             SFSP Meal Counter
           </h5>

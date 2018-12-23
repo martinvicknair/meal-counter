@@ -17,82 +17,14 @@ var hdDate = dt.toDateString(); // = Sat Oct 05 2013
 
 
 
-function onDeviceReady() {
-//   check for stored data?
-    var siteName = document.getElementById("siteName");
-    document.getElementById("siteName").value = localStorage.getItem("mt_count_f1");
-    document.getElementById("address").value = localStorage.getItem("mt_count_f2");
-    document.getElementById("supervisor").value = localStorage.getItem("mt_count_f4");
-// Create Event Listener for the arrow icon
-    $(".hideTxt").on("click",function(){
-        $(this).toggle();
-            $('body').animate({
-                      scrollTop: ($("#hdInfo").offset().top)
-                      },200);
-      });
-   $('.options li').on("click",showMenu);
-
-
-}
-
-
-function selectMeal(meal) {
-  //make sure that they actually filled in the information
-  var hd1, sign4;
-  var f1 = document.getElementById("siteName").value;
-  var f2 = document.getElementById("address").value;
-  var f4 = document.getElementById("supervisor").value;
-  localStorage.setItem("mt_count_f1",f1);
-  localStorage.setItem("mt_count_f2",f2);
-  localStorage.setItem("mt_count_f4",f4);
-
-    if (f1.trim()=="" || f2.trim()=="" || f4.trim()=="") {
-        notification.alert(
-           'All fields must be completed',  // message
-           null,         // callback - can call function
-           'WARNING',      // title
-           'OK'                  // buttonName
-           );
-
-  } else {
-      //keep everything on this page if possible.  Less data to transfer
-     if (meal=="b") {
-       mealType="Breakfast";
-         mealPlural = "Breakfasts";
-     } else if (meal== "l") {
-       mealType="Lunch";
-       mealPlural = "Lunches";
-     } else if (meal== "s") {
-       mealType="Snack";
-         mealPlural = "Snacks";
-     } else if (meal== "d") {
-         mealType="Dinner";
-         mealPlural = "Dinners";
-     }
-
-     hd1 = document.getElementById("mainPage");
-     hd1.style.display='none';
-
-     //show arrows
-    sign4 = document.getElementById("sign");
-    sign4.setAttribute("style","background:url('images/sm_right_arrow.png') no-repeat;float:left;width:60px;height:50px;display:inline-block;background-position: center;");
-     //change the class name so it isn't treated as an option button
-     $('.options li').off("click");
-     $("#arrow").addClass("logo2");
-     $("#arrow").removeClass("options");
-
-    $(".logo2 li").on("click",gotoDelInfo);
-
-    sign4 = document.getElementById("leftArrow");
-    sign4.setAttribute("src","images/sm_left_arrow.png");
-
-    hd1 = document.getElementById("hdInfo");
-    hd1.style.display='inline-block';
-    hd1.innerHTML="<a href='index.html'>" + f1 + "<br>" + hdDate + "<br>" + mealType + "</a>";
-
-    hd1 = document.getElementById("delInfo");
-    hd1.style.display='inline-block';
-	 //call function to get the beginning meals numbers
-	 document.getElementById("delInfo").innerHTML = createDiv(mealType);
-  }
+function updateTotal() {
+    var left = document.getElementById("left").value;
+    var mDel = document.getElementById("mDel").value;
+	if (left=="") {left=0;}
+	if (mDel=="") { mDel=0; }
+    mTotal = parseInt(left) + parseInt(mDel);
+    var mTotalText = mTotal.toString();
+    document.getElementById("mTotl").value = mTotalText ;
+    var button = document.getElementById("button8");
+    button.style.display='inline-block';
 }
