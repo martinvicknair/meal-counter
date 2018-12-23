@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap-4.2.1.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>SFSP Meal Counter</title>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- site-meal-info 1/6 -->
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card" id="site-meal-info">
+          <h5 class="card-header">
+            SFSP Meal Counter
+          </h5>
+          <div class="card-body text-center">
+            <h6 class="card-title">Site & Meal Info</h6>
+            <div class="col-md-10 offset-md-1 mb-3">
+              <form class="needs-validation" id="site-meal-form" novalidate>
+                <input type="text" class="form-control" id="siteName-input" placeholder="Site Name" required>
+                <div class="invalid-feedback">
+                  Site Name required.
+                </div>
+
+                <input type="text" class="form-control" id="siteAddress-input" placeholder="Site Address" required>
+                <div class="invalid-feedback">
+                  Site Address required.
+                </div>
+
+                <input type="text" class="form-control" id="siteSupervisor-input" placeholder="Site Supervisor" required>
+                <div class="invalid-feedback">
+                  Site Supervisor required.
+                </div>
+            </div>
+            <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
+              <div>
+                <button class="btn-lg w-100 btn-primary" type="submit" id="breakfast-btn" value="bkfst">Breakfast</button>
+              </div>
+              <div>
+                <button class="btn-lg w-100 btn-success" type="submit" id="lunch-btn" value="lunch">Lunch</button>
+              </div>
+              <div>
+                <button class="btn-lg w-100 btn-secondary" type="submit" id="snack-btn" value="snack">Snack</button>
+              </div>
+              <div>
+                <button class="btn-lg w-100 btn-warning" type="submit" id="supper-btn" value="supper">Supper</button>
+              </div>
+            </div>
+            </form>
+          </div>
+          <div class="card-footer text-muted text-center">
+            Step 1/6<br>
+            Fill in Name, Address, and Supervisor.<br>
+            Then choose a meal to continue.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- meals-available 2/6 -->
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card d-none" id="meals-available">
+          <h5 class="card-header">
+            SFSP Meal Counter
+          </h5>
+          <div class="card-body text-center">
+            <h6 class="card-title">Meals to Serve</h6>
+            <div class="siteName-current">siteName</div>
+            <div class="long-date">?</div>
+            Number of mealType available
+          </div>
+
+          <div class="col-md-10 offset-md-1 mb-3">
+            <form class="needs-validation" id="meals-available-form" novalidate>
+
+              <div class="form-row align-items-center">
+                <input type="number" class="form-control" min="0" id="meals-received" required />
+                <div class="input-group-append">
+                  <span class="input-group-text">Meals Received/Prepared</span>
+                </div>
+                <div class="invalid-feedback">
+                  Enter number of new meals received, even if zero.
+                </div>
+              </div>
+
+              <div class="form-row align-items-center">
+                <input type="number" class="form-control" min="0" id="meals-leftover" required />
+                <div class="input-group-append">
+                  <span class="input-group-text">Meals From Previous Day</span>
+                </div>
+                <div class="invalid-feedback">
+                  Enter number of meals leftover, even if zero.
+                </div>
+              </div>
+
+              <div class="form-row align-items-center">
+                <input type="text" class="form-control" min="1" id="meals-available" required readonly />
+                <div class="input-group-append">
+                  <span class="input-group-text">Total Meals Available</span>
+                </div>
+                <div class="invalid-feedback">
+                  Cannot start counting without meals available to serve.
+                </div>
+              </div>
+
+              <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
+                <div>
+                  <button class="btn-lg w-100 btn-danger" type="submit" id="startcounting-btn">Start Counting</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-muted text-center">
+            Step 2/6<br>
+            Fill in number of meals available to serve.<br>
+            Press "Start Counting" to continue.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- meal-counter 3/6 -->
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card d-none" id="meal-counter">
+          <h5 class="card-header">
+            SFSP Meal Counter
+          </h5>
+          <div class="card-body text-center">
+            <h6 class="card-title">Main Counter</h6>
+            <div class="siteName-current">siteName</div>
+            <div class="long-date">?</div>
+            Number of mealType remaining
+          </div>
+        <div class="card-footer text-muted text-center">
+          Step 3/6<br>
+          Count meals at point of service.<br>
+          Press "Done Counting" at end of service.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  </div><!-- /container -->
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="js/jquery-3.3.1.slim.min.js"></script>
+  <script src="js/bootstrap-4.2.1.bundle.min.js"></script>
+  <script src="js/logic.js"></script>
+</body>
+
+</html>
