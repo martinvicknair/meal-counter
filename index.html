@@ -76,9 +76,9 @@
           </h5>
           <div class="card-body text-center">
             <h6 class="card-title">Meals Available to Serve</h6>
-            <div class="siteName-current">siteName</div>
-            <div class="long-date">$long-date</div>
-            <div class="mealType-current">$mealType</div>
+            <div class="siteName">$siteName</div>
+            <div class="longDate">$longDate</div>
+            <div class="mealType">$mealType</div>
           </div>
 
           <div class="col-md-11 offset-md-1 mb-3">
@@ -105,7 +105,7 @@
               </div>
 
               <div class="form-row align-items-center">
-                <input type="number" class="form-control" min="1" id="total-meals-start" required readonly />
+                <input type="number" class="form-control mealsAvailable" min="1" required readonly />
                 <div class="input-group-append">
                   <span class="input-group-text">Total Meals Available</span>
                 </div>
@@ -119,7 +119,7 @@
 
               <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
                 <div>
-                  <button class="btn-lg w-100 btn-danger" type="submit" id="startcounting-btn">Start Counting</button>
+                  <button class="btn-lg w-100 btn-danger" type="submit" id="startCounting-btn">Start Counting</button>
                 </div>
               </div>
             </form>
@@ -145,48 +145,30 @@
           <h5 class="card-header">
             SFSP Meal Counter
           </h5>
+
           <div class="card-body text-center">
-            <!-- <span class="card-title"> -->
-            <div class="mealType-current">$mealType</div>
-            <div class="siteName-current">$siteName</div>
-            <div class="long-date">$longDate</div>
-            <!-- </span> -->
-            <!-- <div class="siteName-current">$siteName</div>
-            <div class="long-date">$longDate</div> -->
-            <!-- <div class="mealType-current">$mealType</div> -->
-            <!-- <div class="col-md-1 offset-md-1 mb-3"> -->
-              <div class="jumbotron">
-                <h1 class="display-5 meals-available">00</h1>
-                <p>Meals Remaining</p>
-                <hr class="my-4">
-                <!-- <div class="col-md-6 align-items-center"> -->
-                  <div class="input-group mb-3 align-items-center">
-                    <div class="input-group-prepend">
-                      <button type="button" class="btn-danger btn-lg" id="minus-btn"> - </button>
-                    </div>
-                    <!-- <input type="number" class="form-control" id="quantity" placeholder="0" readonly> -->
-                                <h1 class="display-5 first-meals" style="margin: 0 10px 0 10px; width: 75px">00</h1>
-                    <div class="input-group-append">
-                      <button type="button" class="btn-success btn-lg" id="plus-btn"> + </button>
+            <div class="mealType">$mealType</div>
+            <div class="siteName">$siteName</div>
+            <div class="longDate">$longDate</div>
 
-                    </div>
-                  </div>
-                  <!-- <div class="input-group">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-left-minus btn-danger btn-lg" data-type="minus" data-field=""> - </button>
-                    </span>
-                    <h1 class="display-5" id="quantity">0</h1> -->
-                    <!-- <input type="text" id="quantity" name="quantity" class="form-control input-number" value="0" min="0" max="1000" readonly> -->
-                    <!-- <span class="input-group-btn">
-                      <button type="button" class="quantity-right-plus btn-success btn-lg" data-type="plus" data-field=""> + </button>
-                    </span>
-                  </div> -->
-                <!-- </div> -->
-                <p>First Meals to Children</p>
+            <div class="jumbotron">
+              <h1 class="display-5 mealsRemaining">00</h1>
+              <p>Total Meals Remaining</p>
+              <hr class="my-4">
+              <div class="input-group mb-3 align-items-center">
+
+                <div class="input-group-prepend">
+                  <button type="button" class="btn-danger btn-lg" id="first-minus-btn"> - </button>
+                </div>
+                <h1 class="display-5 firstMeals" style="margin: 0 10px 0 10px; width: 75px">00</h1>
+                <div class="input-group-append">
+                  <button type="button" class="btn-success btn-lg" id="first-plus-btn"> + </button>
+                </div>
               </div>
-
-            <!-- </div> -->
+              <p>First Meals to Children</p>
+            </div>
           </div>
+
           <div class="card-footer text-muted text-center">
             Step 3/6<br>
             Count meals at point of service.<br>
