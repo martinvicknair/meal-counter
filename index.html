@@ -5,6 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap-4.2.1.min.css">
@@ -17,166 +18,181 @@
   <div class="container">
 
     <!-- site-meal-info 1/6 -->
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="card" id="site-meal-card">
-          <h5 class="card-header">
-            SFSP Meal Counter
-          </h5>
-          <div class="card-body text-center">
-            <h6 class="card-title">Site & Meal Info</h6>
-            <div class="col-md-10 offset-md-1 mb-3">
-              <form class="needs-validation" id="site-meal-form" novalidate>
-                <input type="text" class="form-control" id="siteName-input" placeholder="Site Name" required>
-                <div class="invalid-feedback">
-                  Site Name required.
-                </div>
+    <div id="site-meal-card">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card">
+            <h5 class="card-header">
+              SFSP Meal Counter
+            </h5>
+            <div class="card-body text-center">
+              <h6 class="card-title">Site & Meal Info</h6>
+              <div class="col-md-10 offset-md-1 mb-3">
+                <form class="needs-validation" id="site-meal-form" novalidate>
+                  <input type="text" class="form-control" id="siteName-input" placeholder="Site Name" required>
+                  <div class="invalid-feedback">
+                    Site Name required.
+                  </div>
 
-                <input type="text" class="form-control" id="siteAddress-input" placeholder="Site Address" required>
-                <div class="invalid-feedback">
-                  Site Address required.
-                </div>
+                  <input type="text" class="form-control" id="siteAddress-input" placeholder="Site Address" required>
+                  <div class="invalid-feedback">
+                    Site Address required.
+                  </div>
 
-                <input type="text" class="form-control" id="siteSupervisor-input" placeholder="Site Supervisor" required>
-                <div class="invalid-feedback">
-                  Site Supervisor required.
+                  <input type="text" class="form-control" id="siteSupervisor-input" placeholder="Site Supervisor" required>
+                  <div class="invalid-feedback">
+                    Site Supervisor required.
+                  </div>
+              </div>
+              <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type-btns">
+                <div>
+                  <button class="btn-lg w-100 btn-primary" type="submit" id="breakfast-btn" value="bkfst">Breakfast</button>
                 </div>
+                <div>
+                  <button class="btn-lg w-100 btn-success" type="submit" id="lunch-btn" value="lunch">Lunch</button>
+                </div>
+                <div>
+                  <button class="btn-lg w-100 btn-secondary" type="submit" id="snack-btn" value="snack">Snack</button>
+                </div>
+                <div>
+                  <button class="btn-lg w-100 btn-warning" type="submit" id="supper-btn" value="supper">Supper</button>
+                </div>
+              </div>
+              </form>
             </div>
-            <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type-btns">
-              <div>
-                <button class="btn-lg w-100 btn-primary" type="submit" id="breakfast-btn" value="bkfst">Breakfast</button>
-              </div>
-              <div>
-                <button class="btn-lg w-100 btn-success" type="submit" id="lunch-btn" value="lunch">Lunch</button>
-              </div>
-              <div>
-                <button class="btn-lg w-100 btn-secondary" type="submit" id="snack-btn" value="snack">Snack</button>
-              </div>
-              <div>
-                <button class="btn-lg w-100 btn-warning" type="submit" id="supper-btn" value="supper">Supper</button>
-              </div>
+            <div class="card-footer text-muted text-center">
+              Step 1/6<br>
+              Fill in Name, Address, and Supervisor.<br>
+              Then choose a meal to continue.
             </div>
-            </form>
-          </div>
-          <div class="card-footer text-muted text-center">
-            Step 1/6<br>
-            Fill in Name, Address, and Supervisor.<br>
-            Then choose a meal to continue.
           </div>
         </div>
       </div>
     </div>
+    <!-- /#site-meal-card -->
+
 
     <!-- meals-available 2/6 -->
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="card" id="meals-available-card">
-          <h5 class="card-header">
-            SFSP Meal Counter
-          </h5>
-          <div class="card-body text-center">
-            <h6 class="card-title">Meals Available to Serve</h6>
-            <div class="siteName">$siteName</div>
-            <div class="longDate">$longDate</div>
-            <div class="mealType">$mealType</div>
+    <div id="meals-available-card" class="d-none">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card">
+            <span class="card-header">
+              <h5 class="float-left">SFSP Meal Counter</h5>
+              <div class="float-right text-primary" id="backToCard1">Go Back</div>
+            </span>
+
+            <div class="card-body text-center">
+              <h6 class="card-title">Meals Available to Serve</h6>
+              <div class="siteName">$siteName</div>
+              <div class="longDate">$longDate</div>
+              <div class="mealType">$mealType</div>
+            </div>
+
+            <div class="col-md-11 offset-md-1 mb-3">
+              <form class="needs-validation" id="meals-available-form" novalidate>
+
+                <div class="form-row align-items-center">
+                  <input type="number" class="form-control" min="0" id="meals-received" oninput="sumMeals()" required />
+                  <div class="input-group-append">
+                    <span class="input-group-text">Meals Received/Prepared</span>
+                  </div>
+                  <div class="invalid-feedback">
+                    Enter number of new meals received, even if zero.
+                  </div>
+                </div>
+
+                <div class="form-row align-items-center">
+                  <input type="number" class="form-control" min="0" id="meals-leftover" oninput="sumMeals()" required />
+                  <div class="input-group-append">
+                    <span class="input-group-text">Meals From Previous Day</span>
+                  </div>
+                  <div class="invalid-feedback">
+                    Enter number of meals leftover, even if zero.
+                  </div>
+                </div>
+
+                <div class="form-row align-items-center">
+                  <input type="number" class="form-control mealsAvailable" min="1" required readonly />
+                  <div class="input-group-append">
+                    <span class="input-group-text">Total Meals Available</span>
+                  </div>
+                  <small id="invalid-feedback-nomeals" class="form-text text-danger d-none">
+                    Cannot start counting without meals available to serve.
+                  </small>
+                  <!-- <div class="invalid-feedback d-none" id="invalid-feedback-nomeals">
+                    Cannot start counting without meals available to serve.
+                  </div> -->
+                </div>
+
+                <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
+                  <div>
+                    <button class="btn-lg w-100 btn-danger" type="submit" id="startCounting-btn">Start Counting</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="card-footer text-muted text-center">
+              Step 2/6<br>
+              Fill in number of meals available to serve.<br>
+              Press "Start Counting" to continue.
+            </div>
+
           </div>
-
-          <div class="col-md-11 offset-md-1 mb-3">
-            <form class="needs-validation" id="meals-available-form" novalidate>
-
-              <div class="form-row align-items-center">
-                <input type="number" class="form-control" min="0" id="meals-received" oninput="sumMeals()" required />
-                <div class="input-group-append">
-                  <span class="input-group-text">Meals Received/Prepared</span>
-                </div>
-                <div class="invalid-feedback">
-                  Enter number of new meals received, even if zero.
-                </div>
-              </div>
-
-              <div class="form-row align-items-center">
-                <input type="number" class="form-control" min="0" id="meals-leftover" oninput="sumMeals()" required />
-                <div class="input-group-append">
-                  <span class="input-group-text">Meals From Previous Day</span>
-                </div>
-                <div class="invalid-feedback">
-                  Enter number of meals leftover, even if zero.
-                </div>
-              </div>
-
-              <div class="form-row align-items-center">
-                <input type="number" class="form-control mealsAvailable" min="1" required readonly />
-                <div class="input-group-append">
-                  <span class="input-group-text">Total Meals Available</span>
-                </div>
-                <small id="invalid-feedback-nomeals" class="form-text text-danger d-none">
-                  Cannot start counting without meals available to serve.
-                </small>
-                <!-- <div class="invalid-feedback d-none" id="invalid-feedback-nomeals">
-                  Cannot start counting without meals available to serve.
-                </div> -->
-              </div>
-
-              <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
-                <div>
-                  <button class="btn-lg w-100 btn-danger" type="submit" id="startCounting-btn">Start Counting</button>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="card-footer text-muted text-center">
-            Step 2/6<br>
-            Fill in number of meals available to serve.<br>
-            Press "Start Counting" to continue.
-          </div>
-
         </div>
       </div>
     </div>
+    <!-- /#meals-available-card -->
+
 
 
 
 
     <!-- meal-counter 3/6 -->
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="card" id="meal-count-card">
-          <h5 class="card-header">
-            SFSP Meal Counter
-          </h5>
+    <div id="meal-count-card" class="d-none">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card" id="meal-count-card">
+            <span class="card-header">
+              <h5 class="float-left">SFSP Meal Counter</h5>
+              <div class="float-right text-primary" id="backToCard2">Go Back</div>
+            </span>
 
-          <div class="card-body text-center">
-            <div class="mealType">$mealType</div>
-            <div class="siteName">$siteName</div>
-            <div class="longDate">$longDate</div>
+            <div class="card-body text-center">
+              <div class="mealType">$mealType</div>
+              <div class="siteName">$siteName</div>
+              <div class="longDate">$longDate</div>
 
-            <div class="jumbotron">
-              <h1 class="display-5 mealsRemaining">00</h1>
-              <p>Total Meals Remaining</p>
-              <hr class="my-4">
-              <div class="input-group mb-3 align-items-center">
+              <div class="jumbotron">
+                <h1 class="display-5 mealsRemaining">00</h1>
+                <p>Total Meals Remaining</p>
+                <hr class="my-4">
+                <div class="input-group mb-3 align-items-center">
 
-                <div class="input-group-prepend">
-                  <button type="button" class="btn-danger btn-lg" id="first-minus-btn"> - </button>
+                  <div class="input-group-prepend">
+                    <button type="button" class="btn-danger btn-lg" id="first-minus-btn"> - </button>
+                  </div>
+                  <h1 class="display-5 firstMeals" style="margin: 0 10px 0 10px; width: 75px">00</h1>
+                  <div class="input-group-append">
+                    <button type="button" class="btn-success btn-lg" id="first-plus-btn"> + </button>
+                  </div>
                 </div>
-                <h1 class="display-5 firstMeals" style="margin: 0 10px 0 10px; width: 75px">00</h1>
-                <div class="input-group-append">
-                  <button type="button" class="btn-success btn-lg" id="first-plus-btn"> + </button>
-                </div>
+                <p>First Meals to Children</p>
               </div>
-              <p>First Meals to Children</p>
             </div>
-          </div>
 
-          <div class="card-footer text-muted text-center">
-            Step 3/6<br>
-            Count meals at point of service.<br>
-            Press "Done Counting" at end of service.
+            <div class="card-footer text-muted text-center">
+              Step 3/6<br>
+              Count meals at point of service.<br>
+              Press "Done Counting" at end of service.
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- /#meal-count-card -->
+
 
 
 

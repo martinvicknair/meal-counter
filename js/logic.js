@@ -43,8 +43,8 @@ $("#meal-type-btns").click(function(event) {
     selectMeal(meal)
     $(".siteName").text(siteName);
     // document.getElementsByClassName("siteName").value = localStorage.getItem("mealCounter-siteName");
-    // $("#site-meal-card").toggleClass('d-none');
-    // $("#meals-available-card").toggleClass('d-none')
+    $("#site-meal-card").toggleClass('d-none');
+    $("#meals-available-card").toggleClass('d-none')
   }
   form.addClass('was-validated');
 });
@@ -108,6 +108,15 @@ function sumMeals() {
   // }
 }
 
+$("#backToCard1").click(function() {
+  $("#site-meal-card").toggleClass('d-none');
+  $("#meals-available-card").toggleClass('d-none')
+})
+
+$("#backToCard2").click(function() {
+  $("#meals-available-card").toggleClass('d-none');
+  $("#meal-count-card").toggleClass('d-none')
+})
 
 $("#startCounting-btn").click(function(event) {
   // Fetch form to apply custom Bootstrap validation
@@ -123,27 +132,44 @@ $("#startCounting-btn").click(function(event) {
     event.preventDefault()
     mealsRemaining = mealsAvailable - mealsServed;
     $(".mealsRemaining").text(mealsRemaining);
-    // $("#meals-available-card").toggleClass('d-none')
-    // $("#meal-count-card").toggleClass('d-none');
+    $("#meals-available-card").toggleClass('d-none')
+    $("#meal-count-card").toggleClass('d-none');
     console.log(`mealsAvailable: ${mealsAvailable}`);
   }
   form.addClass('was-validated');
 });
 
 $('#first-plus-btn').click(function(e) {
-  firstMeals++;
-  mealsServed++;
-  mealsRemaining--;
-  $('.mealsRemaining').text(mealsRemaining);
-  $('.firstMeals').text(firstMeals);
-  // console.log(`firstMeals+: ${firstMeals}`);
+  if (mealsRemaining > 0) {
+    firstMeals++;
+    mealsServed++;
+    mealsRemaining--;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.firstMeals').text(firstMeals);
+    // console.log(`firstMeals+: ${firstMeals}`);
+  }
+
 });
 
 $('#first-minus-btn').click(function(e) {
+if (firstMeals > 0) {
   firstMeals--;
   mealsServed--;
   mealsRemaining++;
   $('.mealsRemaining').text(mealsRemaining);
   $('.firstMeals').text(firstMeals);
   // console.log(`firstMeals-: ${firstMeals}`);
+}
+
 });
+// window.onbeforeunload = function (e) {
+//       var e = e || window.event;
+//        var msg = 'You may lose changes. Use the "Go Back" button in the app.'
+//      // For IE and Fire[![enter image description here][1]][1]fox
+//   if (e) {
+//       e.returnValue = msg;
+//   }
+//
+//   // For Safari / chrome
+//   return msg;
+// };
