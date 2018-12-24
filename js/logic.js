@@ -5,7 +5,14 @@ var siteSupervisor = "";
 var mealType = "";
 var mealPlural = "";
 
-var totalMealsStart = "";
+var totalMealsStart = 0;
+var firstMeals = 0;
+var secondMeals = 0
+var progAdultMeals = 0;
+var nonProgAdultMeals = 0;
+var mealsServed = 0;
+var numMealsRemain = 0;
+var addlMealsNeeded = 0;
 
 var dt = new Date();
 var dateOptions = {
@@ -35,8 +42,10 @@ $("#meal-type-btns").click(function(event) {
       event.preventDefault()
       var meal = document.activeElement.getAttribute('value');
       selectMeal(meal)
-      $("#site-meal-card").toggleClass('d-none');
-      $("#meals-available-card").toggleClass('d-none')
+      $(".siteName-current").text(siteName);
+      // document.getElementsByClassName("siteName-current").value = localStorage.getItem("mealCounter-siteName");
+      // $("#site-meal-card").toggleClass('d-none');
+      // $("#meals-available-card").toggleClass('d-none')
 }
   form.addClass('was-validated');
 });
@@ -63,10 +72,20 @@ function selectMeal(meal) {
     mealType = "Supper";
     mealPlural = "Suppers";
   }
+    $(".mealType-current").text(mealType);
   console.log(`${siteName}-${shortDate}-${mealType}`);
 }
 
 function sumMeals() {
+  if (mealsReceived != "" && mealsLeftover != "" && totalMealsStart >= 1) {
+    document.getElementById("startcounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
+    $("#invalid-feedback-nomeals").addClass('d-none')
+  }
+  else {
+    document.getElementById("startcounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
+    // $("#invalid-feedback-nomeals").addClass('d-none')
+  }
+
   var mealsReceived = document.getElementById("meals-received").value;
   var mealsLeftover = document.getElementById("meals-leftover").value;
   if (mealsReceived == "") {mealsReceived=0};
@@ -75,43 +94,60 @@ function sumMeals() {
   var totalMealsText = totalMealsStart.toString();
   document.getElementById("total-meals-start").value = totalMealsStart;
   console.log(`totalMealsStart: ${totalMealsStart}`);
-  if (totalMealsStart >= 1) {
-    document.getElementById("startcounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
-  }
-  else {
-    document.getElementById("startcounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
-    // document.getElementById("meals-available-form").setAttribute("class", "is-invalid");
-  }
+  // if (mealsReceived >= 0 && mealsLeftover >= 0 && totalMealsStart >= 1) {
+  //   document.getElementById("startcounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
+  //   $("#invalid-feedback-nomeals").addClass('d-none')
+  // }
+  // else {
+  //   document.getElementById("startcounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
+  //   // $("#invalid-feedback-nomeals").addClass('d-none')
+  // }
 }
 
-// function updateTotal() {
-//     var left = document.getElementById("left").value;
-//     var mDel = document.getElementById("mDel").value;
-// 	if (left=="") {left=0;}
-// 	if (mDel=="") { mDel=0; }
-//     mTotal = parseInt(left) + parseInt(mDel);
-//     var mTotalText = mTotal.toString();
-//     document.getElementById("mTotl").value = mTotalText ;
-//     var button = document.getElementById("button8");
-//     button.style.display='inline-block';
-// }
 
 $("#startcounting-btn").click(function(event) {
   // Fetch form to apply custom Bootstrap validation
   var form = $("#meals-available-form")
-  if (form[0].checkValidity() === false) {
-    event.preventDefault()
-    event.stopPropagation()
-  }
   if (totalMealsStart == 0) {
     event.preventDefault()
     event.stopPropagation()
-    form.removeClass('was-validated')
+    $("#invalid-feedback-nomeals").toggleClass('d-none')
+  }
+  else if (form[0].checkValidity() === false) {
+    event.preventDefault()
+    event.stopPropagation()
   }
   else if (form[0].checkValidity() == true) {
       event.preventDefault()
-      $("#meals-available-card").toggleClass('d-none')
-      $("#meal-count-card").toggleClass('d-none');
+      numMealsRemain = totalMealsStart - mealsServed;
+      $(".meals-available").text(numMealsRemain);
+      // $("#meals-available-card").toggleClass('d-none')
+      // $("#meal-count-card").toggleClass('d-none');
 }
   form.addClass('was-validated');
 });
+
+// var quantity=0;
+   $('#plus-btn').click(function(e){
+     console.log("clickplus");
+     firstMeals ++
+     mealsServed ++;
+     numMealsRemain --;
+     console.log(firstMeals);
+          $('.meals-available').val(numMealsRemain);
+          $('.first-meals').text(firstMeals);
+    });
+
+     $('.quantity-left-minus').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        var quantity = parseInt($('#quantity').val());
+
+        // If is not undefined
+
+            // Increment
+            if(quantity>0){
+            $('#quantity').val(quantity - 1);
+            }
+    });

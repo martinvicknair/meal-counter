@@ -70,18 +70,18 @@
     <!-- meals-available 2/6 -->
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div class="card d-none" id="meals-available-card">
+        <div class="card" id="meals-available-card">
           <h5 class="card-header">
             SFSP Meal Counter
           </h5>
           <div class="card-body text-center">
-            <h6 class="card-title">Meals to Serve</h6>
+            <h6 class="card-title">Meals Available to Serve</h6>
             <div class="siteName-current">siteName</div>
-            <div class="long-date">?</div>
-            Number of mealType available
+            <div class="long-date">$long-date</div>
+            <div class="mealType-current">$mealType</div>
           </div>
 
-          <div class="col-md-10 offset-md-1 mb-3">
+          <div class="col-md-11 offset-md-1 mb-3">
             <form class="needs-validation" id="meals-available-form" novalidate>
 
               <div class="form-row align-items-center">
@@ -105,13 +105,16 @@
               </div>
 
               <div class="form-row align-items-center">
-                <input type="number" class="form-control" min="1" id="total-meals-start" required />
+                <input type="number" class="form-control" min="1" id="total-meals-start" required readonly />
                 <div class="input-group-append">
                   <span class="input-group-text">Total Meals Available</span>
                 </div>
-                <div class="invalid-feedback">
+                <small id="invalid-feedback-nomeals" class="form-text text-danger d-none">
                   Cannot start counting without meals available to serve.
-                </div>
+                </small>
+                <!-- <div class="invalid-feedback d-none" id="invalid-feedback-nomeals">
+                  Cannot start counting without meals available to serve.
+                </div> -->
               </div>
 
               <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
@@ -138,24 +141,60 @@
     <!-- meal-counter 3/6 -->
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div class="card d-none" id="meal-count-card">
+        <div class="card" id="meal-count-card">
           <h5 class="card-header">
             SFSP Meal Counter
           </h5>
           <div class="card-body text-center">
-            <h6 class="card-title">Main Counter</h6>
-            <div class="siteName-current">siteName</div>
-            <div class="long-date">?</div>
-            Number of mealType remaining
+            <!-- <span class="card-title"> -->
+            <div class="mealType-current">$mealType</div>
+            <div class="siteName-current">$siteName</div>
+            <div class="long-date">$longDate</div>
+            <!-- </span> -->
+            <!-- <div class="siteName-current">$siteName</div>
+            <div class="long-date">$longDate</div> -->
+            <!-- <div class="mealType-current">$mealType</div> -->
+            <!-- <div class="col-md-1 offset-md-1 mb-3"> -->
+              <div class="jumbotron">
+                <h1 class="display-5 meals-available">00</h1>
+                <p>Meals Remaining</p>
+                <hr class="my-4">
+                <!-- <div class="col-md-6 align-items-center"> -->
+                  <div class="input-group mb-3 align-items-center">
+                    <div class="input-group-prepend">
+                      <button type="button" class="btn-danger btn-lg" id="minus-btn"> - </button>
+                    </div>
+                    <!-- <input type="number" class="form-control" id="quantity" placeholder="0" readonly> -->
+                                <h1 class="display-5 first-meals" style="margin: 0 10px 0 10px; width: 75px">00</h1>
+                    <div class="input-group-append">
+                      <button type="button" class="btn-success btn-lg" id="plus-btn"> + </button>
+
+                    </div>
+                  </div>
+                  <!-- <div class="input-group">
+                    <span class="input-group-btn">
+                      <button type="button" class="quantity-left-minus btn-danger btn-lg" data-type="minus" data-field=""> - </button>
+                    </span>
+                    <h1 class="display-5" id="quantity">0</h1> -->
+                    <!-- <input type="text" id="quantity" name="quantity" class="form-control input-number" value="0" min="0" max="1000" readonly> -->
+                    <!-- <span class="input-group-btn">
+                      <button type="button" class="quantity-right-plus btn-success btn-lg" data-type="plus" data-field=""> + </button>
+                    </span>
+                  </div> -->
+                <!-- </div> -->
+                <p>First Meals to Children</p>
+              </div>
+
+            <!-- </div> -->
           </div>
-        <div class="card-footer text-muted text-center">
-          Step 3/6<br>
-          Count meals at point of service.<br>
-          Press "Done Counting" at end of service.
+          <div class="card-footer text-muted text-center">
+            Step 3/6<br>
+            Count meals at point of service.<br>
+            Press "Done Counting" at end of service.
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
 
