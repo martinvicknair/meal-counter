@@ -5,13 +5,15 @@ var siteSupervisor = "";
 var mealType = "";
 var mealPlural = "";
 
+var mealsNew = 0;
+var mealsPrevious = 0;
 var mealsAvailable = 0;
 var firstMeals = 0;
 var secondMeals = 0
 var progAdultMeals = 0;
 var nonProgAdultMeals = 0;
 var mealsServed = 0;
-var mealsRemaining = 0;
+var mealsRemaining = -1;
 var addlMealsNeeded = 0;
 
 var dt = new Date();
@@ -24,6 +26,7 @@ var dateOptions = {
 var longDate = dt.toLocaleDateString('en-us', dateOptions);
 var shortDate = dt.toISOString().slice(0, 10); //return YYYY-MM-DD
 $(".longDate").text(longDate);
+$(".shortDate").text(shortDate);
 
 document.getElementById("siteName-input").value = localStorage.getItem("mealCounter-siteName");
 document.getElementById("siteAddress-input").value = localStorage.getItem("mealCounter-siteAddress");
@@ -76,7 +79,7 @@ function selectMeal(meal) {
 }
 
 function sumMeals() {
-  if (mealsReceived != "" && mealsLeftover != "" && mealsAvailable >= 1) {
+  if (mealsNew != "" && mealsPrevious != "" && mealsAvailable >= 1) {
     // $(".startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success")
     document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
     $("#invalid-feedback-nomeals").addClass('d-none')
@@ -85,20 +88,20 @@ function sumMeals() {
     // $("#invalid-feedback-nomeals").addClass('d-none')
   }
 
-  var mealsReceived = document.getElementById("meals-received").value;
-  var mealsLeftover = document.getElementById("meals-leftover").value;
-  if (mealsReceived == "") {
-    mealsReceived = 0
+  mealsNew = document.getElementById("mealsNew").value;
+  mealsPrevious = document.getElementById("mealsPrevious").value;
+  if (mealsNew == "") {
+    mealsNew = 0
   };
-  if (mealsLeftover == "") {
-    mealsLeftover = 0
+  if (mealsPrevious == "") {
+    mealsPrevious = 0
   };
-  mealsAvailable = parseInt(mealsReceived) + parseInt(mealsLeftover);
+  mealsAvailable = parseInt(mealsNew) + parseInt(mealsPrevious);
   // var totalMealsText = mealsAvailable.toString();
   $('.mealsAvailable').val(mealsAvailable);
   // document.getElementsByClassName("mealsAvailable").value = mealsAvailable;
   // console.log(`mealsAvailable: ${mealsAvailable}`);
-  // if (mealsReceived >= 0 && mealsLeftover >= 0 && mealsAvailable >= 1) {
+  // if (mealsNew >= 0 && mealsPrevious >= 0 && mealsAvailable >= 1) {
   //   document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
   //   $("#invalid-feedback-nomeals").addClass('d-none')
   // }
@@ -130,46 +133,119 @@ $("#startCounting-btn").click(function(event) {
     event.stopPropagation()
   } else if (form[0].checkValidity() == true) {
     event.preventDefault()
+    $(".mealsAvailable").text(mealsAvailable);
     mealsRemaining = mealsAvailable - mealsServed;
     $(".mealsRemaining").text(mealsRemaining);
     $("#meals-available-card").toggleClass('d-none')
     $("#meal-count-card").toggleClass('d-none');
-    console.log(`mealsAvailable: ${mealsAvailable}`);
+    console.log(`mealsAvailable: ${mealsPrevious} prev + ${mealsNew} new = ${mealsAvailable}`);
   }
   form.addClass('was-validated');
 });
 
 $('#first-plus-btn').click(function(e) {
-  if (mealsRemaining > 0) {
+if (mealsRemaining >= 1) {
     firstMeals++;
-    mealsServed++;
-    mealsRemaining--;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
     $('.mealsRemaining').text(mealsRemaining);
     $('.firstMeals').text(firstMeals);
+    // console.log(`add 1 firstMeal`);
+    // console.log(`mealsAvailable: ${mealsAvailable}`);
     // console.log(`firstMeals+: ${firstMeals}`);
+    // console.log(`mealsServed: ${mealsServed}`);
+    // console.log(`mealsRemaining: ${mealsRemaining}`);
+    // console.log(`------------------------`);
   }
-
 });
 
 $('#first-minus-btn').click(function(e) {
-if (firstMeals > 0) {
-  firstMeals--;
-  mealsServed--;
-  mealsRemaining++;
-  $('.mealsRemaining').text(mealsRemaining);
-  $('.firstMeals').text(firstMeals);
-  // console.log(`firstMeals-: ${firstMeals}`);
-}
-
+  if (firstMeals >= 1 && firstMeals > secondMeals) {
+    firstMeals--;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.firstMeals').text(firstMeals);
+    // console.log(`sub 1 firstMeal`);
+    // console.log(`mealsAvailable: ${mealsAvailable}`);
+    // console.log(`firstMeals-: ${firstMeals}`);
+    // console.log(`mealsServed: ${mealsServed}`);
+    // console.log(`mealsRemaining: ${mealsRemaining}`);
+    // console.log(`------------------------`);
+  } else if (firstMeals = secondMeals) {
+    $("#invalid-feedback-firstExceeds").toggleClass('d-none')
+  }
 });
-// window.onbeforeunload = function (e) {
-//       var e = e || window.event;
-//        var msg = 'You may lose changes. Use the "Go Back" button in the app.'
-//      // For IE and Fire[![enter image description here][1]][1]fox
-//   if (e) {
-//       e.returnValue = msg;
-//   }
-//
-//   // For Safari / chrome
-//   return msg;
-// };
+
+$('#second-plus-btn').click(function(e) {
+  if (mealsRemaining > 0 && secondMeals < firstMeals) {
+    secondMeals++;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.secondMeals').text(secondMeals);
+
+  } else {
+    $("#invalid-feedback-secondExceeds").toggleClass('d-none')
+  }
+  console.log(`mealsAvailable: ${mealsAvailable}`);
+  console.log(`secondMeals+: ${secondMeals}`);
+  console.log(`mealsServed: ${mealsServed}`);
+  console.log(`mealsRemaining: ${mealsRemaining}`);
+  console.log(`------------------------`);
+});
+
+$('#second-minus-btn').click(function(e) {
+  if (secondMeals >= 1) {
+    secondMeals--;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.secondMeals').text(secondMeals);
+    console.log(`mealsAvailable: ${mealsAvailable}`);
+    console.log(`firstMeals-: ${firstMeals}`);
+    console.log(`mealsServed: ${mealsServed}`);
+    console.log(`mealsRemaining: ${mealsRemaining}`);
+    console.log(`------------------------`);
+  }
+});
+
+$('#progAdultMeals-plus-btn').click(function(e) {
+  if (mealsRemaining > 0 ) {
+    progAdultMeals++;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.progAdultMeals').text(progAdultMeals);
+  }
+});
+
+$('#progAdultMeals-minus-btn').click(function(e) {
+  if (progAdultMeals >= 1) {
+    progAdultMeals--;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.progAdultMeals').text(progAdultMeals);
+  }
+});
+
+$('#nonProgAdultMeals-plus-btn').click(function(e) {
+  if (mealsRemaining > 0 ) {
+    nonProgAdultMeals++;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.nonProgAdultMeals').text(nonProgAdultMeals);
+  }
+});
+
+$('#nonProgAdultMeals-minus-btn').click(function(e) {
+  if (nonProgAdultMeals >= 1) {
+    nonProgAdultMeals--;
+    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    mealsRemaining = mealsAvailable - mealsServed;
+    $('.mealsRemaining').text(mealsRemaining);
+    $('.nonProgAdultMeals').text(nonProgAdultMeals);
+  }
+});
