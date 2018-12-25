@@ -6,8 +6,8 @@ var mealType = "";
 var mealPlural = "";
 
 var mealsNew = 0;
-var mealsPrevious = 0;
-var mealsAvailable = 0;
+var mealsPrevious = -1;
+var mealsAvailable = -1;
 var firstMeals = 0;
 var secondMeals = 0
 var progAdultMeals = 0;
@@ -17,7 +17,8 @@ var mealsRemaining = -1;
 var addlMealsNeeded = 0;
 
 var secondExceeds = "Second Meals cannot exceed First Meals"
-
+var firstExceeds = "First Meals must exceed Second Meals"
+var noMeals ="No meals remain";
 
 var dt = new Date();
 var dateOptions = {
@@ -30,6 +31,8 @@ var longDate = dt.toLocaleDateString('en-us', dateOptions);
 var shortDate = dt.toISOString().slice(0, 10); //return YYYY-MM-DD
 $(".longDate").text(longDate);
 $(".shortDate").text(shortDate);
+
+// $(".secondary-cards").toggleClass('d-none');
 
 document.getElementById("siteName-input").value = localStorage.getItem("mealCounter-siteName");
 document.getElementById("siteAddress-input").value = localStorage.getItem("mealCounter-siteAddress");
@@ -48,9 +51,8 @@ $("#meal-type-btns").click(function(event) {
     var meal = document.activeElement.getAttribute('value');
     selectMeal(meal)
     $(".siteName").text(siteName);
-    // document.getElementsByClassName("siteName").value = localStorage.getItem("mealCounter-siteName");
-    $("#site-meal-card").toggleClass('d-none');
-    $("#meals-available-card").toggleClass('d-none')
+    // $("#site-meal-card").toggleClass('d-none');
+    // $("#meals-available-card").toggleClass('d-none')
   }
   form.addClass('was-validated');
 });
@@ -82,15 +84,9 @@ function selectMeal(meal) {
 }
 
 function sumMeals() {
-  if (mealsNew != "" && mealsPrevious != "" && mealsAvailable >= 1) {
-    // $(".startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success")
-    document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
-    $("#invalid-feedback-nomeals").addClass('d-none')
-  } else {
-    document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
-    // $("#invalid-feedback-nomeals").addClass('d-none')
-  }
-
+ // if (mealsNew != -1 && mealsPrevious != -1 && mealsAvailable > 0) {
+ //    document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
+ //  };
   mealsNew = document.getElementById("mealsNew").value;
   mealsPrevious = document.getElementById("mealsPrevious").value;
   if (mealsNew == "") {
@@ -101,7 +97,15 @@ function sumMeals() {
   };
   mealsAvailable = parseInt(mealsNew) + parseInt(mealsPrevious);
   $('.mealsAvailable').val(mealsAvailable);
-}
+ //  if (mealsAvailable = 0) {
+ //
+ // };
+ if (mealsAvailable > 0) {
+       document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
+ } else {
+          document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
+ }
+};
 
 $("#backToCard1").click(function() {
   $("#site-meal-card").toggleClass('d-none');
@@ -111,6 +115,12 @@ $("#backToCard1").click(function() {
 $("#backToCard2").click(function() {
   $("#meals-available-card").toggleClass('d-none');
   $("#meal-count-card").toggleClass('d-none')
+})
+
+$("#backToCard3").click(function() {
+  $("#meal-count-card").toggleClass('d-none')
+  $("#additonals-card").toggleClass('d-none');
+
 })
 
 $("#startCounting-btn").click(function(event) {
@@ -128,11 +138,16 @@ $("#startCounting-btn").click(function(event) {
     $(".mealsAvailable").text(mealsAvailable);
     mealsRemaining = mealsAvailable - mealsServed;
     $(".mealsRemaining").text(mealsRemaining);
-    $("#meals-available-card").toggleClass('d-none')
-    $("#meal-count-card").toggleClass('d-none');
+    // $("#meals-available-card").toggleClass('d-none')
+    // $("#meal-count-card").toggleClass('d-none');
     console.log(`mealsAvailable: ${mealsPrevious} prev + ${mealsNew} new = ${mealsAvailable}`);
   }
   form.addClass('was-validated');
+});
+
+$('#doneCounting-btn').click(function(e) {
+  // $("#meal-count-card").toggleClass('d-none');
+  // $("#additonals-card").toggleClass('d-none');
 });
 
 $('#first-plus-btn').click(function(e) {
@@ -153,7 +168,7 @@ $('#first-minus-btn').click(function(e) {
     $('.mealsRemaining').text(mealsRemaining);
     $('.firstMeals').text(firstMeals);
   } else if (firstMeals = secondMeals) {
-    $("#notify").val(secondExceeds);
+    $("#notify").val(firstExceeds);
     setTimeout(function() { $("#notify").val(""); }, 3000);
   }
 });
@@ -223,5 +238,25 @@ $('#nonProgAdultMeals-minus-btn').click(function(e) {
     mealsRemaining = mealsAvailable - mealsServed;
     $('.mealsRemaining').text(mealsRemaining);
     $('.nonProgAdultMeals').text(nonProgAdultMeals);
+  }
+});
+
+// $('#addlMealsNeeded-plus-btn').click(function(e) {
+//   console.log("CLCK");
+//     addlMealsNeeded++;
+//     $('.addlMealsNeeded').text(addlMealsNeeded);
+// });
+$('#addlMealsNeeded-plus-btn').click(function(e) {
+console.log("click");
+    addlMealsNeeded++;
+
+    $('.addlMealsNeeded').text(addlMealsNeeded);
+
+});
+
+$('#addlMealsNeeded-minus-btn').click(function(e) {
+  if (addlMealsNeeded >= 1) {
+    addlMealsNeeded--;
+    $('.addlMealsNeeded').text(addlMealsNeeded);
   }
 });

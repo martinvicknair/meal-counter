@@ -18,13 +18,26 @@
   <div class="container">
 
     <!-- site-meal-info 1/6 -->
-    <div id="site-meal-card">
+    <div id="site-meal-card" class="initial-card">
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="card">
-            <h5 class="card-header">
+            <span class="card-header">
+            <h5>
               SFSP Meal Counter
             </h5>
+            <ul class="nav nav-tabs card-header-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+  </li>
+</ul>
+</span>
             <div class="card-body text-center">
               <h6 class="card-title">Site & Meal Info</h6>
               <div class="col-md-10 offset-md-1 mb-3">
@@ -73,7 +86,7 @@
 
 
     <!-- meals-available 2/6 -->
-    <div id="meals-available-card" class="d-none">
+    <div id="meals-available-card" class="secondary-cards">
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="card">
@@ -150,10 +163,10 @@
 
 
     <!-- meal-counter 3/6 -->
-    <div id="meal-count-card" class="d-none">
+    <div id="meal-count-card" class="secondary-cards">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <div class="card" id="meal-count-card">
+          <div class="card" id="">
             <span class="card-header">
               <h5 class="text-left">SFSP Meal Counter</h5>
               <div class="text-right text-primary" id="backToCard2">Go Back</div>
@@ -181,7 +194,7 @@
                 <h1 class="display-5 mealsRemaining">00</h1>
                 <p>Total Meals Remaining</p>
 
-                  <input type="text" class="w-100 rounded border-0 bg-light text-danger text-center px-0 py-1 small mb-3" id="notify" readonly />
+                <input type="text" class="w-100 rounded border-0 bg-light text-danger text-center px-0 py-1 small mb-3" id="notify" readonly />
 
                 <div class="input-group align-items-center">
                   <div class="input-group-prepend">
@@ -192,24 +205,9 @@
                     <button type="button" class="btn-success btn-lg" id="first-plus-btn"> + </button>
                   </div>
                 </div>
-                  <p>First Meals to Children</p>
+                <p>First Meals to Children</p>
               </div>
               <!--jumbotron-->
-
-              <div id="addlMealsNeeded-counter" class="d-none">
-                <div class="input-group align-items-center">
-                  <div class="input-group-prepend">
-                    <button type="button" class="btn-danger btn-sm" id="addlMealsNeeded-minus-btn"> - </button>
-                  </div>
-                  <h1 class="display-5 secondMeals" style="margin: 0 10px 0 10px; width: 75px">00</h1>
-                  <div class="input-group-append">
-                    <button type="button" class="btn-success btn-sm" id="addlMealsNeeded-plus-btn"> + </button>
-                  </div>
-                </div>
-                <p>Additional Meals Needed</p>
-                <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
-              </div>
-              <!-- /#addlMealsNeeded -->
 
               <div class="secondary-counters">
                 <div class="input-group align-items-center">
@@ -257,6 +255,7 @@
                 <p>Non-Program Adult Meals</p>
                 <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;" </div> <!-- /.secondary-counters -->
 
+                <button class="btn btn-info" id="doneCounting-btn">Done Counting</button>
 
 
               </div>
@@ -272,7 +271,104 @@
       </div>
       <!-- /#meal-count-card -->
 
+      <!-- addl-card 4/6 -->
+      <div id="addl-card" class="secondary-cards">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="card">
+              <h5 class="card-header">
+                SFSP Meal Counter
+              </h5>
+              <div class="card-body text-center">
+                <!-- <h6 class="card-title">Site & Meal Info</h6> -->
+                <div class="col-md-10 offset-md-1 mb-3">
+                  <div class="form-row">
+                    <div class="col text-left pl-2">
+                      <div class="siteName">$siteName</div>
+                    </div>
+                    <div class="col text-right pr-2">
+                      <div class="mealsAvailable"></div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col text-left pl-2">
+                      <div class="longDate">$longDate</div>
+                    </div>
+                    <div class="col text-right pr-2">
+                      <div class="mealType">$mealType</div>
+                    </div>
+                  </div>
 
+                  <div id="addlMealsNeeded-counter">
+                    <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
+                    <div class="input-group align-items-center">
+                      <div class="input-group-prepend">
+                        <button type="button" class="btn-danger btn-sm" id="addlMealsNeeded-minus-btn"> - </button>
+                      </div>
+                      <h1 class="display-5 addlMealsNeeded" style="margin: 0 10px 0 10px; width: 75px">00</h1>
+                      <div class="input-group-append">
+                        <button type="button" class="btn-success btn-sm" id="addlMealsNeeded-plus-btn"> + </button>
+                      </div>
+                    </div>
+                    <p>Additional Meals Needed</p>
+                    <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
+                  </div>
+                  <!-- /#addlMealsNeeded -->
+
+
+  <table class="table table-striped text-left">
+    <tbody>
+      <tr>
+        <td class="mealsAvailable">000</td>
+        <td>Meals Available</td>
+      </tr>
+      <tr>
+        <td class="mealsServed">000</td>
+        <td>Meals Served</td>
+      </tr>
+      <tr>
+        <td class="firstMeals">000</td>
+        <td>First Meals</td>
+      </tr>
+      <tr>
+        <td class="secondMeals">000</td>
+        <td>Second Meals</td>
+      </tr>
+      <tr>
+        <td class="progAdultMeals">000</td>
+        <td>Program Adult Meals</td>
+      </tr>
+      <tr>
+        <td class="nonProgAdultMeals">000</td>
+        <td>Non-Program Adult Meals</td>
+      </tr>
+      <tr>
+        <td id="damagedMeals">000</td>
+        <td>Damaged/Incomplete Meals</td>
+      </tr>
+      <tr>
+        <td class="leftoverMeals">000</td>
+        <td>Leftover Meals</td>
+      </tr>
+    </tbody>
+  </table
+
+
+                  <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
+
+<button class="btn btn-info" id="signFinish-btn">Sign & Finish</button>
+                </div>
+              </div>
+              <div class="card-footer text-muted text-center">
+                Step 1/6<br>
+                Fill in Name, Address, and Supervisor.<br>
+                Then choose a meal to continue.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /#site-meal-card -->
 
 
     </div><!-- /container -->
