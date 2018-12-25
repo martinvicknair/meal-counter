@@ -155,8 +155,8 @@
         <div class="col-md-6 offset-md-3">
           <div class="card" id="meal-count-card">
             <span class="card-header">
-              <h5 class="float-left">SFSP Meal Counter</h5>
-              <div class="float-right text-primary" id="backToCard2">Go Back</div>
+              <h5 class="text-left">SFSP Meal Counter</h5>
+              <div class="text-right text-primary" id="backToCard2">Go Back</div>
             </span>
 
             <div class="card-body pt-0">
@@ -180,19 +180,10 @@
               <div class="jumbotron p-2 mb-1">
                 <h1 class="display-5 mealsRemaining">00</h1>
                 <p>Total Meals Remaining</p>
-                <!-- <hr class="mt-4 mb-0"> -->
-                <!-- <div class="text bd-highlight" id="notify"> -->
-                  <span class="d-block p-2 bg-primary text-white mb-4" id="notify"></span>
-                  <small id="invalid-feedback-firstExceeds" class="form-text text-danger d-none my-0">
-                    Cannot serve fewer First Meals than Second Meals.
-                  </small>
-                <!-- </div> -->
-                <!-- /#notify -->
 
-                <!-- <hr class="mt-0 mb-4"> -->
+                  <input type="text" class="w-100 rounded border-0 bg-light text-danger text-center px-0 py-1 small mb-3" id="notify" readonly />
 
                 <div class="input-group align-items-center">
-
                   <div class="input-group-prepend">
                     <button type="button" class="btn-danger btn-lg" id="first-minus-btn"> - </button>
                   </div>
@@ -201,10 +192,7 @@
                     <button type="button" class="btn-success btn-lg" id="first-plus-btn"> + </button>
                   </div>
                 </div>
-                <p>First Meals to Children</p>
-                <small id="invalid-feedback-firstExceeds" class="form-text text-danger d-none">
-                  Cannot serve more Second Meals than First Meals.
-                </small>
+                  <p>First Meals to Children</p>
               </div>
               <!--jumbotron-->
 
@@ -267,35 +255,33 @@
                   </div>
                 </div>
                 <p>Non-Program Adult Meals</p>
-                <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;"
+                <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;" </div> <!-- /.secondary-counters -->
+
+
+
               </div>
-              <!-- /.secondary-counters -->
 
-
-
-            </div>
-
-            <div class="card-footer text-muted text-center">
-              Step 3/6<br>
-              Count meals at point of service.<br>
-              Press "Done Counting" at end of service.
+              <div class="card-footer text-muted text-center">
+                Step 3/6<br>
+                Count meals at point of service.<br>
+                Press "Done Counting" at end of service.
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- /#meal-count-card -->
+      <!-- /#meal-count-card -->
 
 
 
 
-  </div><!-- /container -->
+    </div><!-- /container -->
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="js/jquery-3.3.1.slim.min.js"></script>
-  <script src="js/bootstrap-4.2.1.bundle.min.js"></script>
-  <script src="js/logic.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/bootstrap-4.2.1.bundle.min.js"></script>
+    <script src="js/logic.js"></script>
 </body>
 
 </html>

@@ -16,6 +16,9 @@ var mealsServed = 0;
 var mealsRemaining = -1;
 var addlMealsNeeded = 0;
 
+var secondExceeds = "Second Meals cannot exceed First Meals"
+
+
 var dt = new Date();
 var dateOptions = {
   weekday: 'short',
@@ -97,18 +100,7 @@ function sumMeals() {
     mealsPrevious = 0
   };
   mealsAvailable = parseInt(mealsNew) + parseInt(mealsPrevious);
-  // var totalMealsText = mealsAvailable.toString();
   $('.mealsAvailable').val(mealsAvailable);
-  // document.getElementsByClassName("mealsAvailable").value = mealsAvailable;
-  // console.log(`mealsAvailable: ${mealsAvailable}`);
-  // if (mealsNew >= 0 && mealsPrevious >= 0 && mealsAvailable >= 1) {
-  //   document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
-  //   $("#invalid-feedback-nomeals").addClass('d-none')
-  // }
-  // else {
-  //   document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
-  //   // $("#invalid-feedback-nomeals").addClass('d-none')
-  // }
 }
 
 $("#backToCard1").click(function() {
@@ -150,12 +142,6 @@ if (mealsRemaining >= 1) {
     mealsRemaining = mealsAvailable - mealsServed;
     $('.mealsRemaining').text(mealsRemaining);
     $('.firstMeals').text(firstMeals);
-    // console.log(`add 1 firstMeal`);
-    // console.log(`mealsAvailable: ${mealsAvailable}`);
-    // console.log(`firstMeals+: ${firstMeals}`);
-    // console.log(`mealsServed: ${mealsServed}`);
-    // console.log(`mealsRemaining: ${mealsRemaining}`);
-    // console.log(`------------------------`);
   }
 });
 
@@ -166,14 +152,9 @@ $('#first-minus-btn').click(function(e) {
     mealsRemaining = mealsAvailable - mealsServed;
     $('.mealsRemaining').text(mealsRemaining);
     $('.firstMeals').text(firstMeals);
-    // console.log(`sub 1 firstMeal`);
-    // console.log(`mealsAvailable: ${mealsAvailable}`);
-    // console.log(`firstMeals-: ${firstMeals}`);
-    // console.log(`mealsServed: ${mealsServed}`);
-    // console.log(`mealsRemaining: ${mealsRemaining}`);
-    // console.log(`------------------------`);
   } else if (firstMeals = secondMeals) {
-    $("#invalid-feedback-firstExceeds").toggleClass('d-none')
+    $("#notify").val(secondExceeds);
+    setTimeout(function() { $("#notify").val(""); }, 3000);
   }
 });
 
@@ -184,15 +165,10 @@ $('#second-plus-btn').click(function(e) {
     mealsRemaining = mealsAvailable - mealsServed;
     $('.mealsRemaining').text(mealsRemaining);
     $('.secondMeals').text(secondMeals);
-
   } else {
-    $("#invalid-feedback-secondExceeds").toggleClass('d-none')
+    $("#notify").val(secondExceeds);
+    setTimeout(function() { $("#notify").val(""); }, 3000);
   }
-  console.log(`mealsAvailable: ${mealsAvailable}`);
-  console.log(`secondMeals+: ${secondMeals}`);
-  console.log(`mealsServed: ${mealsServed}`);
-  console.log(`mealsRemaining: ${mealsRemaining}`);
-  console.log(`------------------------`);
 });
 
 $('#second-minus-btn').click(function(e) {
