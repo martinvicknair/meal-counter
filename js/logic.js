@@ -286,3 +286,7 @@ function goBackTo5 () {
   $("#card4-addlMeals").toggleClass('d-none');
   $("#card5-sign").toggleClass('d-none');
 };
+
+function beforeUnload() {
+  return 'Use the "Go Back" button, or you may lose your changes.';
+}
