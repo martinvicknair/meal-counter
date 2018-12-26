@@ -51,8 +51,8 @@ $("#meal-type-btns").click(function(event) {
     var meal = document.activeElement.getAttribute('value');
     selectMeal(meal)
     $(".siteName").text(siteName);
-    // $("#site-meal-card").toggleClass('d-none');
-    // $("#meals-available-card").toggleClass('d-none')
+    $("#card1-siteMealInfo").toggleClass('d-none');
+    $("#card2-mealsAvailable").toggleClass('d-none')
   }
   form.addClass('was-validated');
 });
@@ -81,6 +81,7 @@ function selectMeal(meal) {
   }
   $(".mealType").text(mealType);
   console.log(`${siteName}-${shortDate}-${mealType}`);
+
 }
 
 function sumMeals() {
@@ -138,16 +139,16 @@ $("#startCounting-btn").click(function(event) {
     $(".mealsAvailable").text(mealsAvailable);
     mealsRemaining = mealsAvailable - mealsServed;
     $(".mealsRemaining").text(mealsRemaining);
-    // $("#meals-available-card").toggleClass('d-none')
-    // $("#meal-count-card").toggleClass('d-none');
+    $("#card2-mealsAvailable").toggleClass('d-none')
+    $("#card3-mainCounters").toggleClass('d-none');
     console.log(`mealsAvailable: ${mealsPrevious} prev + ${mealsNew} new = ${mealsAvailable}`);
   }
   form.addClass('was-validated');
 });
 
 $('#doneCounting-btn').click(function(e) {
-  // $("#meal-count-card").toggleClass('d-none');
-  // $("#additonals-card").toggleClass('d-none');
+  $("#card3-mainCounters").toggleClass('d-none');
+  $("#card4-addlMeals").toggleClass('d-none');
 });
 
 $('#first-plus-btn').click(function(e) {
@@ -260,3 +261,28 @@ $('#addlMealsNeeded-minus-btn').click(function(e) {
     $('.addlMealsNeeded').text(addlMealsNeeded);
   }
 });
+
+function goBackTo1 () {
+  $("#card2-mealsAvailable").toggleClass('d-none');
+  $("#card1-siteMealInfo").toggleClass('d-none');
+};
+
+function goBackTo2 () {
+  $("#card3-mainCounters").toggleClass('d-none');
+  $("#card2-mealsAvailable").toggleClass('d-none');
+};
+
+function goBackTo3 () {
+  $("#card4-addlMeals").toggleClass('d-none');
+  $("#card3-mainCounters").toggleClass('d-none');
+};
+
+function goBackTo4 () {
+  $("#card5-summary").toggleClass('d-none');
+  $("#card4-addlMeals").toggleClass('d-none');
+};
+
+function goBackTo5 () {
+  $("#card4-addlMeals").toggleClass('d-none');
+  $("#card5-sign").toggleClass('d-none');
+};
