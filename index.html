@@ -16,13 +16,13 @@
 </head>
 
 <body onbeforeunload="return beforeUnload()">
-  <div class="container">
+  <div class="container pt-2">
 
     <!-- START card1-siteMealInfo -->
     <div id="card1-siteMealInfo">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <div class="card">
+          <div class="card mb-3">
             <span class="card-header">
               <h5>SFSP Meal Counter</h5>
               <ul class="nav nav-tabs card-header-tabs" id="card1-tablist" role="tablist">
@@ -69,7 +69,10 @@
                   <div class="col-md-8 offset-md-2">
                     <h6 class="card-title text-center">Site & Meal Info Help</h6>
                     <p>Fill in Name, Address, and Supervisor. Then choose a meal to continue.</p>
-                    <p>Click here to clear all data from this app.</p>
+
+                    <p>Having trouble and want to start over?</p>
+                    <p>Click below to clear all local data and restart this app.</p>
+                    <button type="button" class="btn btn-danger" name="restartApp" onclick="restartApp()">RESTART</button>
                   </div>
                 </div>
               </div>
@@ -86,7 +89,7 @@
     <div id="card2-mealsAvailable" class="secondary-cards d-none">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <div class="card">
+          <div class="card mb-3">
             <span class="card-header">
               <h5>SFSP Meal Counter</h5>
 
@@ -103,44 +106,41 @@
             <div class="tab-content" id="card2-tabcontent">
 
               <div class="tab-pane fade show active" id="card2-hometab-content" role="tabpanel">
-                <div class="card-body text-center">
-                  <h6 class="card-title">Meals Available to Serve</h6>
-                  <div class="siteName">$siteName</div>
-                  <div class="longDate">$longDate</div>
-                  <div class="mealType">$mealType</div>
-                  <div class="col-md-11 offset-md-1 mb-3">
+                                  <div class="col-md-11 offset-md-1 mb-3">
+                <div class="card-body">
+                  <h6 class="card-title text-center">Meals Available to Serve</h6>
+                  <div class="siteName pl-2">$siteName</div>
+                  <div class="longDate pl-2">$longDate</div>
+                  <div class="mealType pl-2 mb-2">$mealType</div>
+
                     <form class="needs-validation" id="meals-available-form" novalidate>
-                      <div class="form-row align-items-center">
-                        <input type="number" class="form-control" min="0" id="mealsNew" oninput="sumMeals()" required />
+                      <div class="form-row align-items-center mx-auto">
+                        <input type="number" class="form-control" min="0" id="mealsNew" oninput="sumMealsAvail()" required />
                         <div class="input-group-append">
                           <span class="input-group-text">Meals Received/Prepared</span>
                         </div>
                         <div class="invalid-feedback">Enter number of new meals received, even if zero.</div>
                       </div>
-                      <div class="form-row align-items-center">
-                        <input type="number" class="form-control" min="0" id="mealsPrevious" oninput="sumMeals()" required />
+                      <div class="form-row align-items-center mx-auto">
+                        <input type="number" class="form-control" min="0" id="mealsPrevious" oninput="sumMealsAvail()" required />
                         <div class="input-group-append">
                           <span class="input-group-text">Meals From Previous Day</span>
                         </div>
                         <div class="invalid-feedback">Enter number of meals leftover, even if zero.</div>
                       </div>
-                      <div class="form-row align-items-center">
-                        <input type="number" class="form-control mealsAvailable" min="1" required readonly />
+                      <div class="form-row align-items-center mb-3 mx-auto">
+                        <input type="number" id="mealsAvailable-input" class="form-control mealsAvailable" min="1" required readonly />
                         <div class="input-group-append">
                           <span class="input-group-text">Total Meals Available</span>
                         </div>
-                        <small id="invalid-feedback-nomeals" class="form-text text-danger d-none">
-                          Cannot start counting without meals available to serve.
+                        <small id="noMeals-invalidFeedback" class="form-text text-danger d-none mx-auto">
+                          Cannot start counting without Meals Available
                         </small>
-                        <!-- <div class="invalid-feedback d-none" id="invalid-feedback-nomeals">
-                        Cannot start counting without meals available to serve.
-                      </div> -->
+                        <small id="servedExceeds-invalidFeedback" class="form-text text-danger d-none mx-auto">
+                          Minimum of <span id="mealsUtilized"></span> due to meals already served or damaged
+                        </small>
                       </div>
-                      <div class="col-md-8 offset-md-2 button-wrapper" id="meal-type">
-                        <div>
                           <button class="btn-lg w-100 btn-danger" type="submit" id="startCounting-btn">Start Counting</button>
-                        </div>
-                      </div>
                     </form>
                   </div>
                 </div>
@@ -160,6 +160,8 @@
                     <p>Enter the number of new meals and any meals leftover from previous service.</p>
                     <p>Enter zero, if applicable.</p>
                     <p>Press the "Start Counting Button" to continue.</p>
+                    <p>Click below to clear all local data and restart this app.</p>
+                    <button type="button" class="btn btn-danger" name="restartApp" onclick="restartApp()">RESTART</button>
                   </div>
                 </div>
               </div>
@@ -176,7 +178,7 @@
     <div id="card3-mainCounters" class="secondary-cards d-none">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <div class="card">
+          <div class="card mb-3">
             <span class="card-header">
               <h5>SFSP Meal Counter</h5>
               <a class="text-right float-right" id="goBackTo2" href="#" onclick="goBackTo2(); return false;">Go Back</a>
@@ -296,6 +298,8 @@
                     <h6 class="card-title text-center">Meal Counter Help</h6>
                     <p>Count meals at point of service</p>
                     <p>Press "Done Counting" at end of service.</p>
+                    <p>Click below to clear all local data and restart this app.</p>
+                    <button type="button" class="btn btn-danger" name="restartApp" onclick="restartApp()">RESTART</button>
                   </div>
                 </div>
               </div>
@@ -312,7 +316,7 @@
     <div id="card4-addlMeals" class="secondary-cards d-none">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <div class="card">
+          <div class="card mb-3">
             <span class="card-header">
               <h5>SFSP Meal Counter</h5>
               <a class="text-right float-right" id="goBackTo3" href="#" onclick="goBackTo3(); return false;">Go Back</a>
@@ -348,60 +352,71 @@
                       </div>
                     </div>
 
-                    <div id="addlMealsNeeded-counter">
-                      <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
-                      <div class="input-group align-items-center">
-                        <div class="input-group-prepend">
-                          <button type="button" class="btn-danger btn-sm" id="addlMealsNeeded-minus-btn"> - </button>
-                        </div>
-                        <h1 class="display-5 addlMealsNeeded" style="margin: 0 10px 0 10px; width: 75px">00</h1>
-                        <div class="input-group-append">
-                          <button type="button" class="btn-success btn-sm" id="addlMealsNeeded-plus-btn"> + </button>
-                        </div>
-                      </div>
-                      <p>Additional Meals Needed</p>
-                      <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
-                    </div>
-                    <!-- /#addlMealsNeeded -->
+
 
 
                     <table class="table table-striped text-left">
-                      <tbody>
+                      <tbody class="py-2">
                         <tr>
-                          <td class="mealsAvailable">000</td>
-                          <td>Meals Available</td>
+                          <td class="mealsAvailable">00</td>
+                          <td>Meals Available [1]</td>
                         </tr>
                         <tr>
-                          <td class="mealsServed">000</td>
-                          <td>Meals Served</td>
+                          <td class="firstMeals">00</td>
+                          <td>First Meals [2]</td>
                         </tr>
                         <tr>
-                          <td class="firstMeals">000</td>
-                          <td>First Meals</td>
+                          <td class="secondMeals">00</td>
+                          <td>Second Meals [3]</td>
                         </tr>
                         <tr>
-                          <td class="secondMeals">000</td>
-                          <td>Second Meals</td>
+                          <td class="progAdultMeals">00</td>
+                          <td>Program Adult Meals [4]</td>
                         </tr>
                         <tr>
-                          <td class="progAdultMeals">000</td>
-                          <td>Program Adult Meals</td>
+                          <td class="nonProgAdultMeals">00</td>
+                          <td>Non-Program Adult Meals [5]</td>
                         </tr>
                         <tr>
-                          <td class="nonProgAdultMeals">000</td>
-                          <td>Non-Program Adult Meals</td>
+                          <td class="mealsServed">00</td>
+                          <td>Total Meals Served [6]</td>
                         </tr>
                         <tr>
-                          <td id="damagedMeals">000</td>
-                          <td>Damaged/Incomplete Meals</td>
+                          <!-- <div class="form-row align-items-center mb-3 mx-auto">
+                            <input type="number" class="form-control mealsAvailable" min="1" required readonly />
+                            <div class="input-group-append">
+                              <span class="input-group-text">Total Meals Available</span>
+                            </div>
+                            <small id="invalid-feedback-nomeals" class="form-text text-danger d-none">
+                              Cannot start counting without meals available to serve.
+                            </small>
+                          </div> -->
+                          <td><input type="number" class="form-control" id="mealsDamaged" oninput="inputDamaged()" value="0" min="0" max="0" style="width:95px" required /></td>
+                          <td>Damaged/Incomplete Meals [7]<br><small id="mealsDamaged-invalidFeedback" class="form-text text-warning d-none">
+                                                Damaged Meals cannot exceed Meals Remaining.
+                                              </small></td>
                         </tr>
                         <tr>
-                          <td class="leftoverMeals">000</td>
-                          <td>Leftover Meals</td>
+                          <td class="mealsLeftover">00</td>
+                          <td>Leftover Meals [8]</td>
                         </tr>
                       </tbody>
-                    </table <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
-
+                    </table>
+                     <!-- <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;"> -->
+                     <div id="addlMealsNeeded-counter">
+                       <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
+                       <div class="input-group align-items-center">
+                         <div class="input-group-prepend">
+                           <button type="button" class="btn-danger btn-sm" id="addlMealsNeeded-minus-btn"> - </button>
+                         </div>
+                         <h1 class="display-5 addlMealsNeeded" style="margin: 0 10px 0 10px; width: 75px">00</h1>
+                         <div class="input-group-append">
+                           <button type="button" class="btn-success btn-sm" id="addlMealsNeeded-plus-btn"> + </button>
+                         </div>
+                       </div>
+                       <p>Additional Meals Needed</p>
+                       <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
+                     </div>
                     <button class="btn btn-info" id="signFinish-btn">Sign & Finish</button>
                   </div>
                 </div>
@@ -420,6 +435,8 @@
                     <h6 class="card-title text-center">Additonal & Damaged Meals Help</h6>
                     <p>Add any additional meals needed if you run out of meals. You may also note any damaged or incomplete meals.</p>
                     <p>Press "Finish and Sign" to continue.</p>
+                    <p>Click below to clear all local data and restart this app.</p>
+                    <button type="button" class="btn btn-danger" name="restartApp" onclick="restartApp()">RESTART</button>
                   </div>
                 </div>
               </div>

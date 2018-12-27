@@ -6,19 +6,22 @@ var mealType = "";
 var mealPlural = "";
 
 var mealsNew = 0;
-var mealsPrevious = -1;
-var mealsAvailable = -1;
+var mealsPrevious = 0;
+var mealsAvailable = 0;
 var firstMeals = 0;
 var secondMeals = 0
 var progAdultMeals = 0;
 var nonProgAdultMeals = 0;
 var mealsServed = 0;
-var mealsRemaining = -1;
+var mealsRemaining = 0;
+var mealsDamaged = 0;
+var mealsLeftover = 0;
 var addlMealsNeeded = 0;
+var mealsUtilized = 0;
 
-var secondExceeds = "Second Meals cannot exceed First Meals"
-var firstExceeds = "First Meals must exceed Second Meals"
-var noMeals ="No meals remain";
+var secondExceeds = "Second Meals cannot exceed First Meals";
+var firstExceeds = "First Meals must exceed Second Meals";
+var noMeals = "No meals remaining to serve";
 
 var dt = new Date();
 var dateOptions = {
@@ -84,10 +87,7 @@ function selectMeal(meal) {
 
 }
 
-function sumMeals() {
- // if (mealsNew != -1 && mealsPrevious != -1 && mealsAvailable > 0) {
- //    document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
- //  };
+function sumMealsAvail() {
   mealsNew = document.getElementById("mealsNew").value;
   mealsPrevious = document.getElementById("mealsPrevious").value;
   if (mealsNew == "") {
@@ -98,47 +98,76 @@ function sumMeals() {
   };
   mealsAvailable = parseInt(mealsNew) + parseInt(mealsPrevious);
   $('.mealsAvailable').val(mealsAvailable);
- //  if (mealsAvailable = 0) {
- //
- // };
- if (mealsAvailable > 0) {
-       document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
- } else {
-          document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
- }
+
+  if (mealsAvailable > 0) {
+    document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
+  } else {
+    document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
+  }
 };
 
-$("#backToCard1").click(function() {
-  $("#site-meal-card").toggleClass('d-none');
-  $("#meals-available-card").toggleClass('d-none')
-})
+function sumMeals() {
+  mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+  mealsRemaining = mealsAvailable - mealsServed - mealsDamaged;
+  $(".mealsAvailable").text(mealsAvailable);
+  $(".firstMeals").text(firstMeals);
+  $(".secondMeals").text(secondMeals);
+  $(".progAdultMeals").text(progAdultMeals);
+  $(".nonProgAdultMeals").text(nonProgAdultMeals);
+  $(".mealsServed").text(mealsServed);
+  $(".mealsRemaining").text(mealsRemaining);
+  $(".mealsDamaged").text(mealsDamaged);
+  $(".mealsLeftover").text(mealsLeftover);
 
-$("#backToCard2").click(function() {
-  $("#meals-available-card").toggleClass('d-none');
-  $("#meal-count-card").toggleClass('d-none')
-})
+}
 
-$("#backToCard3").click(function() {
-  $("#meal-count-card").toggleClass('d-none')
-  $("#additonals-card").toggleClass('d-none');
+function inputDamaged() {
 
-})
+  mealsDamaged = document.getElementById("mealsDamaged").value;
+  mealsLeftover = mealsAvailable - mealsServed - mealsDamaged;
+  $(".mealsLeftover").text(mealsLeftover)
+  if (mealsDamaged >= mealsAvailable - mealsServed) {
+    $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
+    setTimeout(function() {
+      $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
+    }, 1500);
+
+  }
+  console.log(`INPUT DAMAGED`);
+  console.log(`mealsAvailable: ${mealsAvailable}`);
+  console.log(`mealsServed: ${mealsServed}`);
+  console.log(`mealsRemaining: ${mealsRemaining}`);
+  console.log(`mealsDamaged-: ${mealsDamaged}`);
+  console.log(`mealsLeftover-: ${mealsLeftover}`);
+  console.log(`------------------------`);
+}
 
 $("#startCounting-btn").click(function(event) {
   // Fetch form to apply custom Bootstrap validation
   var form = $("#meals-available-form")
-  if (mealsAvailable == 0) {
+  if (mealsAvailable == 0 ) {
     event.preventDefault()
     event.stopPropagation()
-    $("#invalid-feedback-nomeals").toggleClass('d-none')
+    $("#noMeals-invalidFeedback").toggleClass('d-none')
+    setTimeout(function() {
+      $("#noMeals-invalidFeedback").toggleClass('d-none');
+    }, 3000);
+  } else if (mealsAvailable < (mealsServed + mealsDamaged)) {
+    event.preventDefault()
+    event.stopPropagation()
+    $("#servedExceeds-invalidFeedback").toggleClass('d-none')
+    setTimeout(function() {
+      $("#servedExceeds-invalidFeedback").toggleClass('d-none');
+    }, 3000);
   } else if (form[0].checkValidity() === false) {
     event.preventDefault()
     event.stopPropagation()
   } else if (form[0].checkValidity() == true) {
-    event.preventDefault()
+    event.preventDefault();
+    sumMeals();
     $(".mealsAvailable").text(mealsAvailable);
-    mealsRemaining = mealsAvailable - mealsServed;
-    $(".mealsRemaining").text(mealsRemaining);
+    // mealsRemaining = mealsAvailable - mealsServed;
+    // $(".mealsRemaining").text(mealsRemaining);
     $("#card2-mealsAvailable").toggleClass('d-none')
     $("#card3-mainCounters").toggleClass('d-none');
     console.log(`mealsAvailable: ${mealsPrevious} prev + ${mealsNew} new = ${mealsAvailable}`);
@@ -147,98 +176,159 @@ $("#startCounting-btn").click(function(event) {
 });
 
 $('#doneCounting-btn').click(function(e) {
+  // mealsLeftover = mealsAvailable - (mealsServed + mealsDamaged);
+  mealsLeftover = mealsRemaining;
+  $(".mealsLeftover").text(mealsLeftover);
+  $("#mealsDamaged").attr({
+    "max": mealsAvailable - mealsServed
+  });
   $("#card3-mainCounters").toggleClass('d-none');
   $("#card4-addlMeals").toggleClass('d-none');
+  console.log(`DONE COUNTING`);
+  console.log(`mealsAvailable: ${mealsAvailable}`);
+  console.log(`mealsServed: ${mealsServed}`);
+  console.log(`mealsRemaining: ${mealsRemaining}`);
+  console.log(`mealsDamaged-: ${mealsDamaged}`);
+  console.log(`mealsLeftover-: ${mealsLeftover}`);
+  console.log(`------------------------`);
 });
 
 $('#first-plus-btn').click(function(e) {
-if (mealsRemaining >= 1) {
+  if (mealsRemaining == 0) {
+    $("#notify").val(noMeals);
+    setTimeout(function() {
+      $("#notify").val("");
+    }, 3000);
+  } else if (mealsRemaining >= 1) {
     firstMeals++;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.firstMeals').text(firstMeals);
+    sumMeals();
+  } else {
+    $("#notify").val(noMeals);
+    setTimeout(function() {
+      $("#notify").val("");
+    }, 3000);
   }
+  console.log(`FIRST PLUS`);
+  console.log(`mealsAvailable: ${mealsAvailable}`);
+  console.log(`firstMeals: ${firstMeals}`);
+  console.log(`secondMeals: ${secondMeals}`);
+  console.log(`mealsRemaining: ${mealsRemaining}`);
+  console.log(`mealsDamaged: ${mealsDamaged}`);
+  console.log(`mealsLeftover: ${mealsLeftover}`);
+  console.log(`------------------------`);
 });
 
 $('#first-minus-btn').click(function(e) {
-  if (firstMeals >= 1 && firstMeals > secondMeals) {
+ if (firstMeals >= 1 && firstMeals > secondMeals) {
     firstMeals--;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.firstMeals').text(firstMeals);
+    sumMeals();
   } else if (firstMeals = secondMeals) {
     $("#notify").val(firstExceeds);
-    setTimeout(function() { $("#notify").val(""); }, 3000);
+    setTimeout(function() {
+      $("#notify").val("");
+    }, 3000);
   }
+  console.log(`FIRST MINUS`);
+  console.log(`mealsAvailable: ${mealsAvailable}`);
+  console.log(`firstMeals: ${firstMeals}`);
+  console.log(`secondMeals: ${secondMeals}`);
+  console.log(`mealsRemaining: ${mealsRemaining}`);
+  console.log(`mealsDamaged: ${mealsDamaged}`);
+  console.log(`mealsLeftover: ${mealsLeftover}`);
+  console.log(`------------------------`);
 });
 
 $('#second-plus-btn').click(function(e) {
-  if (mealsRemaining > 0 && secondMeals < firstMeals) {
+  if (mealsRemaining == 0){
+   $("#notify").val(noMeals);
+   setTimeout(function() {
+     $("#notify").val("");
+   }, 3000);
+ }else if (mealsRemaining >= 1 && secondMeals < firstMeals) {
     secondMeals++;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.secondMeals').text(secondMeals);
-  } else {
+    sumMeals();
+  } else if (secondMeals == firstMeals) {
     $("#notify").val(secondExceeds);
-    setTimeout(function() { $("#notify").val(""); }, 3000);
+    setTimeout(function() {
+      $("#notify").val("");
+    }, 3000);
   }
+
+ console.log(`SECOND PLUS`);
+ console.log(`mealsAvailable: ${mealsAvailable}`);
+ console.log(`firstMeals: ${firstMeals}`);
+ console.log(`secondMeals: ${secondMeals}`);
+ console.log(`mealsRemaining: ${mealsRemaining}`);
+ console.log(`mealsDamaged: ${mealsDamaged}`);
+ console.log(`mealsLeftover: ${mealsLeftover}`);
+ console.log(`------------------------`);
 });
 
 $('#second-minus-btn').click(function(e) {
   if (secondMeals >= 1) {
     secondMeals--;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.secondMeals').text(secondMeals);
-    console.log(`mealsAvailable: ${mealsAvailable}`);
-    console.log(`firstMeals-: ${firstMeals}`);
-    console.log(`mealsServed: ${mealsServed}`);
-    console.log(`mealsRemaining: ${mealsRemaining}`);
-    console.log(`------------------------`);
+    sumMeals();
+    // mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    // mealsRemaining = mealsAvailable - mealsServed;
+    // $('.mealsRemaining').text(mealsRemaining);
+    // $('.secondMeals').text(secondMeals);
+    // console.log(`mealsAvailable: ${mealsAvailable}`);
+    // console.log(`firstMeals-: ${firstMeals}`);
+    // console.log(`mealsServed: ${mealsServed}`);
+    // console.log(`mealsRemaining: ${mealsRemaining}`);
+    // console.log(`------------------------`);
   }
+  console.log(`SECOND MINUS`);
+  console.log(`mealsAvailable: ${mealsAvailable}`);
+  console.log(`firstMeals: ${firstMeals}`);
+  console.log(`secondMeals: ${secondMeals}`);
+  console.log(`mealsRemaining: ${mealsRemaining}`);
+  console.log(`mealsDamaged: ${mealsDamaged}`);
+  console.log(`mealsLeftover: ${mealsLeftover}`);
+  console.log(`------------------------`);
 });
 
 $('#progAdultMeals-plus-btn').click(function(e) {
-  if (mealsRemaining > 0 ) {
+  if (mealsRemaining > 0) {
     progAdultMeals++;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.progAdultMeals').text(progAdultMeals);
+    sumMeals();
+    // mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    // mealsRemaining = mealsAvailable - mealsServed;
+    // $('.mealsRemaining').text(mealsRemaining);
+    // $('.progAdultMeals').text(progAdultMeals);
   }
 });
 
 $('#progAdultMeals-minus-btn').click(function(e) {
   if (progAdultMeals >= 1) {
     progAdultMeals--;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.progAdultMeals').text(progAdultMeals);
+    sumMeals();
+    // mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    // mealsRemaining = mealsAvailable - mealsServed;
+    // $('.mealsRemaining').text(mealsRemaining);
+    // $('.progAdultMeals').text(progAdultMeals);
   }
 });
 
 $('#nonProgAdultMeals-plus-btn').click(function(e) {
-  if (mealsRemaining > 0 ) {
+  if (mealsRemaining > 0) {
     nonProgAdultMeals++;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.nonProgAdultMeals').text(nonProgAdultMeals);
+    sumMeals();
+    // mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    // mealsRemaining = mealsAvailable - mealsServed;
+    // $('.mealsRemaining').text(mealsRemaining);
+    // $('.nonProgAdultMeals').text(nonProgAdultMeals);
   }
 });
 
 $('#nonProgAdultMeals-minus-btn').click(function(e) {
   if (nonProgAdultMeals >= 1) {
     nonProgAdultMeals--;
-    mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-    mealsRemaining = mealsAvailable - mealsServed;
-    $('.mealsRemaining').text(mealsRemaining);
-    $('.nonProgAdultMeals').text(nonProgAdultMeals);
+    sumMeals();
+    // mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+    // mealsRemaining = mealsAvailable - mealsServed;
+    // $('.mealsRemaining').text(mealsRemaining);
+    // $('.nonProgAdultMeals').text(nonProgAdultMeals);
   }
 });
 
@@ -248,10 +338,10 @@ $('#nonProgAdultMeals-minus-btn').click(function(e) {
 //     $('.addlMealsNeeded').text(addlMealsNeeded);
 // });
 $('#addlMealsNeeded-plus-btn').click(function(e) {
-console.log("click");
-    addlMealsNeeded++;
+  console.log("click");
+  addlMealsNeeded++;
 
-    $('.addlMealsNeeded').text(addlMealsNeeded);
+  $('.addlMealsNeeded').text(addlMealsNeeded);
 
 });
 
@@ -262,31 +352,58 @@ $('#addlMealsNeeded-minus-btn').click(function(e) {
   }
 });
 
-function goBackTo1 () {
+function goBackTo1() {
   $("#card2-mealsAvailable").toggleClass('d-none');
   $("#card1-siteMealInfo").toggleClass('d-none');
 };
 
-function goBackTo2 () {
+function goBackTo2() {
+  mealsUtilized = mealsServed + parseInt(mealsDamaged);
+  $('#mealsUtilized').text(mealsUtilized);
+
+  $("#mealsAvailable-input").attr({
+    "min": mealsUtilized
+  });
+
   $("#card3-mainCounters").toggleClass('d-none');
   $("#card2-mealsAvailable").toggleClass('d-none');
 };
 
-function goBackTo3 () {
+function goBackTo3() {
+  mealsRemaining = mealsAvailable - mealsServed - mealsDamaged;
+  $('.mealsRemaining').text(mealsRemaining);
   $("#card4-addlMeals").toggleClass('d-none');
   $("#card3-mainCounters").toggleClass('d-none');
+  console.log(`GO BACK TO 3`);
+  console.log(`mealsAvailable: ${mealsAvailable}`);
+  console.log(`mealsServed: ${mealsServed}`);
+  console.log(`mealsRemaining: ${mealsRemaining}`);
+  console.log(`mealsDamaged-: ${mealsDamaged}`);
+  console.log(`mealsLeftover-: ${mealsLeftover}`);
+  console.log(`------------------------`);
 };
 
-function goBackTo4 () {
+function goBackTo4() {
   $("#card5-summary").toggleClass('d-none');
   $("#card4-addlMeals").toggleClass('d-none');
 };
 
-function goBackTo5 () {
+function goBackTo5() {
   $("#card4-addlMeals").toggleClass('d-none');
   $("#card5-sign").toggleClass('d-none');
 };
 
 function beforeUnload() {
   return 'Use the "Go Back" button, or you may lose your changes.';
+}
+
+function  restartApp() {
+  var x = confirm("Do you wish to clear all data and restart the Meal Counter app?")
+  if (x == true) {
+    localStorage.clear();
+    // $(window).unbind('beforeunload');
+    window.onbeforeunload = null;
+    window.location.reload();
+}
+
 }
