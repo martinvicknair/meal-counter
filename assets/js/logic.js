@@ -389,15 +389,24 @@ function goBackTo4() {
 };
 
 function goBackTo5() {
-  $("#card4-addlMeals").toggleClass('d-none');
-  $("#card5-sign").toggleClass('d-none');
+  $("#card6-done").toggleClass('d-none');
+  $("#card5-signature").toggleClass('d-none');
 };
+
+function goToSign() {
+  $("#card4-addlMeals").toggleClass('d-none');
+  $("#card5-signature").toggleClass('d-none');
+}
+function goToDone() {
+  $("#card5-signature").toggleClass('d-none');
+  $("#card6-done").toggleClass('d-none');
+}
 
 function beforeUnload() {
   return 'Use the "Go Back" button, or you may lose your changes.';
 }
 
-function  restartApp() {
+function resetApp() {
   var x = confirm("Do you wish to clear all data and restart the Meal Counter app?")
   if (x == true) {
     localStorage.clear();
@@ -405,5 +414,9 @@ function  restartApp() {
     window.onbeforeunload = null;
     window.location.reload();
 }
+};
 
+function restartApp() {
+    window.onbeforeunload = null;
+    window.location.reload();
 }
