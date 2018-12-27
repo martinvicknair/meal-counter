@@ -22,6 +22,7 @@ var mealsUtilized = 0;
 var secondExceeds = "Second Meals cannot exceed First Meals";
 var firstExceeds = "First Meals must exceed Second Meals";
 var noMeals = "No meals remaining to serve";
+var ready ="Ready to serve!";
 
 var dt = new Date();
 var dateOptions = {
@@ -166,8 +167,10 @@ $("#startCounting-btn").click(function(event) {
     event.preventDefault();
     sumMeals();
     $(".mealsAvailable").text(mealsAvailable);
-    // mealsRemaining = mealsAvailable - mealsServed;
-    // $(".mealsRemaining").text(mealsRemaining);
+    $("#notify").val(ready);
+    setTimeout(function() {
+      $("#notify").val("");
+    }, 3000);
     $("#card2-mealsAvailable").toggleClass('d-none')
     $("#card3-mainCounters").toggleClass('d-none');
     console.log(`mealsAvailable: ${mealsPrevious} prev + ${mealsNew} new = ${mealsAvailable}`);
