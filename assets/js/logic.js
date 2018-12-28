@@ -12,11 +12,11 @@ var secondMeals = 0
 var progAdultMeals = 0;
 var nonProgAdultMeals = 0;
 var mealsServed = 0;
-var mealsRemaining = 0;
 var mealsDamaged = 0;
+var mealsUtilized = 0;
 var mealsLeftover = 0;
 var addlMealsNeeded = 0;
-var mealsUtilized = 0;
+
 
 var secondExceeds = "Second Meals cannot exceed First Meals";
 var firstExceeds = "First Meals must exceed Second Meals";
@@ -64,11 +64,9 @@ function selectSiteMeal(meal) {
   siteName = document.getElementById("siteName-input").value;
   siteAddress = document.getElementById("siteAddress-input").value;
   siteSupervisor = document.getElementById("siteSupervisor-input").value;
-
   localStorage.setItem("mealCounter-siteName", siteName);
   localStorage.setItem("mealCounter-siteAddress", siteAddress);
   localStorage.setItem("mealCounter-siteSupervisor", siteSupervisor);
-
   switch (meal) {
     case "b":
       mealType = "Breakfast";
@@ -90,38 +88,26 @@ function selectSiteMeal(meal) {
 function sumMealsAvail() {
   mealsNew = document.getElementById("mealsNew").value;
   mealsPrevious = document.getElementById("mealsPrevious").value;
-  var tot = 0;
-  tot += addNumNan(mealsNew);
-  tot += addNumNan(mealsPrevious);
-  mealsAvailable = tot;
-  // mealsAvailable = parseInt(mealsNew) + parseInt(mealsPrevious);
+  var mealsTotal = 0;
+  mealsTotal += numNan(mealsNew);
+  mealsTotal += numNan(mealsPrevious);
+  mealsAvailable = mealsTotal;
   $('.mealsAvailable').val(mealsAvailable);
   if (mealsAvailable > 0 && (mealsNew != "" && mealsPrevious != "")) {
     document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
   } else {
     document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
   }
-  // console.log(`Meal Totals`);
-  // console.log(`mealsNew: ${mealsNew}`);
-  // console.log(`mealsPrevious: ${mealsPrevious}`);
-  // console.log(`mealsAvailable: ${mealsAvailable}`);
-  // console.log(`mealsServed: ${mealsServed}`);
-  // console.log(`mealsRemaining: ${mealsRemaining}`);
-  // console.log(`mealsDamaged: ${mealsDamaged}`);
-  // console.log(`mealsLeftover: ${mealsLeftover}`);
-  // console.log(`mealsUtilized: ${mealsUtilized}`);
-  // console.log(`------------------------`);
 };
 
 //allows calculation of NaN without console error or setting variable to zero
 //https://stackoverflow.com/questions/7540397/convert-nan-to-0-in-javascript
-function addNumNan(str) {
+function numNan(str) {
   return /[0-9]*\.?[0-9]+/.test(str) ? parseFloat(str) : 0;
 }
 
 function sumMeals() {
   mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
-  mealsRemaining = mealsAvailable - mealsServed - mealsDamaged;
   mealsUtilized = mealsServed + mealsDamaged;
   mealsLeftover = mealsAvailable - mealsUtilized;
   $(".mealsAvailable").text(mealsAvailable);
@@ -130,39 +116,35 @@ function sumMeals() {
   $(".progAdultMeals").text(progAdultMeals);
   $(".nonProgAdultMeals").text(nonProgAdultMeals);
   $(".mealsServed").text(mealsServed);
-  $(".mealsRemaining").text(mealsRemaining);
   $(".mealsDamaged").text(mealsDamaged);
-    $(".mealsUtilized").text(mealsUtilized);
+  $(".mealsUtilized").text(mealsUtilized);
   $(".mealsLeftover").text(mealsLeftover);
-
 }
 
 function inputDamaged() {
-  if (mealsLeftover == 0) {
+  mealsDamaged = document.getElementById("mealsDamaged").value;
+    // console.log(mealsDamaged);
+  mealsDamaged = numNan(mealsDamaged);
+  console.log(mealsDamaged);
+  sumMeals();
+  if (mealsLeftover <= -1) {
+    mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
     $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
     setTimeout(function() {
       $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
-    }, 1500);
-  } else {
-    mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
-    sumMeals();
+    }, 2500);
+
   }
+  // else {
+  //   mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
+  //   sumMeals();
+  // }
+  // mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
+  // sumMeals();
 
-
-  console.log(`Meal Totals`);
-  console.log(`mealsNew: ${mealsNew}`);
-  console.log(`mealsPrevious: ${mealsPrevious}`);
-  console.log(`mealsAvailable: ${mealsAvailable}`);
-  console.log(`mealsServed: ${mealsServed}`);
-  console.log(`mealsRemaining: ${mealsRemaining}`);
-  console.log(`mealsDamaged: ${mealsDamaged}`);
-  console.log(`mealsLeftover: ${mealsLeftover}`);
-  console.log(`mealsUtilized: ${mealsUtilized}`);
-  console.log(`------------------------`);
-}
+};
 
 $("#startCounting-btn").click(function(event) {
-  // Fetch form to apply custom Bootstrap validation
   var form = $("#meals-available-form")
   if (mealsAvailable == 0) {
     event.preventDefault()
@@ -184,7 +166,6 @@ $("#startCounting-btn").click(function(event) {
   } else if (form[0].checkValidity() == true) {
     event.preventDefault();
     sumMeals();
-    // $(".mealsAvailable").text(mealsAvailable);
     $("#notify").val(ready);
     setTimeout(function() {
       $("#notify").val("");
@@ -196,20 +177,21 @@ $("#startCounting-btn").click(function(event) {
 });
 
 $('#doneCounting-btn').click(function(e) {
-  mealsLeftover = mealsRemaining;
   sumMeals();
-  $("#mealsDamaged").attr({"max": mealsAvailable - mealsServed});
+  $("#mealsDamaged").attr({
+    "max": mealsAvailable - mealsServed
+  });
   $("#card3-mainCounters").toggleClass('d-none');
   $("#card4-addlMeals").toggleClass('d-none');
 });
 
 $('#first-plus-btn').click(function(e) {
-  if (mealsRemaining == 0) {
+  if (mealsLeftover == 0) {
     $("#notify").val(noMeals);
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
-  } else if (mealsRemaining >= 1) {
+  } else if (mealsLeftover >= 1) {
     firstMeals++;
     sumMeals();
   } else {
@@ -233,12 +215,12 @@ $('#first-minus-btn').click(function(e) {
 });
 
 $('#second-plus-btn').click(function(e) {
-  if (mealsRemaining == 0) {
+  if (mealsLeftover == 0) {
     $("#notify").val(noMeals);
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
-  } else if (mealsRemaining >= 1 && secondMeals < firstMeals) {
+  } else if (mealsLeftover >= 1 && secondMeals < firstMeals) {
     secondMeals++;
     sumMeals();
   } else if (secondMeals == firstMeals) {
@@ -257,12 +239,12 @@ $('#second-minus-btn').click(function(e) {
 });
 
 $('#progAdultMeals-plus-btn').click(function(e) {
-  if (mealsRemaining == 0) {
+  if (mealsLeftover == 0) {
     $("#notify").val(noMeals);
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
-  } else if (mealsRemaining > 0) {
+  } else if (mealsLeftover > 0) {
     progAdultMeals++;
     sumMeals();
   }
@@ -276,12 +258,12 @@ $('#progAdultMeals-minus-btn').click(function(e) {
 });
 
 $('#nonProgAdultMeals-plus-btn').click(function(e) {
-  if (mealsRemaining == 0) {
+  if (mealsLeftover == 0) {
     $("#notify").val(noMeals);
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
-  } else if (mealsRemaining > 0) {
+  } else if (mealsLeftover > 0) {
     nonProgAdultMeals++;
     sumMeals();
   }
@@ -302,7 +284,7 @@ $('#addlMealsNeeded-plus-btn').click(function(e) {
     }, 3000);
     console.log("have meals remaining");
   } else
-  addlMealsNeeded++;
+    addlMealsNeeded++;
   $('.addlMealsNeeded').text(addlMealsNeeded);
 });
 
@@ -319,8 +301,6 @@ function goBackTo1() {
 };
 
 function goBackTo2() {
-  mealsUtilized = mealsServed + parseInt(mealsDamaged);
-  $('#mealsUtilized').text(mealsUtilized);
   $("#mealsAvailable-input").attr({
     "min": mealsUtilized
   });
@@ -329,8 +309,6 @@ function goBackTo2() {
 };
 
 function goBackTo3() {
-  mealsRemaining = mealsAvailable - mealsServed - mealsDamaged;
-  $('.mealsRemaining').text(mealsRemaining);
   $("#card4-addlMeals").toggleClass('d-none');
   $("#card3-mainCounters").toggleClass('d-none');
 };
@@ -372,3 +350,13 @@ function restartApp() {
 function beforeUnload() {
   return 'Use the "Go Back" button, or you may lose your changes.';
 }
+
+// console.log(`Meal Totals`);
+// console.log(`mealsNew: ${mealsNew}`);
+// console.log(`mealsPrevious: ${mealsPrevious}`);
+// console.log(`mealsAvailable: ${mealsAvailable}`);
+// console.log(`mealsServed: ${mealsServed}`);
+// console.log(`mealsDamaged: ${mealsDamaged}`);
+// console.log(`mealsLeftover: ${mealsLeftover}`);
+// console.log(`mealsUtilized: ${mealsUtilized}`);
+// console.log(`------------------------`);

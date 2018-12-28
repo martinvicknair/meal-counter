@@ -213,7 +213,7 @@
                   </div>
 
                   <div class="jumbotron p-2 mb-1">
-                    <h1 class="display-5 mealsRemaining">00</h1>
+                    <h1 class="display-5 mealsLeftover">00</h1>
                     <p>Total Meals Remaining</p>
 
                     <input type="text" class="w-100 rounded border-0 bg-light text-danger text-center px-0 py-1 small mb-3" id="notify" readonly />
@@ -391,9 +391,9 @@
                               Cannot start counting without meals available to serve.
                             </small>
                           </div> -->
-                          <td><input type="number" class="form-control" id="mealsDamaged" oninput="inputDamaged()" value="0" min="0" max="0" style="width:95px" required /></td>
-                          <td>Damaged/Incomplete Meals [7]<br><small id="mealsDamaged-invalidFeedback" class="form-text text-warning d-none">
-                              Damaged Meals cannot exceed Meals Remaining.
+                          <td><input type="number" class="form-control" id="mealsDamaged" oninput="inputDamaged()" value="0" min="0" max="mealsLeftover" style="width:95px" required /></td>
+                          <td>Damaged/Incomplete Meals [7]<br><small id="mealsDamaged-invalidFeedback" class="form-text text-danger d-none">
+                              Damaged Meals cannot exceed Leftovers.
                             </small></td>
                         </tr>
                         <tr>
