@@ -382,15 +382,6 @@
                           <td>Total Meals Served [6]</td>
                         </tr>
                         <tr>
-                          <!-- <div class="form-row align-items-center mb-3 mx-auto">
-                            <input type="number" class="form-control mealsAvailable" min="1" required readonly />
-                            <div class="input-group-append">
-                              <span class="input-group-text">Total Meals Available</span>
-                            </div>
-                            <small id="invalid-feedback-nomeals" class="form-text text-danger d-none">
-                              Cannot start counting without meals available to serve.
-                            </small>
-                          </div> -->
                           <td><input type="number" class="form-control" id="mealsDamaged" oninput="inputDamaged()" value="0" min="0" max="mealsLeftover" style="width:95px" required /></td>
                           <td>Damaged/Incomplete Meals [7]<br><small id="mealsDamaged-invalidFeedback" class="form-text text-danger d-none">
                               Damaged Meals cannot exceed Leftovers.
@@ -497,20 +488,92 @@
                     <p>show temp</p>
                     <p>optional email pdf</p>
                     <button class="btn-lg btn-danger" onclick="goToDone()">Submit</button>
-</div>
-                  </div>
-                  <div class="card-footer text-muted text-center">
-                    Step 5/6<br>
-                    <p>Sign & Finish</p>
                   </div>
                 </div>
-                <!--card5-hometab-content-->
+                <div class="card-footer text-muted text-center">
+                  Step 5/6<br>
+                  <p>Sign & Finish</p>
+                </div>
+              </div>
+              <!--card5-hometab-content-->
 
-                <div class="tab-pane fade" id="card5-helptab-content" role="tabpanel">
+              <div class="tab-pane fade" id="card5-helptab-content" role="tabpanel">
+                <div class="card-body bg-light">
+                  <div class="col-md-8 offset-md-2">
+                    <h6 class="card-title text-center">Sign and Finish Help</h6>
+                    <p>Sign & Finish</p>
+
+                    <p>Having trouble and want to start over?</p>
+                    <p>Click below to clear all local data and restart this app.</p>
+                    <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
+                  </div>
+                </div>
+              </div>
+              <!--card5-helptab-content-->
+            </div>
+            <!--card5-tabcontent-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END card5-signature -->
+
+    <!-- START card6-done -->
+    <div id="card6-done" class="secondary-cards d-none">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card mb-3">
+            <span class="card-header">
+              <h5>SFSP Meal Counter</h5>
+              <a class="text-right float-right" id="goBackTo5" href="#" onclick="goBackTo5(); return false;">Go Back</a>
+              <ul class="nav nav-tabs card-header-tabs" id="card6-tablist" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="card6-home-tab" data-toggle="tab" href="#card6-hometab-content" role="tab">Done 6/6</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="card6-help-tab" data-toggle="tab" href="#card6-helptab-content" role="tab">Help</a>
+              </ul>
+            </span>
+
+            <div class="tab-content" id="card6-tabcontent">
+
+              <div class="tab-pane fade show active" id="card6-hometab-content" role="tabpanel">
+                <div class="card-body text-center">
+                  <h6 class="card-title">Done</h6>
+                  <div class="form-row">
+                    <div class="col text-left pl-2">
+                      <div class="siteName">$siteName</div>
+                    </div>
+                    <div class="col text-right pr-2">
+                      <div class="mealsAvailable"></div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col text-left pl-2">
+                      <div class="longDate">$longDate</div>
+                    </div>
+                    <div class="col text-right pr-2">
+                      <div class="mealType">$mealType</div>
+                    </div>
+                  </div>
+                  <div class="col-md-10 offset-md-1 mb-3">
+                    <p>Done</p>
+                    content here
+                    <p>Press below to start a new meal.</p>
+                    <button onclick="restartApp()">new meal</button>
+                  </div>
+                  <div class="card-footer text-muted text-center">
+                    Step 6/6<br>
+                    <p>Done</p>
+                  </div>
+                </div>
+                <!--card6-hometab-content-->
+
+                <div class="tab-pane fade" id="card6-helptab-content" role="tabpanel">
                   <div class="card-body bg-light">
                     <div class="col-md-8 offset-md-2">
-                      <h6 class="card-title text-center">Sign and Finish Help</h6>
-                      <p>Sign & Finish</p>
+                      <h6 class="card-title text-center">Done Help</h6>
+                      <p>xxxx</p>
 
                       <p>Having trouble and want to start over?</p>
                       <p>Click below to clear all local data and restart this app.</p>
@@ -518,98 +581,26 @@
                     </div>
                   </div>
                 </div>
-                <!--card5-helptab-content-->
+                <!--card6-helptab-content-->
               </div>
-              <!--card5-tabcontent-->
+              <!--card6-tabcontent-->
             </div>
           </div>
         </div>
       </div>
-      <!-- END card5-signature -->
-
-      <!-- START card6-done -->
-      <div id="card6-done" class="secondary-cards d-none">
-        <div class="row">
-          <div class="col-md-6 offset-md-3">
-            <div class="card mb-3">
-              <span class="card-header">
-                <h5>SFSP Meal Counter</h5>
-                <a class="text-right float-right" id="goBackTo5" href="#" onclick="goBackTo5(); return false;">Go Back</a>
-                <ul class="nav nav-tabs card-header-tabs" id="card6-tablist" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="card6-home-tab" data-toggle="tab" href="#card6-hometab-content" role="tab">Done 6/6</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="card6-help-tab" data-toggle="tab" href="#card6-helptab-content" role="tab">Help</a>
-                </ul>
-              </span>
-
-              <div class="tab-content" id="card6-tabcontent">
-
-                <div class="tab-pane fade show active" id="card6-hometab-content" role="tabpanel">
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Done</h6>
-                    <div class="form-row">
-                      <div class="col text-left pl-2">
-                        <div class="siteName">$siteName</div>
-                      </div>
-                      <div class="col text-right pr-2">
-                        <div class="mealsAvailable"></div>
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col text-left pl-2">
-                        <div class="longDate">$longDate</div>
-                      </div>
-                      <div class="col text-right pr-2">
-                        <div class="mealType">$mealType</div>
-                      </div>
-                    </div>
-                    <div class="col-md-10 offset-md-1 mb-3">
-                      <p>Done</p>
-                      content here
-                      <p>Press below to start a new meal.</p>
-                      <button onclick="restartApp()">new meal</button>
-                    </div>
-                    <div class="card-footer text-muted text-center">
-                      Step 6/6<br>
-                      <p>Done</p>
-                    </div>
-                  </div>
-                  <!--card6-hometab-content-->
-
-                  <div class="tab-pane fade" id="card6-helptab-content" role="tabpanel">
-                    <div class="card-body bg-light">
-                      <div class="col-md-8 offset-md-2">
-                        <h6 class="card-title text-center">Done Help</h6>
-                        <p>xxxx</p>
-
-                        <p>Having trouble and want to start over?</p>
-                        <p>Click below to clear all local data and restart this app.</p>
-                        <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
-                      </div>
-                    </div>
-                  </div>
-                  <!--card6-helptab-content-->
-                </div>
-                <!--card6-tabcontent-->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- END card6-done -->
+      <!-- END card6-done -->
 
 
 
 
-      </div>
-      <!--container-->
+    </div>
+    <!--container-->
 
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Bootstrap JS -->
-      <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
-      <script src="assets/js/bootstrap-4.2.1.bundle.min.js"></script>
-      <script src="assets/js/logic.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="assets/js/bootstrap-4.2.1.bundle.min.js"></script>
+    <script src="assets/js/logic.js"></script>
 
 </body>
 

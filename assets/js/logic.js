@@ -100,7 +100,7 @@ function sumMealsAvail() {
   }
 };
 
-//allows calculation of NaN without console error or setting variable to zero
+//for calculation of NaN without console error; allows Bootstrap form validation to work properly with blanks
 //https://stackoverflow.com/questions/7540397/convert-nan-to-0-in-javascript
 function numNan(str) {
   return /[0-9]*\.?[0-9]+/.test(str) ? parseFloat(str) : 0;
@@ -138,24 +138,24 @@ function inputDamaged() {
 
 $("#startCounting-btn").click(function(event) {
   var form = $("#meals-available-form")
-  if (mealsAvailable == 0) {
+  if (mealsAvailable == 0) {  //form cannot validate with no mealsAvailable
     event.preventDefault()
     event.stopPropagation()
     $("#noMeals-invalidFeedback").toggleClass('d-none')
     setTimeout(function() {
       $("#noMeals-invalidFeedback").toggleClass('d-none');
     }, 3000);
-  } else if (mealsAvailable < (mealsServed + mealsDamaged)) {
+  } else if (mealsAvailable < mealsUtilized) { //cannot validate if mealsServed exceeds mealsUtilized
     event.preventDefault()
     event.stopPropagation()
     $("#servedExceeds-invalidFeedback").toggleClass('d-none')
     setTimeout(function() {
       $("#servedExceeds-invalidFeedback").toggleClass('d-none');
     }, 3000);
-  } else if (form[0].checkValidity() === false) {
+  } else if (form[0].checkValidity() === false) { //check form fields using built-in validation in html
     event.preventDefault()
     event.stopPropagation()
-  } else if (form[0].checkValidity() == true) {
+  } else if (form[0].checkValidity() == true) { //check form fields using built-in validation in html
     event.preventDefault();
     sumMeals();
     $("#notify").val(ready);
@@ -170,7 +170,7 @@ $("#startCounting-btn").click(function(event) {
 
 $('#doneCounting-btn').click(function(e) {
   sumMeals();
-  $("#mealsDamaged").attr({
+  $("#mealsDamaged").attr({  //sets max value allowed for mealsDamaged on card4
     "max": mealsAvailable - mealsServed
   });
   $("#card3-mainCounters").toggleClass('d-none');
