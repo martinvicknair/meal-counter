@@ -119,14 +119,14 @@
                         <div class="input-group-append">
                           <span class="input-group-text">Meals Received/Prepared</span>
                         </div>
-                        <div class="invalid-feedback">Enter number of new meals received, even if zero.</div>
+                        <div class="invalid-feedback">Enter number of New Meals received, even if zero.</div>
                       </div>
                       <div class="form-row align-items-center mx-auto">
                         <input type="number" class="form-control" min="0" id="mealsPrevious" oninput="sumMealsAvail()" required />
                         <div class="input-group-append">
                           <span class="input-group-text">Meals From Previous Day</span>
                         </div>
-                        <div class="invalid-feedback">Enter number of meals leftover, even if zero.</div>
+                        <div class="invalid-feedback">Enter number of Previous Meals, even if zero.</div>
                       </div>
                       <div class="form-row align-items-center mb-3 mx-auto">
                         <input type="number" id="mealsAvailable-input" class="form-control mealsAvailable" value="0" min="1" required readonly />
@@ -600,6 +600,7 @@
     <!-- jQuery first, then Bootstrap JS -->
     <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
     <script src="assets/js/bootstrap-4.2.1.bundle.min.js"></script>
+    <script src="assets/js/moment.js"></script>
     <script src="assets/js/logic.js"></script>
 
 </body>

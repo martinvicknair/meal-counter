@@ -1,7 +1,6 @@
 var siteName = "";
 var siteAddress = "";
 var siteSupervisor = "";
-
 var mealType = "";
 
 var mealsNew;
@@ -23,15 +22,9 @@ var firstExceeds = "First Meals must exceed Second Meals";
 var noMeals = "No meals remaining to serve";
 var ready = "Ready to serve!";
 
-var dt = new Date();
-var dateOptions = {
-  weekday: 'short',
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric'
-};
-var longDate = dt.toLocaleDateString('en-us', dateOptions);
-var shortDate = dt.toISOString().slice(0, 10); //return YYYY-MM-DD
+var now = moment();
+var longDate = moment(now).format("ddd, MMM DD, YYYY");
+var shortDate = moment(now).format("YYYY-DD-MM")
 $(".longDate").text(longDate);
 $(".shortDate").text(shortDate);
 
@@ -132,13 +125,12 @@ function inputDamaged() {
     setTimeout(function() {
       $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
     }, 2500);
-
   }
 };
 
 $("#startCounting-btn").click(function(event) {
   var form = $("#meals-available-form")
-  if (mealsAvailable == 0) {  //form cannot validate with no mealsAvailable
+  if (mealsAvailable == 0) {  //form cannot validate without mealsAvailable
     event.preventDefault()
     event.stopPropagation()
     $("#noMeals-invalidFeedback").toggleClass('d-none')
