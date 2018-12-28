@@ -123,7 +123,6 @@ function sumMeals() {
 
 function inputDamaged() {
   mealsDamaged = document.getElementById("mealsDamaged").value;
-    // console.log(mealsDamaged);
   mealsDamaged = numNan(mealsDamaged);
   console.log(mealsDamaged);
   sumMeals();
@@ -135,13 +134,6 @@ function inputDamaged() {
     }, 2500);
 
   }
-  // else {
-  //   mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
-  //   sumMeals();
-  // }
-  // mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
-  // sumMeals();
-
 };
 
 $("#startCounting-btn").click(function(event) {
