@@ -20,7 +20,7 @@ var addlMealsNeeded = 0;
 var secondExceeds = "Second Meals cannot exceed First Meals";
 var firstExceeds = "First Meals must exceed Second Meals";
 var noMeals = "No meals remaining to serve";
-var ready = "Ready to serve!";
+var readyServe = "Ready to serve!";
 
 var now = moment();
 var longDate = moment(now).format("ddd, MMM DD, YYYY");
@@ -75,7 +75,6 @@ function selectSiteMeal(meal) {
       break;
   }
   $(".mealType").text(mealType);
-  console.log(`${siteName}-${shortDate}-${mealType}`);
 }
 
 function sumMealsAvail() {
@@ -117,7 +116,6 @@ function sumMeals() {
 function inputDamaged() {
   mealsDamaged = document.getElementById("mealsDamaged").value;
   mealsDamaged = numNan(mealsDamaged);
-  console.log(mealsDamaged);
   sumMeals();
   if (mealsLeftover <= -1) {
     mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
@@ -137,7 +135,7 @@ $("#startCounting-btn").click(function(event) {
     setTimeout(function() {
       $("#noMeals-invalidFeedback").toggleClass('d-none');
     }, 3000);
-  } else if (mealsAvailable < mealsUtilized) { //cannot validate if mealsServed exceeds mealsUtilized
+  } else if (mealsAvailable < mealsUtilized) { //cannot validate if mealsUtilized exceeds mealsAvailable
     event.preventDefault()
     event.stopPropagation()
     $("#servedExceeds-invalidFeedback").toggleClass('d-none')
@@ -150,7 +148,7 @@ $("#startCounting-btn").click(function(event) {
   } else if (form[0].checkValidity() == true) { //check form fields using built-in validation in html
     event.preventDefault();
     sumMeals();
-    $("#notify").val(ready);
+    $("#notify").val(readyServe);
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
@@ -266,7 +264,6 @@ $('#addlMealsNeeded-plus-btn').click(function(e) {
     setTimeout(function() {
       $("#addlMeals-invalidFeedback").toggleClass('d-none');
     }, 3000);
-    console.log("have meals remaining");
   } else
     addlMealsNeeded++;
   $('.addlMealsNeeded').text(addlMealsNeeded);
@@ -344,3 +341,5 @@ function beforeUnload() {
 // console.log(`mealsLeftover: ${mealsLeftover}`);
 // console.log(`mealsUtilized: ${mealsUtilized}`);
 // console.log(`------------------------`);
+
+// console.log(`${siteName}-${shortDate}-${mealType}`);
