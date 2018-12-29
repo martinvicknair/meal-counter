@@ -2,21 +2,24 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
+  <!-- meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="github.com/martinvicknair">
+  <meta name="description" content="SFSP and CACFP electronic meal capture app. No more paper forms. Works on all mobile devices. Generate USDA-approved meal count forms. Free web-based standalone version." />
   <link href="assets/img/favicon.ico" type="image/png" rel="icon">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="assets/css/bootstrap-4.2.1.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
-  <title>SFSP Meal Counter</title>
+  <title>SFR Meal Counter</title>
 </head>
 
 <body onbeforeunload="return beforeUnload()">
-  <div class="container pt-2">
+  <div class="container pt-1">
 
     <!-- START card1-siteMealInfo -->
     <div id="card1-siteMealInfo">
@@ -24,18 +27,21 @@
         <div class="col-md-6 offset-md-3">
           <div class="card mb-3">
             <span class="card-header">
-              <h5>SFSP Meal Counter</h5>
+              <h5>SFR Meal Counter</h5>
               <ul class="nav nav-tabs card-header-tabs" id="card1-tablist" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" id="card1-home-tab" data-toggle="tab" href="#card1-hometab-content" role="tab">Home 1/6</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="card1-help-tab" data-toggle="tab" href="#card1-helptab-content" role="tab">Help</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="card1-about-tab" data-toggle="tab" href="#card1-abouttab-content" role="tab">About</a>
+                </li>
               </ul>
             </span>
 
             <div class="tab-content" id="card1-tabcontent">
-
               <div class="tab-pane fade show active" id="card1-hometab-content" role="tabpanel">
                 <div class="card-body text-center">
                   <h6 class="card-title">Site & Meal Info</h6>
@@ -66,17 +72,47 @@
 
               <div class="tab-pane fade" id="card1-helptab-content" role="tabpanel">
                 <div class="card-body bg-light">
-                  <div class="col-md-8 offset-md-2">
-                    <h6 class="card-title text-center">Site & Meal Info Help</h6>
+                  <div class="col-auto">
+                    <h5 class="card-title text-center"><strong>S</strong>ummer <strong>F</strong>ood <strong>R</strong>ocks!</h5>
+                    <h6 class="card-title text-center">Site and Meal Info Help</h6>
                     <p>Fill in Name, Address, and Supervisor. Then choose a meal to continue.</p>
-
-                    <p>Having trouble and want to start over?</p>
-                    <p>Click below to clear all local data and restart this app.</p>
+                    <p>The number of meals available will be entered in the next step.</p>
+                    <p>Having trouble and want to start over?<br>
+                    Click below to clear all local data and restart this app.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
                   </div>
                 </div>
               </div>
               <!--card1-helptab-content-->
+
+              <div class="tab-pane fade" id="card1-abouttab-content" role="tabpanel">
+                <div class="card-body bg-light">
+                  <div class="col-auto">
+                    <h5 class="card-title text-center"><strong>S</strong>ummer <strong>F</strong>ood <strong>R</strong>ocks!</h5>
+                    <h6 class="card-title text-center"><a href="https://www.summerfoodrocks.org" target="_blank">www.SummerFoodRocks.org</a></h6>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        This is an electronic Point of Service Meal Capture app designed for use in USDA-approved programs. It replaces the paper Daily Meal Count Form used in programs such as SFSP and CACFP.
+                        <div class="my-2">
+                          <ul>
+                            <li>Simple user interface</li>
+                            <li>Reduces errors, saves time</li>
+                            <li>Captures data in real time</li>
+                            <li>Works on any mobile device</li>
+                          </ul>
+                        </div>
+                        At the conclusion of meal service, a USDA-approved Meal Count Form is generated as a PDF document which can be downloaded, emailed, printed, or stored electronically.
+                      </li>
+                      <li class="list-group-item">
+                        Source code:<br>
+                        <a href="https://github.com/martinvicknair/meal-counter" target="_blank">https://github.com/martinvicknair/meal-counter</a>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+              <!--card1-abouttab-content-->
             </div>
             <!--card1-tabcontent-->
           </div>
@@ -91,8 +127,7 @@
         <div class="col-md-6 offset-md-3">
           <div class="card mb-3">
             <span class="card-header">
-              <h5>SFSP Meal Counter</h5>
-
+              <h5>SFR Meal Counter</h5>
               <a class="text-right float-right" id="goBackTo1" href="#" onclick="goBackTo1(); return false;">Go Back</a>
               <ul class="nav nav-tabs card-header-tabs" id="card2-tablist" role="tablist">
                 <li class="nav-item">
@@ -100,11 +135,11 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="card2-help-tab" data-toggle="tab" href="#card2-helptab-content" role="tab">Help</a>
+                </li>
               </ul>
             </span>
 
             <div class="tab-content" id="card2-tabcontent">
-
               <div class="tab-pane fade show active" id="card2-hometab-content" role="tabpanel">
                 <div class="col-md-11 offset-md-1 mb-3">
                   <div class="card-body">
@@ -112,7 +147,6 @@
                     <div class="siteName pl-2">$siteName</div>
                     <div class="longDate pl-2">$longDate</div>
                     <div class="mealType pl-2 mb-2">$mealType</div>
-
                     <form class="needs-validation" id="meals-available-form" novalidate>
                       <div class="form-row align-items-center mx-auto">
                         <input type="number" class="form-control" min="0" id="mealsNew" oninput="sumMealsAvail()" required />
@@ -153,7 +187,6 @@
               <!--card2-hometab-content-->
 
               <div class="tab-pane fade" id="card2-helptab-content" role="tabpanel">
-
                 <div class="card-body bg-light">
                   <div class="col-md-8 offset-md-2">
                     <h6 class="card-title text-center">Meals Available Help</h6>
@@ -180,7 +213,7 @@
         <div class="col-md-6 offset-md-3">
           <div class="card mb-3">
             <span class="card-header">
-              <h5>SFSP Meal Counter</h5>
+              <h5>SFR Meal Counter</h5>
               <a class="text-right float-right" id="goBackTo2" href="#" onclick="goBackTo2(); return false;">Go Back</a>
               <ul class="nav nav-tabs card-header-tabs" id="card3-tablist" role="tablist">
                 <li class="nav-item">
@@ -188,11 +221,11 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="card3-help-tab" data-toggle="tab" href="#card3-helptab-content" role="tab">Help</a>
+                </li>
               </ul>
             </span>
 
             <div class="tab-content" id="card3-tabcontent">
-
               <div class="tab-pane fade show active" id="card3-hometab-content" role="tabpanel">
                 <div class="card-body pt-0">
                   <div class="form-row">
@@ -211,13 +244,10 @@
                       <div class="mealType">$mealType</div>
                     </div>
                   </div>
-
                   <div class="jumbotron p-2 mb-1">
                     <h1 class="display-5 mealsLeftover">00</h1>
                     <p>Total Meals Remaining</p>
-
                     <input type="text" class="w-100 rounded border-0 bg-light text-danger text-center px-0 py-1 small mb-3" id="notify" readonly />
-
                     <div class="input-group align-items-center">
                       <div class="input-group-prepend">
                         <button type="button" class="btn-danger btn-lg" id="first-minus-btn"> - </button>
@@ -230,7 +260,6 @@
                     <p>First Meals to Children</p>
                   </div>
                   <!--jumbotron-->
-
                   <div class="secondary-counters">
                     <div class="input-group align-items-center">
                       <small id="invalid-feedback-secondExceeds" class="form-text text-danger d-none">
@@ -247,8 +276,6 @@
                     <p>Second Meals to Children</p>
                     <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
                   </div>
-                  <!-- /.secondary-counters -->
-
                   <div class="secondary-counters">
                     <div class="input-group align-items-center">
                       <div class="input-group-prepend">
@@ -262,8 +289,6 @@
                     <p>Program Adult Meals</p>
                     <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;">
                   </div>
-                  <!-- /.secondary-counters -->
-
                   <div class="secondary-counters">
                     <div class="input-group align-items-center">
                       <div class="input-group-prepend">
@@ -276,12 +301,8 @@
                     </div>
                     <p>Non-Program Adult Meals</p>
                     <hr class="" style="height:1px;border:none;color:#839192;background-color:#839192;" </div> <!-- /.secondary-counters -->
-
                     <button class="btn btn-info" id="doneCounting-btn">Done Counting</button>
-
-
                   </div>
-
                   <div class="card-footer text-muted text-center">
                     Step 3/6<br>
                     Count meals at point of service.<br>
@@ -292,7 +313,6 @@
               <!--card3-hometab-content-->
 
               <div class="tab-pane fade" id="card3-helptab-content" role="tabpanel">
-
                 <div class="card-body bg-light">
                   <div class="col-md-8 offset-md-2">
                     <h6 class="card-title text-center">Meal Counter Help</h6>
@@ -318,7 +338,7 @@
         <div class="col-md-6 offset-md-3">
           <div class="card mb-3">
             <span class="card-header">
-              <h5>SFSP Meal Counter</h5>
+              <h5>SFR Meal Counter</h5>
               <a class="text-right float-right" id="goBackTo3" href="#" onclick="goBackTo3(); return false;">Go Back</a>
               <ul class="nav nav-tabs card-header-tabs" id="card4-tablist" role="tablist">
                 <li class="nav-item">
@@ -326,11 +346,11 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="card4-help-tab" data-toggle="tab" href="#card4-helptab-content" role="tab">Help</a>
+                </li>
               </ul>
             </span>
 
             <div class="tab-content" id="card4-tabcontent">
-
               <div class="tab-pane fade show active" id="card4-hometab-content" role="tabpanel">
                 <div class="card-body text-center">
                   <!-- <h6 class="card-title">Site & Meal Info</h6> -->
@@ -351,10 +371,6 @@
                         <div class="mealType">$mealType</div>
                       </div>
                     </div>
-
-
-
-
                     <table class="table table-striped text-left">
                       <tbody class="py-2">
                         <tr>
@@ -448,7 +464,7 @@
         <div class="col-md-6 offset-md-3">
           <div class="card mb-3">
             <span class="card-header">
-              <h5>SFSP Meal Counter</h5>
+              <h5>SFR Meal Counter</h5>
               <a class="text-right float-right" id="goBackTo4" href="#" onclick="goBackTo4(); return false;">Go Back</a>
               <ul class="nav nav-tabs card-header-tabs" id="card5-tablist" role="tablist">
                 <li class="nav-item">
@@ -456,11 +472,11 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="card5-help-tab" data-toggle="tab" href="#card5-helptab-content" role="tab">Help</a>
+                </li>
               </ul>
             </span>
 
             <div class="tab-content" id="card5-tabcontent">
-
               <div class="tab-pane fade show active" id="card5-hometab-content" role="tabpanel">
                 <div class="card-body text-center">
                   <h6 class="card-title">Finish and Sign</h6>
@@ -502,7 +518,6 @@
                   <div class="col-md-8 offset-md-2">
                     <h6 class="card-title text-center">Sign and Finish Help</h6>
                     <p>Sign & Finish</p>
-
                     <p>Having trouble and want to start over?</p>
                     <p>Click below to clear all local data and restart this app.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
@@ -524,7 +539,7 @@
         <div class="col-md-6 offset-md-3">
           <div class="card mb-3">
             <span class="card-header">
-              <h5>SFSP Meal Counter</h5>
+              <h5>SFR Meal Counter</h5>
               <a class="text-right float-right" id="goBackTo5" href="#" onclick="goBackTo5(); return false;">Go Back</a>
               <ul class="nav nav-tabs card-header-tabs" id="card6-tablist" role="tablist">
                 <li class="nav-item">
@@ -532,11 +547,14 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="card6-help-tab" data-toggle="tab" href="#card6-helptab-content" role="tab">Help</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="card6-about-tab" data-toggle="tab" href="#card6-abouttab-content" role="tab">About</a>
+                </li>
               </ul>
             </span>
 
             <div class="tab-content" id="card6-tabcontent">
-
               <div class="tab-pane fade show active" id="card6-hometab-content" role="tabpanel">
                 <div class="card-body text-center">
                   <h6 class="card-title">Done</h6>
@@ -562,47 +580,42 @@
                     <p>Press below to start a new meal.</p>
                     <button onclick="restartApp()">new meal</button>
                   </div>
-                  <div class="card-footer text-muted text-center">
-                    Step 6/6<br>
-                    <p>Done</p>
-                  </div>
                 </div>
-                <!--card6-hometab-content-->
-
-                <div class="tab-pane fade" id="card6-helptab-content" role="tabpanel">
-                  <div class="card-body bg-light">
-                    <div class="col-md-8 offset-md-2">
-                      <h6 class="card-title text-center">Done Help</h6>
-                      <p>xxxx</p>
-
-                      <p>Having trouble and want to start over?</p>
-                      <p>Click below to clear all local data and restart this app.</p>
-                      <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
-                    </div>
-                  </div>
+                <div class="card-footer text-muted text-center">
+                  Step 6/6<br>
+                  <p>Done</p>
                 </div>
-                <!--card6-helptab-content-->
               </div>
-              <!--card6-tabcontent-->
+              <!--card6-hometab-content-->
+
+              <div class="tab-pane fade" id="card6-helptab-content" role="tabpanel">
+                <div class="card-body bg-light">
+                  <div class="col-md-8 offset-md-2">
+                    <h6 class="card-title text-center">Done Help</h6>
+                    <p>xxxx</p>
+                    <p>Having trouble and want to start over?</p>
+                    <p>Click below to clear all local data and restart this app.</p>
+                    <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
+                  </div>
+                </div>
+              </div>
+              <!--card6-helptab-content-->
             </div>
+            <!--card6-tabcontent-->
           </div>
         </div>
       </div>
-      <!-- END card6-done -->
-
-
-
-
     </div>
-    <!--container-->
+    <!-- END card6-done -->
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Bootstrap JS -->
-    <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
-    <script src="assets/js/bootstrap-4.2.1.bundle.min.js"></script>
-    <script src="assets/js/moment.js"></script>
-    <script src="assets/js/logic.js"></script>
+  </div>
+  <!--container-->
 
+  <!-- jQuery first, then Bootstrap JS -->
+  <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="assets/js/bootstrap-4.2.1.bundle.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/js/logic.js"></script>
 </body>
 
 </html>
