@@ -6,15 +6,15 @@ var mealType = "";
 var mealsNew;
 var mealsPrevious;
 var mealsAvailable = 0;
-var firstMeals = 0;
-var secondMeals = 0
-var progAdultMeals = 0;
-var nonProgAdultMeals = 0;
+var mealsFirst = 0;
+var mealsSecond = 0
+var mealsProgAdult = 0;
+var mealsNonProgAdult = 0;
 var mealsServed = 0;
 var mealsDamaged = 0;
 var mealsUtilized = 0;
 var mealsLeftover = 0;
-var addlMealsNeeded = 0;
+var mealsAddlNeeded = 0;
 
 
 var secondExceeds = "Second Meals cannot exceed First Meals";
@@ -104,14 +104,14 @@ function numNan(str) {
 }
 
 function sumMeals() {
-  mealsServed = firstMeals + secondMeals + progAdultMeals + nonProgAdultMeals;
+  mealsServed = mealsFirst + mealsSecond + mealsProgAdult + mealsNonProgAdult;
   mealsUtilized = mealsServed + mealsDamaged;
   mealsLeftover = mealsAvailable - mealsUtilized;
   $(".mealsAvailable").text(mealsAvailable);
-  $(".firstMeals").text(firstMeals);
-  $(".secondMeals").text(secondMeals);
-  $(".progAdultMeals").text(progAdultMeals);
-  $(".nonProgAdultMeals").text(nonProgAdultMeals);
+  $(".mealsFirst").text(mealsFirst);
+  $(".mealsSecond").text(mealsSecond);
+  $(".mealsProgAdult").text(mealsProgAdult);
+  $(".mealsNonProgAdult").text(mealsNonProgAdult);
   $(".mealsServed").text(mealsServed);
   $(".mealsDamaged").text(mealsDamaged);
   $(".mealsUtilized").text(mealsUtilized);
@@ -180,7 +180,7 @@ $('#first-plus-btn').click(function(e) {
       $("#notify").val("");
     }, 3000);
   } else if (mealsLeftover >= 1) {
-    firstMeals++;
+    mealsFirst++;
     sumMeals();
   } else {
     $("#notify").val(noMeals);
@@ -191,10 +191,10 @@ $('#first-plus-btn').click(function(e) {
 });
 
 $('#first-minus-btn').click(function(e) {
-  if (firstMeals >= 1 && firstMeals > secondMeals) {
-    firstMeals--;
+  if (mealsFirst >= 1 && mealsFirst > mealsSecond) {
+    mealsFirst--;
     sumMeals();
-  } else if (firstMeals = secondMeals) {
+  } else if (mealsFirst = mealsSecond) {
     $("#notify").val(firstExceeds);
     setTimeout(function() {
       $("#notify").val("");
@@ -208,10 +208,10 @@ $('#second-plus-btn').click(function(e) {
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
-  } else if (mealsLeftover >= 1 && secondMeals < firstMeals) {
-    secondMeals++;
+  } else if (mealsLeftover >= 1 && mealsSecond < mealsFirst) {
+    mealsSecond++;
     sumMeals();
-  } else if (secondMeals == firstMeals) {
+  } else if (mealsSecond == mealsFirst) {
     $("#notify").val(secondExceeds);
     setTimeout(function() {
       $("#notify").val("");
@@ -220,65 +220,65 @@ $('#second-plus-btn').click(function(e) {
 });
 
 $('#second-minus-btn').click(function(e) {
-  if (secondMeals >= 1) {
-    secondMeals--;
+  if (mealsSecond >= 1) {
+    mealsSecond--;
     sumMeals();
   }
 });
 
-$('#progAdultMeals-plus-btn').click(function(e) {
+$('#mealsProgAdult-plus-btn').click(function(e) {
   if (mealsLeftover == 0) {
     $("#notify").val(noMeals);
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
   } else if (mealsLeftover > 0) {
-    progAdultMeals++;
+    mealsProgAdult++;
     sumMeals();
   }
 });
 
-$('#progAdultMeals-minus-btn').click(function(e) {
-  if (progAdultMeals >= 1) {
-    progAdultMeals--;
+$('#mealsProgAdult-minus-btn').click(function(e) {
+  if (mealsProgAdult >= 1) {
+    mealsProgAdult--;
     sumMeals();
   }
 });
 
-$('#nonProgAdultMeals-plus-btn').click(function(e) {
+$('#mealsNonProgAdult-plus-btn').click(function(e) {
   if (mealsLeftover == 0) {
     $("#notify").val(noMeals);
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
   } else if (mealsLeftover > 0) {
-    nonProgAdultMeals++;
+    mealsNonProgAdult++;
     sumMeals();
   }
 });
 
-$('#nonProgAdultMeals-minus-btn').click(function(e) {
-  if (nonProgAdultMeals >= 1) {
-    nonProgAdultMeals--;
+$('#mealsNonProgAdult-minus-btn').click(function(e) {
+  if (mealsNonProgAdult >= 1) {
+    mealsNonProgAdult--;
     sumMeals();
   }
 });
 
-$('#addlMealsNeeded-plus-btn').click(function(e) {
+$('#mealsAddlNeeded-plus-btn').click(function(e) {
   if (mealsLeftover > 0) {
     $("#addlMeals-invalidFeedback").toggleClass('d-none');
     setTimeout(function() {
       $("#addlMeals-invalidFeedback").toggleClass('d-none');
     }, 3000);
   } else
-    addlMealsNeeded++;
-  $('.addlMealsNeeded').text(addlMealsNeeded);
+    mealsAddlNeeded++;
+  $('.mealsAddlNeeded').text(mealsAddlNeeded);
 });
 
-$('#addlMealsNeeded-minus-btn').click(function(e) {
-  if (addlMealsNeeded >= 1) {
-    addlMealsNeeded--;
-    $('.addlMealsNeeded').text(addlMealsNeeded);
+$('#mealsAddlNeeded-minus-btn').click(function(e) {
+  if (mealsAddlNeeded >= 1) {
+    mealsAddlNeeded--;
+    $('.mealsAddlNeeded').text(mealsAddlNeeded);
   }
 });
 
@@ -322,6 +322,7 @@ function goToSign() {
 }
 
 function goToDone() {
+  createPDF();
   $("#card5-signature").toggleClass('d-none');
   $("#card6-done").toggleClass('d-none');
 }
@@ -342,6 +343,207 @@ function restartApp() {
 
 function beforeUnload() {
   return 'Use the "Go Back" button, or you may lose your changes.';
+}
+
+function createPDF() {
+  /****************************************************************
+  *
+  *		get page variables
+  *
+  ******************************************************************/
+  $(this).css("background-color","green");
+  // var siteName = siteName;
+  // var siteAddress = siteAddress;
+  // var siteSupervisor = siteSupervisor;
+  //
+  // // set elsewhere: mealType;mealsDamaged, mealsLeftover, mealsAvailable (mealsPrevious+mealsNew), mealsProgAdult, mealsNonProgAdult
+  // //
+  // var mealsPrevious = mealsPrevious;
+  // var mealsNew = mealsNew;
+  // var mealsFirst = mealsFirst;  //first meals to children
+  // var mealsSecond = mealsSecond;  //second meals to children
+  // var mealsServed = mealsServed;
+
+//write a second page to handle numbers greater than defined below
+  if (mealsFirst>160) {
+          //divide then round up and multiply again
+          r = Math.ceil(mealsFirst/20);
+          r = r*20;
+  } else {
+          r= 160;
+  }
+
+  if (mealsSecond>15) {
+          r2 = Math.ceil(mealsSecond/15);
+          r2 = r2*15;
+  } else {
+          r2 = 15;
+  }
+  if (mealsProgAdult>15) {
+          r3 = Math.ceil(mealsProgAdult/15);
+          r3 = r3*15;
+  } else {
+          r3 = 15;
+  }
+  if (mealsNonProgAdult>15) {
+          r4 = Math.ceil(mealsNonProgAdult/15);
+          r4 = r4*15;
+  } else {
+          r4 = 15;
+  }
+  var doc = new jsPDF('p', 'mm', 'letter');
+  // starting x, starting y, width, height
+  doc.rect(9, 9, 192, 257);
+  doc.rect(10, 10, 190, 255); // outline of the page for A4 paper in mm is 10,10,190,275
+  //Font size 12 gives me 69 capital A's across and font-size 10 gets me 83
+  doc.setFontSize(10);
+  doc.text(85, 16, 'DAILY MEAL COUNT FORM');
+  doc.line(10, 19, 200, 19); //horizontal line:
+  doc.line(10, 26, 200, 26); //horizontal line:
+  doc.line(10, 36, 200, 36); //horizontal line:
+  doc.line(10, 46, 200, 46); //horizontal line:
+  doc.line(10, 56, 200, 56);
+
+  doc.text(12, 25, 'Site: ' + siteName);
+  doc.text(130,25, 'Meal: ' + mealType);
+  doc.text(12, 35, 'Address: ' + siteAddress);
+
+  doc.text(12,45, "Supervisor\'s Name: " + siteSupervisor);
+  doc.text(130, 45, 'Date: ' + longDate);
+  var txt = 'Meals Received: ' + mealsNew + ' +	  Meals available from previous day: ' + mealsPrevious + ' =  Total meals available: ';
+  doc.setFontType("bold");
+  doc.text(12, 55, txt);
+  doc.text(175,55,mealsAvailable.toString());
+  doc.setFontType("normal");
+  doc.text(12, 62, 'First Meals Served to Children:');
+
+  //put lines through the served meals
+  var x,tx,b = 1;
+  var c = 68;
+  for (j=0;j<(r/20);j++) {
+    x = 13;
+    if (j>4) { x = 12; }
+    for (i=b;i<(b+20);i++) {
+        tx = i.toString();
+        doc.text(x, c, tx);
+        if (i<=mealsFirst) {
+          doc.line(x-1,c+1,x+4,c-3);
+        }
+        x = x + 9;
+    }
+    b=i;
+    c += 7;
+  }
+
+
+  doc.setFontType("bold");
+  doc.text(156, c, 'Total First Meals: ' + mealsFirst);
+  doc.setFontType("normal");
+
+  doc.line(10, (c+2), 200, (c+2));
+  doc.text(12, (c+8), 'Second meals served to children:');
+  b = 1;
+  c = c + 14;
+  for (j=0;j<(r2/15);j++) {
+    x = 13;
+    for (i=b;i<(b+15);i++) {
+        tx = i.toString();
+        doc.text(x, c, tx);
+        if (i<=mealsSecond) {
+          doc.line(x-1,c+1,x+3,c-2);
+        }
+        x = x + 7;
+    }
+    b=i;
+    c += 7;
+  }
+  c = c-7;
+  doc.setFontType("bold");
+  doc.text(150, c, 'Total Second Meals+ ' + mealsSecond);
+  doc.setFontType("normal");
+
+  doc.line(10, (c+2), 200, (c+2));
+  doc.text(12, (c+8), 'Meals served to Program adults:');
+  b = 1;
+  c = c + 14;
+  for (j=0;j<(r3/15);j++) {
+    x = 13;
+    for (i=b;i<(b+15);i++) {
+            tx = i.toString();
+            doc.text(x, c, tx);
+            if (i<=mealsProgAdult) {
+              doc.line(x-1,c+1,x+3,c-2);
+            }
+            x = x + 7;
+    }
+    b=i;
+    c += 7;
+  }
+  c = c-7;
+  doc.setFontType("bold");
+  doc.text(140, c, 'Total Program Adult Meals+ ' + mealsProgAdult);
+  doc.setFontType("normal");
+
+  doc.line(10, (c+2), 200, (c+2));
+  doc.text(12, (c+8), 'Meals served to non-Program adults:');
+  b = 1;
+  c = c + 14;
+  for (j=0;j<(r4/15);j++) {
+    x = 13;
+    for (i=b;i<(b+15);i++) {
+      tx = i.toString();
+      doc.text(x, c, tx);
+      if (i<=mealsNonProgAdult) {
+        doc.line(x-1,c+1,x+3,c-2);
+      }
+      x = x + 7;
+    }
+    b=i;
+    c += 7;
+  }
+  c = c-7;
+  doc.setFontType("bold");
+  doc.text(133, c, 'Total non-Program Adult Meals+ ' + mealsNonProgAdult);
+
+  doc.setLineWidth(1);
+  doc.line(10, (c+2), 200, (c+2));
+  doc.setLineWidth(.2);
+  doc.text(138, (c+8), 'TOTAL MEALS SERVED = ' + mealsServed);
+  doc.line(10, (c+10), 200, (c+10));
+  c += 16;
+  doc.text(90, c, 'Total damaged/incomplete/other non-reimbursable meals+ ' + mealsDamaged);
+  doc.line(10, (c+2), 200, (c+2));
+  doc.text(148, (c+8), 'Total mealsLeftover meals+ ' + mealsLeftover);
+  doc.setLineWidth(1);
+  doc.line(10, (c+10), 200, (c+10));
+  doc.setLineWidth(.2);
+  c += 16;
+  doc.setFontType("normal");
+  doc.text(12, c, "By signing below, I certify that the above information is true and accurate:");
+   doc.text (148, (c+23), longDate);
+
+    var canvas = document.body.querySelector('canvas');
+
+  if (canvas===null) {
+    notification.alert(
+       'Site Representative must sign the form',  // message
+       null,         // callback
+       'Signature Needed',      // title
+       'OK'                  // buttonName
+       );
+    return false;
+  } else if (canvas !== null) {
+        var st = canvas.toDataURL("image/jpeg");
+        var data = st.slice('data:image/jpeg;base64,'.length);
+        data = atob(data);
+    doc.addImage(data, 'JPEG', 12, (c+8),80,25);
+  }
+  doc.save("MealCount_" + siteName+ "_" + longDate + ".pdf");
+  // if (isApple) {
+  //   window.location=doc.output('datauristring');
+  // } else {
+  //    doc.save("MealCount_" + siteName+ "_" + longDate + ".pdf");
+  // }
 }
 
 // console.log(`Meal Totals`);
