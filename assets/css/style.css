@@ -1,19 +1,24 @@
-/*
-* {border:1px dashed purple;}
-*/
 .button-wrapper .btn-lg {
     margin-bottom:5px;
 }
 #meals-available-form input {
    width:95px;
 }
-/* #startcounting-btn {
-  margin-top: 10px;
-} */
-/* .card {
-  margin-bottom: 5px;
-} */
-
-/* .container {
-  margin-top: 5px;
+#signature {
+/* width: 100%; */
+height: 100px;
+/* margin-bottom: : 5px; */
+border: 1px solid gray;
+}
+/* #signature {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  border: 1px solid gray;
+  width: 75%;
+}
+#signatureparent {
+  color:darkblue;
+  background-color:lightgrey;
+  padding: 15px;
+  max-size: 824px;
 } */

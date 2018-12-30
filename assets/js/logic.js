@@ -28,7 +28,12 @@ var shortDate = moment(now).format("YYYY-DD-MM")
 $(".longDate").text(longDate);
 $(".shortDate").text(shortDate);
 
-// $(".secondary-cards").toggleClass('d-none');
+$("#signature").jSignature();
+
+$(".secondary-cards").toggleClass('d-none');
+//comment above line to see all cards at start
+//does not alter navigation by toggleClass display of cards
+
 
 document.getElementById("siteName-input").value = localStorage.getItem("mealCounter-siteName");
 document.getElementById("siteAddress-input").value = localStorage.getItem("mealCounter-siteAddress");
@@ -128,7 +133,7 @@ function inputDamaged() {
 
 $("#startCounting-btn").click(function(event) {
   var form = $("#meals-available-form")
-  if (mealsAvailable == 0) {  //form cannot validate without mealsAvailable
+  if (mealsAvailable == 0) { //form cannot validate without mealsAvailable
     event.preventDefault()
     event.stopPropagation()
     $("#noMeals-invalidFeedback").toggleClass('d-none')
@@ -160,9 +165,10 @@ $("#startCounting-btn").click(function(event) {
 
 $('#doneCounting-btn').click(function(e) {
   sumMeals();
-  $("#mealsDamaged").attr({  //sets max value allowed for mealsDamaged on card4
+  $("#mealsDamaged").attr({ //sets max value allowed for mealsDamaged on card4
     "max": mealsAvailable - mealsServed
   });
+
   $("#card3-mainCounters").toggleClass('d-none');
   $("#card4-addlMeals").toggleClass('d-none');
 });
@@ -295,11 +301,13 @@ function goBackTo3() {
 };
 
 function goBackTo4() {
-  $("#card5-summary").toggleClass('d-none');
+  $("#signature").jSignature("clear");
+  $("#card5-signature").toggleClass('d-none');
   $("#card4-addlMeals").toggleClass('d-none');
 };
 
 function goBackTo5() {
+  $("#signature").jSignature("reset");
   $("#card6-done").toggleClass('d-none');
   $("#card5-signature").toggleClass('d-none');
 };
@@ -307,6 +315,10 @@ function goBackTo5() {
 function goToSign() {
   $("#card4-addlMeals").toggleClass('d-none');
   $("#card5-signature").toggleClass('d-none');
+  // Initialize jSignature
+  // $("#signature").jSignature();
+
+  // $("#signature").jSignature({'UndoButton':true});
 }
 
 function goToDone() {
