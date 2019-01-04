@@ -569,10 +569,10 @@ function createPDF() {
     );
     return false;
   } else if (canvas !== null) {
-    var st = canvas.toDataURL("image/jpeg");
-    var data = st.slice('data:image/jpeg;base64,'.length);
+    var st = canvas.toDataURL("image/png");
+    var data = st.slice('data:image/png;base64,'.length);
     data = atob(data);
-    doc.addImage(data, 'JPEG', 12, (c + 8), 80, 25);
+    doc.addImage(data, 'PNG', 12, (c + 8), 80, 25);
   }
   doc.save("MealCount_" + siteName + "_" + longDate + ".pdf");
   // if (isApple) {
