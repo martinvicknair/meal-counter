@@ -1,3 +1,4 @@
+// global variables
 var siteName = "";
 var siteAddress = "";
 var siteSupervisor = "";
@@ -16,48 +17,79 @@ var mealsUtilized = 0;
 var mealsLeftover = 0;
 var mealsAddlNeeded = 0;
 
-
+// notification strings other than bootstrap form validation
 var secondExceeds = "Second Meals cannot exceed First Meals";
 var firstExceeds = "First Meals must exceed Second Meals";
 var noMeals = "No meals remaining to serve";
 var readyServe = "Ready to serve!";
 
+
+// current date using moment.js
 var now = moment();
 var longDate = moment(now).format("ddd, MMM DD, YYYY");
 var shortDate = moment(now).format("YYYY-DD-MM")
 $(".longDate").text(longDate);
 $(".shortDate").text(shortDate);
 
+// must initialize jSignature before hiding cards 2-6
 $("#signature").jSignature();
 
+
+// initialize functions goes here
+
+// toggle here for app-in-cards mode or show all cards for editing
 $(".secondary-cards").toggleClass('d-none');
 //comment above line to see all cards at start
 //does not alter navigation by toggleClass display of cards
 
-
+// check local storage for previous site info, or whether a meal counting session is in progress
 document.getElementById("siteName-input").value = localStorage.getItem("mealCounter-siteName");
 document.getElementById("siteAddress-input").value = localStorage.getItem("mealCounter-siteAddress");
 document.getElementById("siteSupervisor-input").value = localStorage.getItem("mealCounter-siteSupervisor");
 
+// internal tracking of meal categories
+function sumMeals() {
+  mealsServed = mealsFirst + mealsSecond + mealsProgAdult + mealsNonProgAdult;
+  mealsUtilized = mealsServed + mealsDamaged;
+  mealsLeftover = mealsAvailable - mealsUtilized;
+  $(".mealsAvailable").text(mealsAvailable);
+  $(".mealsFirst").text(mealsFirst);
+  $(".mealsSecond").text(mealsSecond);
+  $(".mealsProgAdult").text(mealsProgAdult);
+  $(".mealsNonProgAdult").text(mealsNonProgAdult);
+  $(".mealsServed").text(mealsServed);
+  $(".mealsDamaged").text(mealsDamaged);
+  $(".mealsUtilized").text(mealsUtilized);
+  $(".mealsLeftover").text(mealsLeftover);
+  $("#mealsDamaged").attr({
+    "max": mealsAvailable - mealsServed //sets max value allowed for mealsDamaged on card4
+  });
+}
+
+
+<!---// card1-siteMealInfo functionality --->
+
+// validation for mealType onclick
 // https://getbootstrap.com/docs/4.2/components/forms/#validation
 // https://www.codeply.com/go/LYdmkkTZUS/bootstrap-4-validation-example
 $("#meal-type-btns").click(function(event) {
   // Fetch form to apply custom Bootstrap validation
-  var form = $("#site-meal-form")
-  if (form[0].checkValidity() === false) {
-    event.preventDefault()
-    event.stopPropagation()
-  } else if (form[0].checkValidity() == true) {
-    event.preventDefault()
+  var form = $("#site-meal-form");
+  if (form[0].checkValidity() === false) { // check form fields using built-in validation in html
+    event.preventDefault();
+    event.stopPropagation();
+  } else if (form[0].checkValidity() == true) { // must have siteName, siteAddress, siteSupervisor
+    event.preventDefault();
     var meal = document.activeElement.getAttribute('value');
     selectSiteMeal(meal);
     $(".siteName").text(siteName);
     $("#card1-siteMealInfo").toggleClass('d-none');
-    $("#card2-mealsAvailable").toggleClass('d-none')
+    $("#card2-mealsAvailable").toggleClass('d-none');
   }
   form.addClass('was-validated');
 });
 
+// upon successful mealType validation
 function selectSiteMeal(meal) {
   siteName = document.getElementById("siteName-input").value;
   siteAddress = document.getElementById("siteAddress-input").value;
@@ -80,54 +112,23 @@ function selectSiteMeal(meal) {
       break;
   }
   $(".mealType").text(mealType);
-}
+};
+
+
+<!---// card2-mealsAvailable functionality --->
 
 function sumMealsAvail() {
   mealsNew = document.getElementById("mealsNew").value;
   mealsPrevious = document.getElementById("mealsPrevious").value;
   var mealsTotal = 0;
-  mealsTotal += numNan(mealsNew);
-  mealsTotal += numNan(mealsPrevious);
+  mealsTotal += numNaN(mealsNew);
+  mealsTotal += numNaN(mealsPrevious);
   mealsAvailable = mealsTotal;
   $('.mealsAvailable').val(mealsAvailable);
   if (mealsAvailable > 0 && (mealsNew != "" && mealsPrevious != "")) {
     document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-success");
   } else {
     document.getElementById("startCounting-btn").setAttribute("class", "btn-lg w-100 btn-danger");
-  }
-};
-
-//for calculation of NaN without console error; allows Bootstrap form validation to work properly with blanks
-//https://stackoverflow.com/questions/7540397/convert-nan-to-0-in-javascript
-function numNan(str) {
-  return /[0-9]*\.?[0-9]+/.test(str) ? parseFloat(str) : 0;
-}
-
-function sumMeals() {
-  mealsServed = mealsFirst + mealsSecond + mealsProgAdult + mealsNonProgAdult;
-  mealsUtilized = mealsServed + mealsDamaged;
-  mealsLeftover = mealsAvailable - mealsUtilized;
-  $(".mealsAvailable").text(mealsAvailable);
-  $(".mealsFirst").text(mealsFirst);
-  $(".mealsSecond").text(mealsSecond);
-  $(".mealsProgAdult").text(mealsProgAdult);
-  $(".mealsNonProgAdult").text(mealsNonProgAdult);
-  $(".mealsServed").text(mealsServed);
-  $(".mealsDamaged").text(mealsDamaged);
-  $(".mealsUtilized").text(mealsUtilized);
-  $(".mealsLeftover").text(mealsLeftover);
-}
-
-function inputDamaged() {
-  mealsDamaged = document.getElementById("mealsDamaged").value;
-  mealsDamaged = numNan(mealsDamaged);
-  sumMeals();
-  if (mealsLeftover <= -1) {
-    mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
-    $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
-    setTimeout(function() {
-      $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
-    }, 2500);
   }
 };
 
@@ -140,17 +141,17 @@ $("#startCounting-btn").click(function(event) {
     setTimeout(function() {
       $("#noMeals-invalidFeedback").toggleClass('d-none');
     }, 3000);
-  } else if (mealsAvailable < mealsUtilized) { //cannot validate if mealsUtilized exceeds mealsAvailable
+  } else if (mealsAvailable < mealsUtilized) { // cannot validate if mealsUtilized exceeds mealsAvailable
     event.preventDefault()
     event.stopPropagation()
     $("#servedExceeds-invalidFeedback").toggleClass('d-none')
     setTimeout(function() {
       $("#servedExceeds-invalidFeedback").toggleClass('d-none');
     }, 3000);
-  } else if (form[0].checkValidity() === false) { //check form fields using built-in validation in html
+  } else if (form[0].checkValidity() === false) { // check form fields using built-in validation in html
     event.preventDefault()
     event.stopPropagation()
-  } else if (form[0].checkValidity() == true) { //check form fields using built-in validation in html
+  } else if (form[0].checkValidity() == true) { // must have non-zero on inputs & mealsAvailable > 0
     event.preventDefault();
     sumMeals();
     $("#notify").val(readyServe);
@@ -163,15 +164,8 @@ $("#startCounting-btn").click(function(event) {
   form.addClass('was-validated');
 });
 
-$('#doneCounting-btn').click(function(e) {
-  sumMeals();
-  $("#mealsDamaged").attr({ //sets max value allowed for mealsDamaged on card4
-    "max": mealsAvailable - mealsServed
-  });
 
-  $("#card3-mainCounters").toggleClass('d-none');
-  $("#card4-addlMeals").toggleClass('d-none');
-});
+<!---// card3-counterCard functionality --->
 
 $('#first-plus-btn').click(function(e) {
   if (mealsLeftover == 0) {
@@ -264,6 +258,27 @@ $('#mealsNonProgAdult-minus-btn').click(function(e) {
   }
 });
 
+$('#doneCounting-btn').click(function(e) {
+  sumMeals();
+  $("#card3-mainCounters").toggleClass('d-none');
+  $("#card4-addlMeals").toggleClass('d-none');
+});
+
+<!---// card4-addlMeals functionality -->
+
+function inputDamaged() {
+  mealsDamaged = document.getElementById("mealsDamaged").value;
+  mealsDamaged = numNaN(mealsDamaged);
+  sumMeals();
+  if (mealsLeftover <= -1) {
+    mealsDamaged = parseInt(document.getElementById("mealsDamaged").value);
+    $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
+    setTimeout(function() {
+      $("#mealsDamaged-invalidFeedback").toggleClass('d-none');
+    }, 2500);
+  }
+};
+
 $('#mealsAddlNeeded-plus-btn').click(function(e) {
   if (mealsLeftover > 0) {
     $("#addlMeals-invalidFeedback").toggleClass('d-none');
@@ -281,6 +296,23 @@ $('#mealsAddlNeeded-minus-btn').click(function(e) {
     $('.mealsAddlNeeded').text(mealsAddlNeeded);
   }
 });
+
+function signFinish() {
+
+};
+
+
+<!-- // card5-signature functionality  --->
+
+// jSignature was called on line 35
+function goToDone() {
+  createPDF();
+  $("#card5-signature").toggleClass('d-none');
+  $("#card6-done").toggleClass('d-none');
+}
+
+
+// card navigations
 
 function goBackTo1() {
   $("#card2-mealsAvailable").toggleClass('d-none');
@@ -321,10 +353,12 @@ function goToSign() {
   // $("#signature").jSignature({'UndoButton':true});
 }
 
-function goToDone() {
-  createPDF();
-  $("#card5-signature").toggleClass('d-none');
-  $("#card6-done").toggleClass('d-none');
+// for calculation of NaN without console error-
+// allows Bootstrap form validation to work properly with blanks,
+// and when user enters zero directly into number input
+// https://stackoverflow.com/questions/7540397/convert-nan-to-0-in-javascript
+function numNaN(str) {
+  return /[0-9]*\.?[0-9]+/.test(str) ? parseFloat(str) : 0;
 }
 
 function resetApp() {
@@ -347,11 +381,11 @@ function beforeUnload() {
 
 function createPDF() {
   /****************************************************************
-  *
-  *		get page variables
-  *
-  ******************************************************************/
-  $(this).css("background-color","green");
+   *
+   *		get page variables
+   *
+   ******************************************************************/
+  $(this).css("background-color", "green");
   // var siteName = siteName;
   // var siteAddress = siteAddress;
   // var siteSupervisor = siteSupervisor;
@@ -364,32 +398,32 @@ function createPDF() {
   // var mealsSecond = mealsSecond;  //second meals to children
   // var mealsServed = mealsServed;
 
-//write a second page to handle numbers greater than defined below
-  if (mealsFirst>160) {
-          //divide then round up and multiply again
-          r = Math.ceil(mealsFirst/20);
-          r = r*20;
+  //write a second page to handle numbers greater than defined below
+  if (mealsFirst > 160) {
+    //divide then round up and multiply again
+    r = Math.ceil(mealsFirst / 20);
+    r = r * 20;
   } else {
-          r= 160;
+    r = 160;
   }
 
-  if (mealsSecond>15) {
-          r2 = Math.ceil(mealsSecond/15);
-          r2 = r2*15;
+  if (mealsSecond > 15) {
+    r2 = Math.ceil(mealsSecond / 15);
+    r2 = r2 * 15;
   } else {
-          r2 = 15;
+    r2 = 15;
   }
-  if (mealsProgAdult>15) {
-          r3 = Math.ceil(mealsProgAdult/15);
-          r3 = r3*15;
+  if (mealsProgAdult > 15) {
+    r3 = Math.ceil(mealsProgAdult / 15);
+    r3 = r3 * 15;
   } else {
-          r3 = 15;
+    r3 = 15;
   }
-  if (mealsNonProgAdult>15) {
-          r4 = Math.ceil(mealsNonProgAdult/15);
-          r4 = r4*15;
+  if (mealsNonProgAdult > 15) {
+    r4 = Math.ceil(mealsNonProgAdult / 15);
+    r4 = r4 * 15;
   } else {
-          r4 = 15;
+    r4 = 15;
   }
   var doc = new jsPDF('p', 'mm', 'letter');
   // starting x, starting y, width, height
@@ -405,33 +439,35 @@ function createPDF() {
   doc.line(10, 56, 200, 56);
 
   doc.text(12, 25, 'Site: ' + siteName);
-  doc.text(130,25, 'Meal: ' + mealType);
+  doc.text(130, 25, 'Meal: ' + mealType);
   doc.text(12, 35, 'Address: ' + siteAddress);
 
-  doc.text(12,45, "Supervisor\'s Name: " + siteSupervisor);
+  doc.text(12, 45, "Supervisor\'s Name: " + siteSupervisor);
   doc.text(130, 45, 'Date: ' + longDate);
   var txt = 'Meals Received: ' + mealsNew + ' +	  Meals available from previous day: ' + mealsPrevious + ' =  Total meals available: ';
   doc.setFontType("bold");
   doc.text(12, 55, txt);
-  doc.text(175,55,mealsAvailable.toString());
+  doc.text(175, 55, mealsAvailable.toString());
   doc.setFontType("normal");
   doc.text(12, 62, 'First Meals Served to Children:');
 
   //put lines through the served meals
-  var x,tx,b = 1;
+  var x, tx, b = 1;
   var c = 68;
-  for (j=0;j<(r/20);j++) {
+  for (j = 0; j < (r / 20); j++) {
     x = 13;
-    if (j>4) { x = 12; }
-    for (i=b;i<(b+20);i++) {
-        tx = i.toString();
-        doc.text(x, c, tx);
-        if (i<=mealsFirst) {
-          doc.line(x-1,c+1,x+4,c-3);
-        }
-        x = x + 9;
+    if (j > 4) {
+      x = 12;
     }
-    b=i;
+    for (i = b; i < (b + 20); i++) {
+      tx = i.toString();
+      doc.text(x, c, tx);
+      if (i <= mealsFirst) {
+        doc.line(x - 1, c + 1, x + 4, c - 3);
+      }
+      x = x + 9;
+    }
+    b = i;
     c += 7;
   }
 
@@ -440,105 +476,105 @@ function createPDF() {
   doc.text(156, c, 'Total First Meals: ' + mealsFirst);
   doc.setFontType("normal");
 
-  doc.line(10, (c+2), 200, (c+2));
-  doc.text(12, (c+8), 'Second meals served to children:');
+  doc.line(10, (c + 2), 200, (c + 2));
+  doc.text(12, (c + 8), 'Second meals served to children:');
   b = 1;
   c = c + 14;
-  for (j=0;j<(r2/15);j++) {
+  for (j = 0; j < (r2 / 15); j++) {
     x = 13;
-    for (i=b;i<(b+15);i++) {
-        tx = i.toString();
-        doc.text(x, c, tx);
-        if (i<=mealsSecond) {
-          doc.line(x-1,c+1,x+3,c-2);
-        }
-        x = x + 7;
+    for (i = b; i < (b + 15); i++) {
+      tx = i.toString();
+      doc.text(x, c, tx);
+      if (i <= mealsSecond) {
+        doc.line(x - 1, c + 1, x + 3, c - 2);
+      }
+      x = x + 7;
     }
-    b=i;
+    b = i;
     c += 7;
   }
-  c = c-7;
+  c = c - 7;
   doc.setFontType("bold");
   doc.text(150, c, 'Total Second Meals+ ' + mealsSecond);
   doc.setFontType("normal");
 
-  doc.line(10, (c+2), 200, (c+2));
-  doc.text(12, (c+8), 'Meals served to Program adults:');
+  doc.line(10, (c + 2), 200, (c + 2));
+  doc.text(12, (c + 8), 'Meals served to Program adults:');
   b = 1;
   c = c + 14;
-  for (j=0;j<(r3/15);j++) {
+  for (j = 0; j < (r3 / 15); j++) {
     x = 13;
-    for (i=b;i<(b+15);i++) {
-            tx = i.toString();
-            doc.text(x, c, tx);
-            if (i<=mealsProgAdult) {
-              doc.line(x-1,c+1,x+3,c-2);
-            }
-            x = x + 7;
+    for (i = b; i < (b + 15); i++) {
+      tx = i.toString();
+      doc.text(x, c, tx);
+      if (i <= mealsProgAdult) {
+        doc.line(x - 1, c + 1, x + 3, c - 2);
+      }
+      x = x + 7;
     }
-    b=i;
+    b = i;
     c += 7;
   }
-  c = c-7;
+  c = c - 7;
   doc.setFontType("bold");
   doc.text(140, c, 'Total Program Adult Meals+ ' + mealsProgAdult);
   doc.setFontType("normal");
 
-  doc.line(10, (c+2), 200, (c+2));
-  doc.text(12, (c+8), 'Meals served to non-Program adults:');
+  doc.line(10, (c + 2), 200, (c + 2));
+  doc.text(12, (c + 8), 'Meals served to non-Program adults:');
   b = 1;
   c = c + 14;
-  for (j=0;j<(r4/15);j++) {
+  for (j = 0; j < (r4 / 15); j++) {
     x = 13;
-    for (i=b;i<(b+15);i++) {
+    for (i = b; i < (b + 15); i++) {
       tx = i.toString();
       doc.text(x, c, tx);
-      if (i<=mealsNonProgAdult) {
-        doc.line(x-1,c+1,x+3,c-2);
+      if (i <= mealsNonProgAdult) {
+        doc.line(x - 1, c + 1, x + 3, c - 2);
       }
       x = x + 7;
     }
-    b=i;
+    b = i;
     c += 7;
   }
-  c = c-7;
+  c = c - 7;
   doc.setFontType("bold");
   doc.text(133, c, 'Total non-Program Adult Meals+ ' + mealsNonProgAdult);
 
   doc.setLineWidth(1);
-  doc.line(10, (c+2), 200, (c+2));
+  doc.line(10, (c + 2), 200, (c + 2));
   doc.setLineWidth(.2);
-  doc.text(138, (c+8), 'TOTAL MEALS SERVED = ' + mealsServed);
-  doc.line(10, (c+10), 200, (c+10));
+  doc.text(138, (c + 8), 'TOTAL MEALS SERVED = ' + mealsServed);
+  doc.line(10, (c + 10), 200, (c + 10));
   c += 16;
   doc.text(90, c, 'Total damaged/incomplete/other non-reimbursable meals+ ' + mealsDamaged);
-  doc.line(10, (c+2), 200, (c+2));
-  doc.text(148, (c+8), 'Total mealsLeftover meals+ ' + mealsLeftover);
+  doc.line(10, (c + 2), 200, (c + 2));
+  doc.text(148, (c + 8), 'Total mealsLeftover meals+ ' + mealsLeftover);
   doc.setLineWidth(1);
-  doc.line(10, (c+10), 200, (c+10));
+  doc.line(10, (c + 10), 200, (c + 10));
   doc.setLineWidth(.2);
   c += 16;
   doc.setFontType("normal");
   doc.text(12, c, "By signing below, I certify that the above information is true and accurate:");
-   doc.text (148, (c+23), longDate);
+  doc.text(148, (c + 23), longDate);
 
-    var canvas = document.body.querySelector('canvas');
+  var canvas = document.body.querySelector('canvas');
 
-  if (canvas===null) {
+  if (canvas === null) {
     notification.alert(
-       'Site Representative must sign the form',  // message
-       null,         // callback
-       'Signature Needed',      // title
-       'OK'                  // buttonName
-       );
+      'Site Representative must sign the form', // message
+      null, // callback
+      'Signature Needed', // title
+      'OK' // buttonName
+    );
     return false;
   } else if (canvas !== null) {
-        var st = canvas.toDataURL("image/jpeg");
-        var data = st.slice('data:image/jpeg;base64,'.length);
-        data = atob(data);
-    doc.addImage(data, 'JPEG', 12, (c+8),80,25);
+    var st = canvas.toDataURL("image/jpeg");
+    var data = st.slice('data:image/jpeg;base64,'.length);
+    data = atob(data);
+    doc.addImage(data, 'JPEG', 12, (c + 8), 80, 25);
   }
-  doc.save("MealCount_" + siteName+ "_" + longDate + ".pdf");
+  doc.save("MealCount_" + siteName + "_" + longDate + ".pdf");
   // if (isApple) {
   //   window.location=doc.output('datauristring');
   // } else {
