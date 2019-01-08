@@ -309,7 +309,7 @@ function signFinish() {
 // jSignature was called on line 35
 function goToDone() {
   if ($('#signature').jSignature("getData", 'native').length > 0) {
-    jsSigDataValid = true;
+    // jsSigDataValid = true;
     createPDF();
     $("#card5-signature").fadeOut('fast');
     $("#card6-done").fadeIn();
