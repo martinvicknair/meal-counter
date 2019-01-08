@@ -13,6 +13,7 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="assets/css/bootstrap-4.2.1.min.css">
+  <link rel="stylesheet" href="assets/css/animate.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
   <title>SFR Meal Counter</title>
@@ -78,8 +79,9 @@
                   <div class="col-auto">
                     <p>Fill in Name, Address, and Supervisor. Then choose a meal to continue.</p>
                     <p>The number of meals available will be entered in the next step.</p>
+                    <hr class="my-4">
                     <p>Having trouble and want to start over?<br>
-                      Click below to clear all local data and restart this app.</p>
+                      Click below to clear all data and restart this app from the beginning.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
                   </div>
                 </div>
@@ -95,12 +97,12 @@
                       <li class="list-group-item">
                         <p>This is an electronic Point of Service Meal Capture app designed for use in USDA-approved programs. It replaces the paper Daily Meal Count Form used in programs such as SFSP and CACFP.</p>
 
-                          <ul class="">
+                        <ul class="">
                           <li>Simple user interface</li>
                           <li>Reduces errors, saves time</li>
                           <li>Captures data in real time</li>
                           <li>Works on any mobile device</li>
-                          </ul>
+                        </ul>
 
                         <p class="mt-3">At the conclusion of meal service, a USDA-approved Meal Count Form is generated as a PDF document which can be downloaded, emailed, printed, or stored electronically.</p>
                       </li>
@@ -122,7 +124,7 @@
     <!-- END card1-siteMealInfo -->
 
     <!-- START card2-mealsAvailable -->
-    <div id="card2-mealsAvailable" class="secondary-cards ">
+    <div id="card2-mealsAvailable" class="secondary-cards animate">
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="card mb-3">
@@ -202,7 +204,8 @@
                     <p>Enter the number of new meals and any meals leftover from previous service.</p>
                     <p>Enter zero, if applicable.</p>
                     <p>Press the "Start Counting Button" to continue.</p>
-                    <p>Click below to clear all local data and restart this app.</p>
+                    <hr class="my-4">
+                    <p>Click below to clear all data and restart this app from the beginning.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
                   </div>
                 </div>
@@ -327,7 +330,8 @@
                     <h6 class="card-title text-center">Meal Counter Help</h6>
                     <p>Count meals at point of service</p>
                     <p>Press "Done Counting" at end of service.</p>
-                    <p>Click below to clear all local data and restart this app.</p>
+                    <hr class="my-4">
+                    <p>Click below to clear all data and restart this app from the beginning.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
                   </div>
                 </div>
@@ -440,9 +444,8 @@
                 </div>
                 <div class="card-footer text-muted text-center">
                   Step 4/6<br>
-                  Add any additional meals needed if you run out of meals.<br>
-                  You may also note any damaged or incomplete meals.<br>
-                  Press "Finish and Sign" to continue.
+                  <p>Enter the number of damaged or incomplete meals, if any. You may also make note of any Additional Meals requested if you run out.<br>
+                  Press "Finish and Sign" to continue.</p>
                 </div>
               </div>
               <!--card4-hometab-content-->
@@ -450,10 +453,12 @@
               <div class="tab-pane fade" id="card4-helptab-content" role="tabpanel">
                 <div class="card-body bg-light">
                   <div class="col-md-8 offset-md-2">
-                    <h6 class="card-title text-center">Additonal & Damaged Meals Help</h6>
-                    <p>Add any additional meals needed if you run out of meals. You may also note any damaged or incomplete meals.</p>
+                    <h6 class="card-title text-center">Damaged & Additonal Meals Help</h6>
+                    <p>Enter the number of damaged or incomplete meals, if any.</p>
+                    <p>You may also make note of any Additional Meals requested if you run out.</p>
                     <p>Press "Finish and Sign" to continue.</p>
-                    <p>Click below to clear all local data and restart this app.</p>
+                    <hr class="my-4">
+                    <p>Click below to clear all data and restart this app from the beginning.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
                   </div>
                 </div>
@@ -527,8 +532,8 @@
                   <div class="col-md-8 offset-md-2">
                     <h6 class="card-title text-center">Sign and Finish Help</h6>
                     <p>Sign & Finish</p>
-                    <p>Having trouble and want to start over?</p>
-                    <p>Click below to clear all local data and restart this app.</p>
+                    <hr class="my-4">
+                    <p>Click below to clear all data and restart this app from the beginning.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
                   </div>
                 </div>
@@ -549,7 +554,7 @@
           <div class="card mb-3">
             <span class="card-header">
               <h5>SFR Meal Counter</h5>
-              <a class="text-right float-right" id="goBackTo5" href="#" onclick="goBackTo5(); return false;">Go Back</a>
+              <!-- <a class="text-right float-right" id="goBackTo5" href="#" onclick="goBackTo5(); return false;">Go Back</a> -->
               <ul class="nav nav-tabs card-header-tabs" id="card6-tablist" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" id="card6-home-tab" data-toggle="tab" href="#card6-hometab-content" role="tab">Done 6/6</a>
@@ -599,16 +604,46 @@
 
               <div class="tab-pane fade" id="card6-helptab-content" role="tabpanel">
                 <div class="card-body bg-light">
-                  <div class="col-md-8 offset-md-2">
-                    <h6 class="card-title text-center">Done Help</h6>
-                    <p>xxxx</p>
-                    <p>Having trouble and want to start over?</p>
-                    <p>Click below to clear all local data and restart this app.</p>
+
+                  <h5 class="card-title text-center"><strong>S</strong>ummer <strong>F</strong>ood <strong>R</strong>ocks!</h5>
+                  <h6 class="card-title text-center">Site and Meal Info Help</h6>
+                  <div class="col-auto">
+
+                    <hr class="my-4">
+                    <p>Click below to clear all data and restart this app from the beginning.</p>
                     <button type="button" class="btn btn-danger" name="resetApp" onclick="resetApp()">RESET</button>
                   </div>
                 </div>
               </div>
-              <!--card6-helptab-content-->
+              <!--card1-helptab-content-->
+
+              <div class="tab-pane fade" id="card6-abouttab-content" role="tabpanel">
+                <div class="card-body bg-light">
+                  <h5 class="card-title text-center"><strong>S</strong>ummer <strong>F</strong>ood <strong>R</strong>ocks!</h5>
+                  <h6 class="card-title text-center"><a href="https://www.summerfoodrocks.org" target="_blank">www.SummerFoodRocks.org</a></h6>
+                  <div class="col-auto">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        <p>This is an electronic Point of Service Meal Capture app designed for use in USDA-approved programs. It replaces the paper Daily Meal Count Form used in programs such as SFSP and CACFP.</p>
+
+                        <ul class="">
+                          <li>Simple user interface</li>
+                          <li>Reduces errors, saves time</li>
+                          <li>Captures data in real time</li>
+                          <li>Works on any mobile device</li>
+                        </ul>
+
+                        <p class="mt-3">At the conclusion of meal service, a USDA-approved Meal Count Form is generated as a PDF document which can be downloaded, emailed, printed, or stored electronically.</p>
+                      </li>
+                      <li class="list-group-item">
+                        <p>Project Home:</p>
+                        <a href="https://github.com/martinvicknair/meal-counter" target="_blank">github.com/martinvicknair/meal-counter</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--card6-abouttab-content-->
             </div>
             <!--card6-tabcontent-->
           </div>
@@ -617,11 +652,54 @@
     </div>
     <!-- END card6-done -->
 
+    <!-- needSigModal -->
+    <div class="modal fade" id="needSigModal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h5 class="modal-title">Signature Needed</h5>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            Please sign before continuing.
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- resetModal -->
+    <div class="modal fade" id="resetModal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h5 class="modal-title">Starting Over</h5>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            Delete current app entries and restart?
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer float-left">
+            <button type="button" class="btn btn-warning" id="resetModal-yes">Yes</button>
+            <button type="button" class="btn btn-info" id="resetModal-no">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!--container-->
 
   <!-- jQuery first, then Bootstrap JS -->
-  <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
   <script src="assets/js/bootstrap-4.2.1.bundle.min.js"></script>
   <script src="assets/js/moment.js"></script>
   <script src="assets/js/jSignature.min.js"></script>
