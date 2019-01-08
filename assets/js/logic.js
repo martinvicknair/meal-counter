@@ -38,7 +38,8 @@ $("#signature").jSignature();
 // initialize functions goes here
 
 // toggle here for app-in-cards mode or show all cards for editing
-$(".secondary-cards").toggleClass('d-none');
+// $(".secondary-cards").toggleClass('d-none');
+$(".secondary-cards").fadeOut('fast');
 //comment above line to see all cards at start
 //does not alter navigation by toggleClass display of cards
 
@@ -83,8 +84,8 @@ $("#meal-type-btns").click(function(event) {
     var meal = document.activeElement.getAttribute('value');
     selectSiteMeal(meal);
     $(".siteName").text(siteName);
-    $("#card1-siteMealInfo").toggleClass('d-none');
-    $("#card2-mealsAvailable").toggleClass('d-none');
+    $("#card1-siteMealInfo").fadeOut('fast');
+    $("#card2-mealsAvailable").fadeIn();
   }
   form.addClass('was-validated');
 });
@@ -158,8 +159,8 @@ $("#startCounting-btn").click(function(event) {
     setTimeout(function() {
       $("#notify").val("");
     }, 3000);
-    $("#card2-mealsAvailable").toggleClass('d-none')
-    $("#card3-mainCounters").toggleClass('d-none');
+    $("#card2-mealsAvailable").fadeOut('fast');
+    $("#card3-mainCounters").fadeIn();
   }
   form.addClass('was-validated');
 });
@@ -260,8 +261,8 @@ $('#mealsNonProgAdult-minus-btn').click(function(e) {
 
 $('#doneCounting-btn').click(function(e) {
   sumMeals();
-  $("#card3-mainCounters").toggleClass('d-none');
-  $("#card4-addlMeals").toggleClass('d-none');
+  $("#card3-mainCounters").fadeOut('fast');
+  $("#card4-addlMeals").fadeIn();
 });
 
 <!---// card4-addlMeals functionality -->
@@ -302,51 +303,57 @@ function signFinish() {
 };
 
 
+
 <!-- // card5-signature functionality  --->
 
 // jSignature was called on line 35
 function goToDone() {
-  createPDF();
-  $("#card5-signature").toggleClass('d-none');
-  $("#card6-done").toggleClass('d-none');
-}
+  if ($('#signature').jSignature("getData", 'native').length > 0) {
+    jsSigDataValid = true;
+    createPDF();
+    $("#card5-signature").fadeOut('fast');
+    $("#card6-done").fadeIn();
+  } else {
+        $("#needSigModal").modal()
+  }
+};
 
 
 // card navigations
 
 function goBackTo1() {
-  $("#card2-mealsAvailable").toggleClass('d-none');
-  $("#card1-siteMealInfo").toggleClass('d-none');
+  $("#card2-mealsAvailable").fadeOut('fast');
+  $("#card1-siteMealInfo").fadeIn();
 };
 
 function goBackTo2() {
-  $("#mealsAvailable-input").attr({
-    "min": mealsUtilized
-  });
-  $("#card3-mainCounters").toggleClass('d-none');
-  $("#card2-mealsAvailable").toggleClass('d-none');
+  // $("#mealsAvailable-input").attr({
+  //   "min": mealsUtilized
+  // });
+  $("#card3-mainCounters").fadeOut('fast');
+  $("#card2-mealsAvailable").fadeIn();
 };
 
 function goBackTo3() {
-  $("#card4-addlMeals").toggleClass('d-none');
-  $("#card3-mainCounters").toggleClass('d-none');
+  $("#card4-addlMeals").fadeOut('fast');
+  $("#card3-mainCounters").fadeIn();
 };
 
 function goBackTo4() {
   $("#signature").jSignature("clear");
-  $("#card5-signature").toggleClass('d-none');
-  $("#card4-addlMeals").toggleClass('d-none');
+  $("#card5-signature").fadeOut('fast');
+  $("#card4-addlMeals").fadeIn();
 };
 
-function goBackTo5() {
-  $("#signature").jSignature("reset");
-  $("#card6-done").toggleClass('d-none');
-  $("#card5-signature").toggleClass('d-none');
-};
+// function goBackTo5() {
+//   $("#signature").jSignature("reset");
+//   $("#card6-done").fadeOut('fast');
+//   $("#card5-signature").fadeIn();
+// };
 
 function goToSign() {
-  $("#card4-addlMeals").toggleClass('d-none');
-  $("#card5-signature").toggleClass('d-none');
+  $("#card4-addlMeals").fadeOut('fast');
+  $("#card5-signature").fadeIn();
   // Initialize jSignature
   // $("#signature").jSignature();
 
@@ -361,13 +368,35 @@ function numNaN(str) {
   return /[0-9]*\.?[0-9]+/.test(str) ? parseFloat(str) : 0;
 }
 
+// function resetApp() {
+//   var x = confirm("Do you wish to clear all data and restart the Meal Counter app?")
+//   if (x == true) {
+//     localStorage.clear();
+//     window.onbeforeunload = null;
+//     window.location.reload();
+//   }
+// };
+
 function resetApp() {
-  var x = confirm("Do you wish to clear all data and restart the Meal Counter app?")
-  if (x == true) {
-    localStorage.clear();
-    window.onbeforeunload = null;
-    window.location.reload();
-  }
+  var modalConfirm = function(callback) {
+    $("#resetModal").modal()
+    $("#resetModal-yes").on("click", function() {
+      callback(true);
+      $("#resetModal").modal('hide');
+    });
+    $("#resetModal-no").on("click", function() {
+      callback(false);
+      $("#resetModal").modal('hide');
+    });
+  };
+
+  modalConfirm(function(confirm) {
+    if (confirm) {
+      localStorage.clear();
+      window.onbeforeunload = null;
+      window.location.reload();
+    }
+  });
 };
 
 function restartApp() {
@@ -376,7 +405,7 @@ function restartApp() {
 }
 
 function beforeUnload() {
-  return 'Use the "Go Back" button, or you may lose your changes.';
+  return 'Use the "Go Back" button, or you wil lose your changes.';
 }
 
 function createPDF() {
@@ -561,7 +590,7 @@ function createPDF() {
   var canvas = document.body.querySelector('canvas');
 
   if (canvas === null) {
-    notification.alert(
+    alert(
       'Site Representative must sign the form', // message
       null, // callback
       'Signature Needed', // title
