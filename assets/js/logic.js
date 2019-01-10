@@ -35,11 +35,13 @@ $(".shortDate").text(shortDate);
 $("#signature").jSignature();
 
 
+
+
 // initialize functions goes here
 
 // toggle here for app-in-cards mode or show all cards for editing
 // $(".secondary-cards").toggleClass('d-none');
-$(".secondary-cards").fadeOut('fast');
+// $(".secondary-cards").fadeOut('fast');
 //comment above line to see all cards at start
 //does not alter navigation by toggleClass display of cards
 
@@ -74,6 +76,7 @@ function sumMeals() {
 // https://getbootstrap.com/docs/4.2/components/forms/#validation
 // https://www.codeply.com/go/LYdmkkTZUS/bootstrap-4-validation-example
 $("#meal-type-btns").click(function(event) {
+  // tiktok.play();
   // Fetch form to apply custom Bootstrap validation
   var form = $("#site-meal-form");
   if (form[0].checkValidity() === false) { // check form fields using built-in validation in html
@@ -155,9 +158,10 @@ $("#startCounting-btn").click(function(event) {
   } else if (form[0].checkValidity() == true) { // must have non-zero on inputs & mealsAvailable > 0
     event.preventDefault();
     sumMeals();
+    $("#notify").toggleClass('text-primary');
     $("#notify").val(readyServe);
     setTimeout(function() {
-      $("#notify").val("");
+      $("#notify").val("").toggleClass('text-danger');
     }, 3000);
     $("#card2-mealsAvailable").fadeOut('fast');
     $("#card3-mainCounters").fadeIn();
