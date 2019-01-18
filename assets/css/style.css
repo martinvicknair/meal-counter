@@ -6,11 +6,11 @@
 }
 #signature {
 /* width: 100%; */
-height: 100px;
+height: 100%;
 /* margin-bottom: : 5px; */
 border: 1px solid gray;
 }
-.col-centered{
+/* .col-centered{
     margin: 0 auto;
     float: none;
-}
+} */
