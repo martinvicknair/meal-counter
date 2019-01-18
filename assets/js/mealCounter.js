@@ -3,6 +3,8 @@ var siteName = "";
 var siteAddress = "";
 var siteSupervisor = "";
 var mealType = "";
+var deliveryTemp = "";
+var sitePhone = [{ "mask": "###-###-####"}];
 
 var mealsNew;
 var mealsPrevious;
@@ -158,6 +160,8 @@ $("#startCounting-btn").click(function(event) {
   } else if (form[0].checkValidity() == true) { // must have non-zero on inputs & mealsAvailable > 0
     event.preventDefault();
     sumMeals();
+    deliveryTemp = document.getElementsByClassName("deliveryTemp")[0].value;
+    console.log(deliveryTemp);
     $("#notify").toggleClass('text-primary');
     $("#notify").val(readyServe);
     setTimeout(function() {
@@ -303,18 +307,23 @@ $('#mealsAddlNeeded-minus-btn').click(function(e) {
 });
 
 function signFinish() {
-
+$('deliveryTemp').attr('placeholder', deliveryTemp);
 };
 
 
 
 <!-- // card5-signature functionality  --->
+$('#sitePhone').inputmask({
+        mask: sitePhone,
+        greedy: false,
+        definitions: { '#': { validator: "[0-9]", cardinality: 1}} });
 
 // jSignature was called on line 35
 function goToDone() {
   if ($('#signature').jSignature("getData", 'native').length > 0) {
     // jsSigDataValid = true;
     createPDF();
+    deliveryTemp = document.getElementsByClassName("deliveryTemp")[0].value;
     $("#card5-signature").fadeOut('fast');
     $("#card6-done").fadeIn();
   } else {
@@ -356,6 +365,7 @@ function goBackTo4() {
 // };
 
 function goToSign() {
+  $('.deliveryTemp').attr('value', deliveryTemp);
   $("#card4-addlMeals").fadeOut('fast');
   $("#card5-signature").fadeIn();
   // Initialize jSignature
