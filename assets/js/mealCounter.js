@@ -10,7 +10,7 @@ var mealsNew;
 var mealsPrevious;
 var mealsAvailable = 0;
 var mealsFirst = 0;
-var mealsSecond = 0
+var mealsSecond = 0;
 var mealsProgAdult = 0;
 var mealsNonProgAdult = 0;
 var mealsServed = 0;
@@ -20,9 +20,10 @@ var mealsLeftover = 0;
 var mealsAddlNeeded = 0;
 
 // notification strings other than bootstrap form validation
+// used on card3-counterCard
 var secondExceeds = "Second Meals cannot exceed First Meals";
 var firstExceeds = "First Meals must exceed Second Meals";
-var noMeals = "No meals remaining to serve";
+var noMeals = "No Meals Remaining to serve";
 var readyServe = "Ready to serve!";
 
 
@@ -33,16 +34,9 @@ var shortDate = moment(now).format("YYYY-DD-MM")
 $(".longDate").text(longDate);
 $(".shortDate").text(shortDate);
 
-// must initialize jSignature before hiding cards 2-6
+// must initialize jSignature before jquery hiding secondary cards 2-6
 $("#signature").jSignature();
 
-
-
-
-// initialize functions goes here
-
-// toggle here for app-in-cards mode or show all cards for editing
-// $(".secondary-cards").toggleClass('d-none');
 $(".secondary-cards").fadeOut('fast');
 //comment above line to see all cards at start
 //does not alter navigation by toggleClass display of cards
@@ -52,7 +46,7 @@ document.getElementById("siteName-input").value = localStorage.getItem("mealCoun
 document.getElementById("siteAddress-input").value = localStorage.getItem("mealCounter-siteAddress");
 document.getElementById("siteSupervisor-input").value = localStorage.getItem("mealCounter-siteSupervisor");
 
-// internal tracking of meal categories
+// tracking of meal categories
 function sumMeals() {
   mealsServed = mealsFirst + mealsSecond + mealsProgAdult + mealsNonProgAdult;
   mealsUtilized = mealsServed + mealsDamaged;
@@ -78,7 +72,6 @@ function sumMeals() {
 // https://getbootstrap.com/docs/4.2/components/forms/#validation
 // https://www.codeply.com/go/LYdmkkTZUS/bootstrap-4-validation-example
 $("#meal-type-btns").click(function(event) {
-  // tiktok.play();
   // Fetch form to apply custom Bootstrap validation
   var form = $("#site-meal-form");
   if (form[0].checkValidity() === false) { // check form fields using built-in validation in html
