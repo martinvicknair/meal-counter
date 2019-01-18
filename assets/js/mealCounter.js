@@ -4,7 +4,7 @@ var siteAddress = "";
 var siteSupervisor = "";
 var mealType = "";
 var deliveryTemp = "";
-var sitePhone = [{ "mask": "###-###-####"}];
+var sitePhone = [{ "mask": " ### - ### - ####"}];
 
 var mealsNew;
 var mealsPrevious;
@@ -365,7 +365,10 @@ function goBackTo4() {
 // };
 
 function goToSign() {
-  $('.deliveryTemp').attr('value', deliveryTemp);
+  if (deliveryTemp != "") {
+      $('.deliveryTemp').attr('value', deliveryTemp);
+  }
+
   $("#card4-addlMeals").fadeOut('fast');
   $("#card5-signature").fadeIn();
   // Initialize jSignature
@@ -419,7 +422,7 @@ function restartApp() {
 }
 
 function beforeUnload() {
-  return 'Use the "Go Back" button, or you wil lose your changes.';
+  return 'Use the "Go Back" button, or you may lose your changes.';
 }
 
 function createPDF() {
