@@ -43,7 +43,7 @@ $("#signature").jSignature();
 
 // toggle here for app-in-cards mode or show all cards for editing
 // $(".secondary-cards").toggleClass('d-none');
-$(".secondary-cards").fadeOut('fast');
+// $(".secondary-cards").fadeOut('fast');
 //comment above line to see all cards at start
 //does not alter navigation by toggleClass display of cards
 

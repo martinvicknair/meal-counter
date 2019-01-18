@@ -13,7 +13,6 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="assets/css/bootstrap-4.2.1.min.css">
-  <link rel="stylesheet" href="assets/css/style.css">
 
   <title>SFR Meal Counter</title>
 </head>
@@ -54,11 +53,11 @@
                       <input type="text" class="form-control" id="siteSupervisor-input" placeholder="Site Supervisor" required>
                       <div class="invalid-feedback">Site Supervisor required.</div>
                   </div>
-                  <div class="col-md-10 mx-auto button-wrapper" id="meal-type-btns">
-                    <div><button class="btn-lg w-100 btn-primary" type="submit" id="breakfast-btn" value="b">Breakfast</button></div>
-                    <div><button class="btn-lg w-100 btn-success" type="submit" id="lunch-btn" value="l">Lunch</button></div>
-                    <div><button class="btn-lg w-100 btn-secondary" type="submit" id="snack-btn" value="sn">Snack</button></div>
-                    <div><button class="btn-lg w-100 btn-warning" type="submit" id="supper-btn" value="su">Supper</button></div>
+                  <div class="col-md-10 mx-auto" id="meal-type-btns">
+                    <div><button class="btn-lg w-100 btn-primary mb-2" type="submit" id="breakfast-btn" value="b">Breakfast</button></div>
+                    <div><button class="btn-lg w-100 btn-success mb-2" type="submit" id="lunch-btn" value="l">Lunch</button></div>
+                    <div><button class="btn-lg w-100 btn-secondary mb-2" type="submit" id="snack-btn" value="sn">Snack</button></div>
+                    <div><button class="btn-lg w-100 btn-warning mb-2" type="submit" id="supper-btn" value="su">Supper</button></div>
                   </div>
                   </form>
                 </div>
@@ -151,46 +150,41 @@
                     <form class="needs-validation" id="meals-available-form" novalidate>
 
 <div class="form-row align-items-center mx-auto mb-2">
-  <input type="number" class="form-control deliveryTemp" min="32" max="200" id="" placeholder="°F"  />
+  <input type="number" class="form-control deliveryTemp" min="32" max="200" id="" placeholder="°F" style="width: 95px;"  />
   <div class="input-group-append">
     <span class="input-group-text">Delivery Temp (optional)</span>
   </div>
 </div>
 
                       <div class="form-row align-items-center mx-auto">
-                        <input type="number" class="form-control" min="0" id="mealsNew" oninput="sumMealsAvail()" required />
+                        <input type="number" class="form-control" min="0" id="mealsNew" oninput="sumMealsAvail()" style="width: 95px;" required />
                         <div class="input-group-append">
                           <span class="input-group-text">Meals Received/Prepared</span>
                         </div>
                         <div class="invalid-feedback">Enter number of New Meals, even if zero.</div>
                       </div>
-                      <div class="form-row align-items-center mx-auto">
-                        <input type="number" class="form-control" min="0" id="mealsPrevious" oninput="sumMealsAvail()" required />
+                      <div class="form-row align-items-center mx-auto mb-2">
+                        <input type="number" class="form-control" min="0" id="mealsPrevious" oninput="sumMealsAvail()" style="width: 95px;" required />
                         <div class="input-group-append">
                           <span class="input-group-text">Meals From Previous Day</span>
                         </div>
                         <div class="invalid-feedback">Enter number of Previous Meals, even if zero.</div>
                       </div>
-                      <div class="form-row align-items-center mb-3 mx-auto">
-                        <input type="number" id="mealsAvailable-input" class="form-control mealsAvailable" value="0" min="1" required readonly />
-                        <div class="input-group-append">
-                          <span class="input-group-text">Total Meals Available</span>
-                        </div>
-                        <small id="noMeals-invalidFeedback" class="form-text text-danger d-none mx-auto">
-                          Cannot start counting without Meals Available
-                        </small>
-                        <small id="servedExceeds-invalidFeedback" class="form-text text-danger d-none mx-auto">
-                          Minimum of <span id="mealsUtilized"></span> due to meals already served or damaged
-                        </small>
-                      </div>
 
-                      <!-- <div class="form-row align-items-center mb-3">
-                          <div class="input-group input-group-sm">
-                          <input type="number" class="" value="0" min="32" max="180" id="" oninput="" />
+                        <div class="form-row align-items-center mb-3 mx-auto">
+                          <input type="number" id="mealsAvailable-input" class="form-control mealsAvailable" value="0" min="1" style="width: 95px;" required readonly />
                           <div class="input-group-append">
-                            <span class="input-group-text small">Delivery Temp-optional</span>
+                            <span class="input-group-text">Total Meals Available</span>
                           </div>
-                        </div> -->
+                          <small id="noMeals-invalidFeedback" class="form-text text-danger d-none mx-auto">
+                            Cannot start counting without Meals Available
+                          </small>
+                          <small id="servedExceeds-invalidFeedback" class="form-text text-danger d-none mx-auto">
+                            Minimum of <span id="mealsUtilized"></span> due to meals already served or damaged
+                          </small>
+                        </div>
+
+
 
                       <button class="btn-lg w-100 btn-danger" type="submit" id="startCounting-btn">Start Counting</button>
                     </form>
@@ -539,7 +533,7 @@
 
                   <hr class="my-4">
                   <p>By signing below, I certify that the above information is true and accurate.</p>
-                  <div id="signature" class="mb-3"></div>
+                  <div id="signature" class="mb-3" style="border: 1px solid gray; min-height: 50px;"></div>
                   <button class="btn-lg btn-danger" onclick="goToDone()">Submit</button>
                 </div>
               </div>
