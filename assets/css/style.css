@@ -6,7 +6,7 @@
 }
 #signature {
 /* width: 100%; */
-height: 100%;
+height: auto;
 /* margin-bottom: : 5px; */
 border: 1px solid gray;
 }
