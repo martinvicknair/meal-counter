@@ -63,6 +63,11 @@ function sumMeals() {
   $("#mealsDamaged").attr({
     "max": mealsAvailable - mealsServed //sets max value allowed for mealsDamaged on card4
   });
+  if (mealsLeftover==0) {
+    document.getElementById("mealsAddlNeeded-counter").style.display="block";
+  } else {
+    document.getElementById("mealsAddlNeeded-counter").style.display="none"; //in case they back out a number
+  }
 }
 
 
@@ -74,12 +79,20 @@ function sumMeals() {
 $("#meal-type-btns").click(function(event) {
   // Fetch form to apply custom Bootstrap validation
   var form = $("#site-meal-form");
-  if (form[0].checkValidity() === false) { // check form fields using built-in validation in html
+  var meal = document.activeElement.getAttribute('value');
+  if (meal===null) {
+     /* On Android when you tap through the input boxes on the first screen and then select Go on the last one,
+    it will take you into the second screen without selecting a meal. This is not a problem with Apple. */
+    event.preventDefault();
+    event.stopPropagation();
+    document.activeElement.blur(); //close soft keyboard
+    return;
+  } else if (form[0].checkValidity() === false) { // check form fields using built-in validation in html
     event.preventDefault();
     event.stopPropagation();
   } else if (form[0].checkValidity() == true) { // must have siteName, siteAddress, siteSupervisor
     event.preventDefault();
-    var meal = document.activeElement.getAttribute('value');
+    //var meal = document.activeElement.getAttribute('value');
     selectSiteMeal(meal);
     $(".siteName").text(siteName);
     $("#card1-siteMealInfo").fadeOut('fast');
@@ -365,6 +378,7 @@ function goToSign() {
   $("#card4-addlMeals").fadeOut('fast');
   $("#card5-signature").fadeIn();
   // Initialize jSignature
+  $("#signature").jSignature("reset");
   // $("#signature").jSignature();
 
   // $("#signature").jSignature({'UndoButton':true});
@@ -425,17 +439,7 @@ function createPDF() {
    *
    ******************************************************************/
   $(this).css("background-color", "green");
-  // var siteName = siteName;
-  // var siteAddress = siteAddress;
-  // var siteSupervisor = siteSupervisor;
-  //
-  // // set elsewhere: mealType;mealsDamaged, mealsLeftover, mealsAvailable (mealsPrevious+mealsNew), mealsProgAdult, mealsNonProgAdult
-  // //
-  // var mealsPrevious = mealsPrevious;
-  // var mealsNew = mealsNew;
-  // var mealsFirst = mealsFirst;  //first meals to children
-  // var mealsSecond = mealsSecond;  //second meals to children
-  // var mealsServed = mealsServed;
+    var meal_temp=document.getElementById("meal_temperature").value.trim();
 
   //write a second page to handle numbers greater than defined below
   if (mealsFirst > 160) {
@@ -470,7 +474,7 @@ function createPDF() {
   doc.rect(10, 10, 190, 255); // outline of the page for A4 paper in mm is 10,10,190,275
   //Font size 12 gives me 69 capital A's across and font-size 10 gets me 83
   doc.setFontSize(10);
-  doc.text(85, 16, 'DAILY MEAL COUNT FORM');
+  doc.text(85, 16, 'SFSP Daily Meal Count Form');
   doc.line(10, 19, 200, 19); //horizontal line:
   doc.line(10, 26, 200, 26); //horizontal line:
   doc.line(10, 36, 200, 36); //horizontal line:
@@ -478,11 +482,14 @@ function createPDF() {
   doc.line(10, 56, 200, 56);
 
   doc.text(12, 25, 'Site: ' + siteName);
-  doc.text(130, 25, 'Meal: ' + mealType);
+  doc.text(140, 25, 'Meal: ' + mealType);
   doc.text(12, 35, 'Address: ' + siteAddress);
-
+  doc.text(140,35,'Telephone: '+document.getElementById("sitePhone").value)
   doc.text(12, 45, "Supervisor\'s Name: " + siteSupervisor);
   doc.text(130, 45, 'Date: ' + longDate);
+  if (meal_temp!=="") {
+    doc.text(180, 45, 'Temp: ' + meal_temp);
+  }
   var txt = 'Meals Received: ' + mealsNew + ' +	  Meals available from previous day: ' + mealsPrevious + ' =  Total meals available: ';
   doc.setFontType("bold");
   doc.text(12, 55, txt);
@@ -588,12 +595,21 @@ function createPDF() {
   c += 16;
   doc.text(90, c, 'Total damaged/incomplete/other non-reimbursable meals+ ' + mealsDamaged);
   doc.line(10, (c + 2), 200, (c + 2));
-  doc.text(148, (c + 8), 'Total mealsLeftover meals+ ' + mealsLeftover);
+  doc.text(148, (c + 8), 'Total leftover meals+ ' + mealsLeftover);
   doc.setLineWidth(1);
   doc.line(10, (c + 10), 200, (c + 10));
-  doc.setLineWidth(.2);
-  c += 16;
-  doc.setFontType("normal");
+
+  //added new
+  c+=16;
+  var total_items=mealsServed+mealsDamaged+mealsLeftover;
+  doc.text(130, c, 'Total of items:'); doc.text(185, c, total_items.toString());
+
+  doc.setLineWidth(.2); doc.setFontType("normal");
+  doc.line(10, (c + 1), 200, (c + 1));
+  doc.text(12, (c+8),"Number of additional children requesting a meal after all available meals were served: "+mealsAddlNeeded);
+  doc.line(10, (c + 9), 200, (c + 9));
+  c += 16; //changed
+
   doc.text(12, c, "By signing below, I certify that the above information is true and accurate:");
   doc.text(148, (c + 23), longDate);
 
@@ -608,17 +624,10 @@ function createPDF() {
     );
     return false;
   } else if (canvas !== null) {
-    var st = canvas.toDataURL("image/png");
-    var data = st.slice('data:image/png;base64,'.length);
-    data = atob(data);
-    doc.addImage(data, 'PNG', 12, (c + 8), 80, 25);
+    var st = canvas.toDataURL("image/jpeg");
+    doc.addImage(st, 'JPEG', 12, (c + 8), 80, 25);
   }
-  doc.save("MealCount_" + siteName + "_" + longDate + ".pdf");
-  // if (isApple) {
-  //   window.location=doc.output('datauristring');
-  // } else {
-  //    doc.save("MealCount_" + siteName+ "_" + longDate + ".pdf");
-  // }
+  doc.save("MealCount_" + siteName + "_" + shortDate + ".pdf");
 }
 
 // console.log(`Meal Totals`);

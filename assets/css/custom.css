@@ -1,0 +1,82 @@
+.small_counter {
+	margin: 0 10px;
+	width: 75px;
+	font-weight: 500;
+	font-size: 32px;
+	line-height: 1;
+}
+.page4input {
+  width:80px;
+}
+.page2input {
+	width:100px;
+}
+.input-group-text {
+	/*width:200px;*/
+	padding:.375rem 0 .375rem .375rem ;
+	background-color: inherit;
+    border: none;
+}
+.input_line {
+	background-color: #e9ecef;
+    border: 1px solid #ced4da;
+}
+.mealsLeftover {
+  display:block;
+}
+.mealsLeftover-span {
+    display:block;
+    line-height: 50px;
+    vertical-align: top;
+    padding-left: 8px;
+    font-size: 16px;
+}
+#meals-available-form .form-control{
+	background-clip: inherit;
+    border: 1px solid #3273b5;
+    border-radius: 0;
+    margin-right: 4px;
+}
+#meals-available-form .form-control.mealsAvailable {
+	border:0;
+	text-align: right;
+}
+#notify {display:none;}
+/*#card4-hometab-content table td:first-child {
+	width:25%;
+}*/
+p.tighten {
+	/*tighten up spacing*/
+	margin-block-end: 0;
+	margin-botton:0;
+}
+hr.my-4 {
+  	display:none;
+  }
+
+@media (max-width: 768px) {
+  .mealsLeftover {
+    display:inline;
+  }
+  .mealsLeftover-span {
+    display:inline;
+  }
+}
+@media (max-width: 325px) {
+  .input-group-text {
+    font-size: .75rem;
+    padding:.375rem 0 ;
+  }
+  .page2input {
+    width:75px;
+  }
+  .break_small {
+  	flex-basis: unset;
+  }
+  .col-md-6 {
+  	padding:0;
+  }
+  .table td {
+	padding: .75rem 0;
+  }
+}
